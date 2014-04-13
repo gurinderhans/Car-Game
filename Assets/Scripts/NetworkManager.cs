@@ -39,7 +39,7 @@ public class NetworkManager : MonoBehaviour {
 	void OnGUI(){
 		//GUILayout.Box (PhotonNetwork.connectionStateDetailed.ToString ());
 		//GUI.Label(new Rect(0, 0, 200, 40), ""+PhotonNetwork.connectionStateDetailed.ToString ()+"");
-		print (PhotonNetwork.connectionStateDetailed.ToString ());
+		//print (PhotonNetwork.connectionStateDetailed.ToString ());
 	}
 	
 	void OnJoinedLobby(){

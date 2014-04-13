@@ -70,9 +70,9 @@ function LateUpdate () {
         transform.LookAt (target);
         
         //car speed
-        //var veloc : int = car.rigidbody.velocity.magnitude;
-        //veloc = veloc * 2;
-        //var carSpeed = veloc.ToString();
-        //speedText.text = carSpeed + " km/h";
+        var veloc : int = car.rigidbody.velocity.magnitude;
+        veloc = veloc * 2;
+        var carSpeed = veloc.ToString();
+        speedText.text = carSpeed + " km/h";
         //print(carSpeed);
 }

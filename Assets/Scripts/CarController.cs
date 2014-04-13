@@ -14,22 +14,26 @@ public class CarController : MonoBehaviour {
 	public Transform wheelRLTrans;//rear left
 	public Transform wheelRRTrans;//rear right
 
-	//incoming
-	//public Quaternion wheelFront;
-	
+	//Skidding variables
+	private float slipSidewayFriction;
+	private float slipForwardFriction;
+
 	//torque
 	private float maxTorque;
 	//deceleration by itself
 	public int deceleration;
 	//max speed
 	public int maxSpeed;
-	
+
+
 	// Use this for initialization
 	void Start () {
 		rigidbody.centerOfMass = new Vector3 (0.0f, -0.9f, 0.0f);
 		//print(rigidbody.centerOfMass);
+		slipForwardFriction = 0.05f;
+		slipSidewayFriction = 0.025f;
 	}
-	
+
 	void Update(){
 		//make wheels spin
 		wheelFLTrans.Rotate (0,0,wheelFL.rpm / 60 * 360 * Time.deltaTime);
@@ -43,6 +47,31 @@ public class CarController : MonoBehaviour {
 		wheelFRTrans.localEulerAngles = new Vector3 (wheelFRTrans.localEulerAngles.x, wheelFR.steerAngle, wheelFRTrans.localEulerAngles.z);
 
 		//print (rigidbody.velocity.magnitude);
+	}
+
+	//set slip function
+	void MakeSlip (float forwardFriction , float sidewayFriction){
+		/*<WheelFrictionCurve> is a struct so we cant change it directly
+		 * So first we get the <forwardFriction> var type from it
+		 * then <stiffness> attribute gets copied and is assigned a value
+		 * We at the end 'wheelRR.forwardFriction = t2;' assign the <forwardFriction> type the attribute copy we had
+		 */
+		WheelFrictionCurve t1 = wheelRR.forwardFriction;
+		t1.stiffness = forwardFriction;
+
+		WheelFrictionCurve t2 = wheelRL.forwardFriction;
+		t2.stiffness = forwardFriction;
+
+		WheelFrictionCurve t3 = wheelRR.sidewaysFriction;
+		t3.stiffness = sidewayFriction;
+
+		WheelFrictionCurve t4 = wheelRL.sidewaysFriction;
+		t4.stiffness = sidewayFriction;
+
+		wheelRR.forwardFriction = t1;
+		wheelRL.forwardFriction = t2;
+		wheelRR.sidewaysFriction = t3;
+		wheelRL.sidewaysFriction = t4;
 	}
 
 	
@@ -60,12 +89,17 @@ public class CarController : MonoBehaviour {
 		if(Input.GetButton("Brake")){//brake button defined as space in project settings
 			wheelRL.brakeTorque = 100;
 			wheelRR.brakeTorque = 100;
+			//call setslip
+			MakeSlip(slipForwardFriction, slipSidewayFriction);
 		} else if(Input.GetAxis("Vertical") == 0){
 			wheelRL.brakeTorque = deceleration;
 			wheelRR.brakeTorque = deceleration;
+			MakeSlip(1, 1);
 		} else{
 			wheelRL.brakeTorque = 0.0f;
 			wheelRR.brakeTorque = 0.0f;
+			MakeSlip(1, 1);
+			//call setslip
 		}
 
 		//max speed
