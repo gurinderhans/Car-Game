@@ -18,6 +18,9 @@ public class CarController : MonoBehaviour {
 	private float slipSidewayFriction;
 	private float slipForwardFriction;
 
+	/*private float nslipSidewayFriction;
+	private float nslipForwardFriction;*/
+
 	//torque
 	private float maxTorque;
 	//deceleration by itself
@@ -26,12 +29,16 @@ public class CarController : MonoBehaviour {
 	public int maxSpeed;
 
 
+
 	// Use this for initialization
 	void Start () {
 		rigidbody.centerOfMass = new Vector3 (0.0f, -0.9f, 0.0f);
 		//print(rigidbody.centerOfMass);
 		slipForwardFriction = 0.05f;
 		slipSidewayFriction = 0.025f;
+
+		/*nslipForwardFriction = 0.05f;
+		nslipSidewayFriction = 0.04f;*/
 	}
 
 	void Update(){
@@ -74,7 +81,6 @@ public class CarController : MonoBehaviour {
 		wheelRL.sidewaysFriction = t4;
 	}
 
-	
 	//is called multiple times per frame ;)
 	void FixedUpdate(){
 		//wheelRR.motorTorque = maxTorque * Input.GetAxis ("Vertical");
@@ -131,6 +137,12 @@ public class CarController : MonoBehaviour {
 		//print (steerAngleforCar);
 		wheelFL.steerAngle = steerAngleforCar * Input.GetAxis ("Horizontal");
 		wheelFR.steerAngle = steerAngleforCar * Input.GetAxis ("Horizontal");
+
+		/*float steerThreshold = Mathf.Abs (steerAngleforCar * Input.GetAxis ("Horizontal"));
+		print (steerThreshold);
+		if(steerThreshold <	 9 && steerThreshold > 8){
+			MakeSlip(nslipForwardFriction, nslipSidewayFriction);
+		}
 
 		/*if(carSpeed < 50){//mess around with value 100
 			wheelFL.steerAngle = 12 * Input.GetAxis ("Horizontal");
