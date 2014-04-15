@@ -6,7 +6,7 @@ public var skidAtVal : float = 4.1;
 private var markWidth : float = 0.5;
 private var skidding : int;
 private var lastPos = new Vector3[2];
-
+private var frontSlipVal : float;
 function Start () {
 }
 
@@ -16,11 +16,13 @@ function Update () {
 	var hit : WheelHit;	
 	transform.GetComponent(WheelCollider).GetGroundHit(hit);
 	currentSlipValue = Mathf.Abs(hit.sidewaysSlip);
-	
+	frontSlipVal = Mathf.Abs(hit.forwardSlip);
+	print(frontSlipVal);
 	if (skidAtVal <= currentSlipValue){
 		SkidMesh();
-	}
-	else {
+	} else if(2.0 <= frontSlipVal){
+		SkidMesh();
+	} else {
 		skidding = 0;
 	}
 }

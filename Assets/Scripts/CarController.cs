@@ -46,7 +46,7 @@ public class CarController : MonoBehaviour {
 		wheelFLTrans.Rotate (0,0,wheelFL.rpm / 60 * 360 * Time.deltaTime);
 		wheelFRTrans.Rotate (0,0,wheelFL.rpm / 60 * 360 * Time.deltaTime);
 		wheelRLTrans.Rotate (0,0,wheelFL.rpm / 60 * 360 * Time.deltaTime);
-		wheelRRTrans.Rotate (0,0,wheelFL.rpm / 60 * 360 * Time.deltaTime);
+		wheelRRTrans.Rotate (0, 0, wheelFL.rpm / 60 * 360 * Time.deltaTime);
 
 
 		//wheel rotate
@@ -100,11 +100,21 @@ public class CarController : MonoBehaviour {
 		} else if(Input.GetAxis("Vertical") == 0){
 			wheelRL.brakeTorque = deceleration;
 			wheelRR.brakeTorque = deceleration;
-			MakeSlip(1, 1);
+			if(rigidbody.velocity.magnitude > 25){
+				MakeSlip(Mathf.Lerp(slipForwardFriction, 1f, Time.deltaTime), Mathf.Lerp(slipSidewayFriction, 1f, Time.deltaTime));
+			} else{
+				MakeSlip(1, 1);
+			}
 		} else{
 			wheelRL.brakeTorque = 0.0f;
 			wheelRR.brakeTorque = 0.0f;
-			MakeSlip(1, 1);
+
+			if(rigidbody.velocity.magnitude > 25){
+				MakeSlip(Mathf.Lerp(slipForwardFriction, 1f, Time.deltaTime), Mathf.Lerp(slipSidewayFriction, 1f, Time.deltaTime));
+			} else{
+				MakeSlip(1, 1);
+			}
+			//MakeSlip(1, 1);
 			//call setslip
 		}
 
@@ -184,6 +194,7 @@ public class CarController : MonoBehaviour {
 		if(Input.GetKeyDown("q")){
 			transform.position = new Vector3(0, 15, 0);
 			transform.rotation = Quaternion.identity;
+			rigidbody.Sleep ();
 		}
 		/*
 		 * When max speed reached and if you hold back key without letting go of front key car will lock at max speed
