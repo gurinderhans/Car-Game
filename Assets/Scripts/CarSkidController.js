@@ -1,12 +1,12 @@
 ﻿#pragma strict
 
-
 private var currentSlipValue : float;
-public var skidAtVal : float = 4.1;
 private var markWidth : float = 0.5;
 private var skidding : int;
 private var lastPos = new Vector3[2];
 private var frontSlipVal : float;
+var skidMaterial : Material;
+
 function Start () {
 }
 
@@ -17,10 +17,11 @@ function Update () {
 	transform.GetComponent(WheelCollider).GetGroundHit(hit);
 	currentSlipValue = Mathf.Abs(hit.sidewaysSlip);
 	frontSlipVal = Mathf.Abs(hit.forwardSlip);
-	print(frontSlipVal);
-	if (skidAtVal <= currentSlipValue){
+	print(currentSlipValue);
+	if (currentSlipValue > 5){
 		SkidMesh();
-	} else if(2.0 <= frontSlipVal){
+		print("SKID");
+	} else if(frontSlipVal > 2){
 		SkidMesh();
 	} else {
 		skidding = 0;
@@ -63,4 +64,6 @@ function SkidMesh(){
 	uvm[3] = Vector2(1,1);
 	markMesh.uv = uvm;
 	filter.mesh = markMesh;
+	mark.renderer.material = skidMaterial;
+	mark.AddComponent(DestroyObjScript);
 }
