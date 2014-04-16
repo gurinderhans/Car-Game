@@ -17,10 +17,10 @@ function Update () {
 	transform.GetComponent(WheelCollider).GetGroundHit(hit);
 	currentSlipValue = Mathf.Abs(hit.sidewaysSlip);
 	frontSlipVal = Mathf.Abs(hit.forwardSlip);
-	print(currentSlipValue);
+	//print(currentSlipValue);
 	if (currentSlipValue > 5){
 		SkidMesh();
-		print("SKID");
+		//print("SKID");
 	} else if(frontSlipVal > 2){
 		SkidMesh();
 	} else {
