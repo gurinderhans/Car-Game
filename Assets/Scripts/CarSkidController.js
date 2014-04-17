@@ -6,6 +6,10 @@ private var skidding : int;
 private var lastPos = new Vector3[2];
 private var frontSlipVal : float;
 var skidMaterial : Material;
+var skidSmoke: GameObject;
+var smokeDepth : float = 0.4;
+skidSmoke.transform.position = transform.position;
+skidSmoke.transform.position.y -= smokeDepth;
 
 function Start () {
 }
@@ -16,15 +20,19 @@ function Update () {
 	var hit : WheelHit;	
 	transform.GetComponent(WheelCollider).GetGroundHit(hit);
 	currentSlipValue = Mathf.Abs(hit.sidewaysSlip);
+	print(currentSlipValue);
 	frontSlipVal = Mathf.Abs(hit.forwardSlip);
 	//print(currentSlipValue);
-	if (currentSlipValue > 5){
+	if (currentSlipValue > 14){
+		skidSmoke.particleEmitter.emit = true;
 		SkidMesh();
 		//print("SKID");
 	} else if(frontSlipVal > 2){
 		SkidMesh();
+		skidSmoke.particleEmitter.emit = true;
 	} else {
 		skidding = 0;
+		skidSmoke.particleEmitter.emit = false;
 	}
 }
 function SkidMesh(){
