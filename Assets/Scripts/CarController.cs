@@ -28,7 +28,7 @@ public class CarController : MonoBehaviour {
 	public int maxSpeed;
 
 	//the MAGIC VALUE
-	public float magicValue = 0.07f;
+	private float magicValue = 0.07f;
 
 
 	// Use this for initialization
