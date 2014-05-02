@@ -10,17 +10,13 @@ var skidSmoke: GameObject;
 var smokeDepth : float = 0.4;
 skidSmoke.transform.position = transform.position;
 skidSmoke.transform.position.y -= smokeDepth;
-
-function Start () {
-}
-
  
 
 function Update () {
 	var hit : WheelHit;	
 	transform.GetComponent(WheelCollider).GetGroundHit(hit);
 	currentSlipValue = Mathf.Abs(hit.sidewaysSlip);
-	print(currentSlipValue);
+	//print(currentSlipValue);
 	frontSlipVal = Mathf.Abs(hit.forwardSlip);
 	//print(currentSlipValue);
 	if (currentSlipValue > 14){

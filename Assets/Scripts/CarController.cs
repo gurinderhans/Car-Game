@@ -8,7 +8,7 @@ public class CarController : MonoBehaviour {
 	public WheelCollider wheelRL;//rear left
 	public WheelCollider wheelRR;//rear right
 	
-	//transforms
+	//Transforms
 	public Transform wheelFLTrans;//front left
 	public Transform wheelFRTrans;//front right
 	public Transform wheelRLTrans;//rear left
@@ -18,16 +18,17 @@ public class CarController : MonoBehaviour {
 	private float slipSidewayFriction;
 	private float slipForwardFriction;
 
-	/*private float nslipSidewayFriction;
-	private float nslipForwardFriction;*/
-
 	//torque
 	private float maxTorque;
+
 	//deceleration by itself
 	public int deceleration;
+
 	//max speed
 	public int maxSpeed;
 
+	//the MAGIC VALUE
+	public float magicValue = 0.07f;
 
 
 	// Use this for initialization
@@ -37,8 +38,6 @@ public class CarController : MonoBehaviour {
 		slipForwardFriction = 0.05f;
 		slipSidewayFriction = 0.018f;
 
-		/*nslipForwardFriction = 0.05f;
-		nslipSidewayFriction = 0.04f;*/
 	}
 
 	void Update(){
@@ -47,7 +46,6 @@ public class CarController : MonoBehaviour {
 		wheelFRTrans.Rotate (0,0,wheelFL.rpm / 60 * 360 * Time.deltaTime);
 		wheelRLTrans.Rotate (0,0,wheelFL.rpm / 60 * 360 * Time.deltaTime);
 		wheelRRTrans.Rotate (0, 0, wheelFL.rpm / 60 * 360 * Time.deltaTime);
-
 
 		//wheel rotate
 		wheelFLTrans.localEulerAngles = new Vector3 (wheelFLTrans.localEulerAngles.x, wheelFL.steerAngle, wheelFLTrans.localEulerAngles.z);//changing just y and leaving alone x & z
@@ -85,27 +83,13 @@ public class CarController : MonoBehaviour {
 	void CalcStiffness(){
 		int carSpeed = (int)rigidbody.velocity.magnitude;
 		if(carSpeed <= 70f && carSpeed >= 15f){
-			slipSidewayFriction = 0.026f;
+			slipSidewayFriction = 0.019f;
 			MakeSlip(slipForwardFriction, slipSidewayFriction);
 		} else if(carSpeed > 70f && carSpeed <= maxSpeed){
-			slipSidewayFriction = 0.028f;
+			slipSidewayFriction = 0.022f;
 			MakeSlip(slipForwardFriction, slipSidewayFriction);
 		} else if(carSpeed < 15f){
-			MakeSlip(Mathf.Lerp(wheelRL.forwardFriction.stiffness, 1f, Time.deltaTime*0.17f), Mathf.Lerp(wheelRL.sidewaysFriction.stiffness, 1f, Time.deltaTime*0.17f));
-		}
-		//print ("SIDEWAYS FRIC: "+wheelRL.sidewaysFriction.stiffness+" FORWARD FRIC: "+wheelRL.forwardFriction.stiffness);
-	}
-
-	void CalcStiffnessOnBrakePress(){
-		int carSpeed = (int)rigidbody.velocity.magnitude;
-		if(carSpeed <= 70f && carSpeed >= 15f){
-			slipSidewayFriction = 0.018f;
-			MakeSlip(slipForwardFriction, slipSidewayFriction);
-		} else if(carSpeed > 70f && carSpeed <= maxSpeed){
-			slipSidewayFriction = 0.020f;
-			MakeSlip(slipForwardFriction, slipSidewayFriction);
-		} else if(carSpeed < 15f){
-			MakeSlip(Mathf.Lerp(wheelRL.forwardFriction.stiffness, 1f, Time.deltaTime*0.17f), Mathf.Lerp(wheelRL.sidewaysFriction.stiffness, 1f, Time.deltaTime*0.17f));
+			MakeSlip(Mathf.Lerp(wheelRL.forwardFriction.stiffness, 1f, Time.deltaTime*magicValue), Mathf.Lerp(wheelRL.sidewaysFriction.stiffness, 1f, Time.deltaTime*magicValue));
 		}
 		//print ("SIDEWAYS FRIC: "+wheelRL.sidewaysFriction.stiffness+" FORWARD FRIC: "+wheelRL.forwardFriction.stiffness);
 	}
@@ -116,54 +100,29 @@ public class CarController : MonoBehaviour {
 		 * speed more than 70 - 100 slipSidewayFriction = 0.05
 		 * speed more than 100 - 150 slipSidewayFriction = 0.09
 		 */
-		/*if(Input.GetButton("Brake")){
-			wheelRL.brakeTorque = 100f;
-			wheelRR.brakeTorque = 100f;
-			if(carSpeed <= 70f && carSpeed >= 15f){
-				slipSidewayFriction = 0.018f;
-				MakeSlip(slipForwardFriction, slipSidewayFriction);
-			} else if(carSpeed > 70f && carSpeed <= maxSpeed){
-				slipSidewayFriction = 0.02f;
-				MakeSlip(slipForwardFriction, slipSidewayFriction);
-			} else if(carSpeed < 15f){
-				MakeSlip(Mathf.Lerp(wheelRL.forwardFriction.stiffness, 1f, Time.deltaTime*0.17f), Mathf.Lerp(wheelRL.sidewaysFriction.stiffness, 1f, Time.deltaTime*0.17f));
-			}
-		} else*/ 
+
 		if(Input.GetAxis("Vertical") == 0){
-			/*wheelRL.brakeTorque = deceleration;
-			wheelRR.brakeTorque = deceleration;*/
 
 			if(Input.GetButton("Brake")){
 				wheelRL.brakeTorque = 100f;
 				wheelRR.brakeTorque = 100f;
-				CalcStiffnessOnBrakePress();
-				//print ("brakes on");
+				CalcStiffness();
 			} else{
-				//print ("brakes off");
 				wheelRL.brakeTorque = deceleration;
 				wheelRR.brakeTorque = deceleration;
-				CalcStiffness();
-				//CalcStiffness();
+				MakeSlip(Mathf.Lerp(wheelRL.forwardFriction.stiffness, 1f, Time.deltaTime*magicValue), Mathf.Lerp(wheelRL.sidewaysFriction.stiffness, 1f, Time.deltaTime*magicValue));
 			}
 		} else if(Input.GetAxis("Vertical") != 0f){
 			if(Input.GetButton("Brake")){
 				wheelRL.brakeTorque = 150f;//this value should be greater than brake torque on brake pressed when no accleratopm
 				wheelRR.brakeTorque = 150f;
-				CalcStiffnessOnBrakePress();
-				//print ("brakes on");
+				CalcStiffness();
 			} else{
 				wheelRL.brakeTorque = 0f;
 				wheelRR.brakeTorque = 0f;
-				CalcStiffness();
-				//CalcStiffness();
-				//print ("brakes off");
+				MakeSlip(Mathf.Lerp(wheelRL.forwardFriction.stiffness, 1f, Time.deltaTime*magicValue), Mathf.Lerp(wheelRL.sidewaysFriction.stiffness, 1f, Time.deltaTime*magicValue));
 			}
 		}
-		/*else{
-			wheelRL.brakeTorque = 0f;
-			wheelRR.brakeTorque = 0f;
-		}*/
-
 
 		//print (wheelRL.brakeTorque);
 		//print ("SIDEWAYS FRIC: "+wheelRL.sidewaysFriction.stiffness+" FORWARD FRIC: "+wheelRL.forwardFriction.stiffness);
@@ -171,30 +130,14 @@ public class CarController : MonoBehaviour {
 
 	//is called multiple times per frame ;)
 	void FixedUpdate(){
-		//wheelRR.motorTorque = maxTorque * Input.GetAxis ("Vertical");
-		//wheelRL.motorTorque = maxTorque * Input.GetAxis ("Vertical");
-		//add steer angle to front wheels to make them turn -> car turn
-		/*wheelFL.steerAngle = 7 * Input.GetAxis ("Horizontal");
-		wheelFR.steerAngle = 7 * Input.GetAxis ("Horizontal");*/
-
-
-
 		//if(Drift()){ slow down car -> add very little opposing force to slow it down}
 		//if car currently drifting and only Input.GetAxis("Vertical") is pressed then speed it to make it go forward
 		Drift ();
 
 
-
-
 		//check for car moving if no key pressed start slowing down
 		//this is also for brakes
-		/*if(Input.GetAxis("Vertical") == 0){
-			wheelRL.brakeTorque = deceleration;
-			wheelRR.brakeTorque = deceleration;
-		} else{
-			wheelRL.brakeTorque = 0.0f;
-			wheelRR.brakeTorque = 0.0f;
-		}*/
+
 
 		//max speed
 		//int carSpeed = (int) Mathf.Abs(2 * Mathf.PI * wheelRR.radius * wheelRR.rpm * 60 / 1000);
@@ -225,24 +168,6 @@ public class CarController : MonoBehaviour {
 		//print (steerAngleforCar);
 		wheelFL.steerAngle = steerAngleforCar * Input.GetAxis ("Horizontal");
 		wheelFR.steerAngle = steerAngleforCar * Input.GetAxis ("Horizontal");
-
-		//print (steerAngleforCar * Input.GetAxis ("Horizontal"));
-		/*float steerThreshold = Mathf.Abs (steerAngleforCar * Input.GetAxis ("Horizontal"));
-		print (steerThreshold);
-		if(steerThreshold <	 9 && steerThreshold > 8){
-			MakeSlip(nslipForwardFriction, nslipSidewayFriction);
-		}
-
-		/*if(carSpeed < 50){//mess around with value 100
-			wheelFL.steerAngle = 12 * Input.GetAxis ("Horizontal");
-			wheelFR.steerAngle = 12 * Input.GetAxis ("Horizontal");
-			print(12);
-		} else{
-			wheelFL.steerAngle = 10 * Input.GetAxis ("Horizontal");
-			wheelFR.steerAngle = 10 * Input.GetAxis ("Horizontal");
-			print (10);
-		}*/
-
 
 		//decelerating when oppsite direction button pressed to direction of motion
 		//wheel.rpm and wheel.motortorque
