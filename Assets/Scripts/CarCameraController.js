@@ -9,8 +9,8 @@ Then we smooth it using the Lerp function.
 Then we apply the smoothed values to the transform's position.
 */
 
-// The target we are following
-var target : Transform;
+
+
 // The distance in the x-z plane to the target
 var distance = 10.0;
 // the height we want the camera to be above the target
@@ -19,13 +19,20 @@ var height = 5.0;
 var heightDamping = 2.0;
 var rotationDamping = 3.0;
 
-private var car : GameObject;
+
+
+// The target we are following
+var target : Transform;
 
 private var follow : GameObject;
+
 // This will return the game object named Hand in the scene.
 follow = GameObject.Find("Follow");
+
 target = follow.transform;
 
+
+private var car : GameObject;
 private var speedTextObj : GameObject;
 speedTextObj = GameObject.Find("Car Speed");
 private var speedText : GUIText;
@@ -33,8 +40,6 @@ speedText = speedTextObj.guiText;
 
 car = GameObject.FindGameObjectWithTag("Player");
 
-// Place the script in the Camera-Control group in the component menu
-//@script AddComponentMenu("Camera-Control/Smooth Follow")
 
 
 function LateUpdate () {
