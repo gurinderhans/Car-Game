@@ -4,14 +4,12 @@ using System.Collections;
 public class NetworkManager : MonoBehaviour {
 
 	string reg_game_name = "CarGame_gurinderhans";
-	//bool isRefreshing = false;
 	float refresReqLength = 3.0f;
 	HostData[] hostData;
-	
 
 
 	private void  Awake(){
-		MasterServer.ipAddress = "192.168.0.10";
+		MasterServer.ipAddress = "192.168.0.13";
 		MasterServer.port = 23466;
 	}
 
@@ -27,6 +25,26 @@ public class NetworkManager : MonoBehaviour {
 
 	}
 
+	public IEnumerator RefreshHostList(){
+		Debug.Log ("RefreshHostList");
+		MasterServer.RequestHostList (reg_game_name);//request host list from master server
+		//float timeStarted = Time.time;
+		float timeEnd = Time.time + refresReqLength;
+		
+		while(Time.time < timeEnd){
+			hostData = MasterServer.PollHostList();
+			yield return new WaitForEndOfFrame();
+		}
+		
+		if(hostData == null || hostData.Length == 0){
+			Debug.Log ("No active servers have been found");
+		}
+		
+	}
+
+	/**************************************************************/
+	//Call Backs from the Client and Server
+	/**************************************************************/
 
 	private void StartServer(){
 		Network.InitializeServer (32, 25000, false);
@@ -43,26 +61,6 @@ public class NetworkManager : MonoBehaviour {
 			Debug.Log("Registration Succeeded");
 		}
 	}
-
-	public IEnumerator RefreshHostList(){
-		Debug.Log ("RefreshHostList");
-		MasterServer.RequestHostList (reg_game_name);//request host list from master server
-		//float timeStarted = Time.time;
-		float timeEnd = Time.time + refresReqLength;
-
-		while(Time.time < timeEnd){
-			hostData = MasterServer.PollHostList();
-			yield return new WaitForEndOfFrame();
-		}
-
-		if(hostData == null || hostData.Length == 0){
-			Debug.Log ("No active servers have been found");
-		}
-
-	}
-
-
-	//Call Backs from the Client and Server
 
 	void OnConnectedToServer(){
 		SpawnPlayer();
