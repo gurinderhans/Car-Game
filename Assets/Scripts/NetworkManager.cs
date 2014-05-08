@@ -18,8 +18,6 @@ public class NetworkManager : MonoBehaviour {
 		GameObject myCar = (GameObject) Network.Instantiate (Resources.Load("CHEVROLET_CAMARO_BB"), new Vector3 (0f, 10f, 0f), Quaternion.identity, 0);
 		GameObject myCam = (GameObject) Instantiate(Resources.Load("CarCamera"), new Vector3(0f, 10f, 0f), Quaternion.identity);
 		((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files
-
-		
 		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
 		
 
