@@ -22,7 +22,7 @@ var rotationDamping = 3.0;
 
 
 // The target we are following
-var target : Transform;
+private var target : Transform;
 
 private var follow : GameObject;
 
