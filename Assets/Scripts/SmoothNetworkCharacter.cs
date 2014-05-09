@@ -38,6 +38,7 @@ public class SmoothNetworkCharacter : MonoBehaviour {
 			//update remote player
 			transform.position = Vector3.Lerp(transform.position, correctPlayerPos, Time.deltaTime * this.SmoothingDelay);
 			transform.rotation = Quaternion.Lerp(transform.rotation, correctPlayerRot, Time.deltaTime * this.SmoothingDelay);
+
 		}
 	}
 
