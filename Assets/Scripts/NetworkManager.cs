@@ -8,9 +8,8 @@ public class NetworkManager : MonoBehaviour {
 	HostData[] hostData;
 	string car_choosen;
 	string color_choosen;
-	public Material tess;
 
-		//GUI.Box(new Rect (50f, 100f, 300f, 30f), "Which color do you like");
+	//GUI.Box(new Rect (50f, 100f, 300f, 30f), "Which color do you like");
 
 	/*private void  Awake(){
 		MasterServer.ipAddress = "10.127.127.1";
@@ -23,8 +22,12 @@ public class NetworkManager : MonoBehaviour {
 		GameObject myCam = (GameObject) Instantiate(Resources.Load("CarCamera"), new Vector3(0f, 10f, 0f), Quaternion.identity);
 		((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files
 		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
-	}
 
+		myCar.GetComponent<CarController> ().playerNameText.renderer.enabled = false;//hide the player name locally so it wont
+																				//interrupt gameplay but show on others screen
+		
+	}
+	
 	public IEnumerator RefreshHostList(){
 		Debug.Log ("RefreshHostList");
 		MasterServer.RequestHostList (reg_game_name);//request host list from master server
@@ -134,7 +137,7 @@ public class NetworkManager : MonoBehaviour {
 		} else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "WHITE")){
 			color_choosen = "CHEVROLET_CAMARO_WHITE";
 			isColorChosen = true;
-		} else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "MORE COMING SOON")){
+		} else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "MORE COMING SOON")){//really need better colors, now only white is acceptable :D
 
 		} /*else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "GREY")){
 			car_choosen = "CHEVROLET_CAMARO_GREY";
@@ -156,7 +159,7 @@ public class NetworkManager : MonoBehaviour {
 			// Refresh server list funciton here
 			StartCoroutine("RefreshHostList");
 		}
-
+		
 		if(hostData != null){
 			for(int i = 0; i < hostData.Length; i++){
 				if(GUI.Button(new Rect(Screen.width/2, 65f+(30f*i), 300f, 30f), hostData[i].gameName)){
@@ -165,7 +168,7 @@ public class NetworkManager : MonoBehaviour {
 				}
 			}
 		}
-
+		
 	}
 
 
@@ -183,7 +186,6 @@ public class NetworkManager : MonoBehaviour {
 			GUILayout.Label("Running as a client.");
 		}
 
-
 		if(!isCarChosen){
 			ChooseCar();
 		} else {
@@ -197,7 +199,5 @@ public class NetworkManager : MonoBehaviour {
 				}
 			}
 		}
-
-		print (car_choosen + color_choosen);
 	}
 }
