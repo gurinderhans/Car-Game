@@ -28,7 +28,7 @@ public class CarController : MonoBehaviour {
 	public int maxSpeed;
 
 	//the MAGIC VALUE
-	private float magicValue = 0.03f;//controls the time it takes for car to recover from drift:low->longer, high->faster
+	private float magicValue = 0.05f;//controls the time it takes for car to recover from drift:low->longer, high->faster
 
 	// Use this for initialization
 	void Start () {

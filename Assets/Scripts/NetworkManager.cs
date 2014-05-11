@@ -21,7 +21,6 @@ public class NetworkManager : MonoBehaviour {
 		((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files
 		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
 
-
 		//hide the player name locally so it wont interrupt gameplay but show on others screen
 		myCar.GetComponentInChildren<TextMesh> ().renderer.enabled = false;
 	}

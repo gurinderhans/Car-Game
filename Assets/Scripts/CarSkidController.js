@@ -19,7 +19,7 @@ function Update () {
 	//print(currentSlipValue);
 	frontSlipVal = Mathf.Abs(hit.forwardSlip);
 	//print(currentSlipValue);
-	if (currentSlipValue > 14){
+	if (currentSlipValue > 7){
 		skidSmoke.particleEmitter.emit = true;
 		SkidMesh();
 		//print("SKID");
