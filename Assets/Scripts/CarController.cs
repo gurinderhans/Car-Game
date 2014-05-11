@@ -30,8 +30,6 @@ public class CarController : MonoBehaviour {
 	//the MAGIC VALUE
 	private float magicValue = 0.03f;//controls the time it takes for car to recover from drift:low->longer, high->faster
 
-	public GameObject playerNameText;
-
 	// Use this for initialization
 	void Start () {
 		rigidbody.centerOfMass = new Vector3 (0.0f, -0.9f, 0.0f);
@@ -42,6 +40,7 @@ public class CarController : MonoBehaviour {
 	}
 
 	void Update(){
+
 		//make wheels spin
 		wheelFLTrans.Rotate (0,0,wheelFL.rpm / 60 * 360 * Time.deltaTime);
 		wheelFRTrans.Rotate (0,0,wheelFL.rpm / 60 * 360 * Time.deltaTime);

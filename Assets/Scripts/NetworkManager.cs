@@ -3,14 +3,12 @@ using System.Collections;
 
 public class NetworkManager : MonoBehaviour {
 
-	string reg_game_name = "CarGame_gurinderhans";
-	float refresReqLength = 3.0f;
-	HostData[] hostData;
-	string car_choosen;
-	string color_choosen;
-
-	//GUI.Box(new Rect (50f, 100f, 300f, 30f), "Which color do you like");
-
+	private string reg_game_name = "CarGame_gurinderhans";
+	public float refresReqLength = 3.0f;
+	public HostData[] hostData;
+	private string car_choosen;
+	private string color_choosen;
+	
 	/*private void  Awake(){
 		MasterServer.ipAddress = "10.127.127.1";
 		MasterServer.port = 23466;
@@ -23,9 +21,9 @@ public class NetworkManager : MonoBehaviour {
 		((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files
 		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
 
-		myCar.GetComponent<CarController> ().playerNameText.renderer.enabled = false;//hide the player name locally so it wont
-																				//interrupt gameplay but show on others screen
-		
+
+		//hide the player name locally so it wont interrupt gameplay but show on others screen
+		myCar.GetComponentInChildren<TextMesh> ().renderer.enabled = false;
 	}
 	
 	public IEnumerator RefreshHostList(){
@@ -77,7 +75,7 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	void OnPlayerConnected(NetworkPlayer player){
-		
+		Debug.Log ("Player connected from:" + player.ipAddress + ":" + player.port);
 	}
 
 	void OnPlayerDisconnected(NetworkPlayer player){
@@ -91,7 +89,6 @@ public class NetworkManager : MonoBehaviour {
 	}
 
 	void OnNetworkInstantiate(NetworkMessageInfo info){
-		
 	}
 
 	void OnApplicationQuit(){
@@ -114,19 +111,19 @@ public class NetworkManager : MonoBehaviour {
 			car_choosen = "CHEVROLET_CAMARO/";
 			isCarChosen = true;
 		} else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "DODGE CHALLENGER")){
-			print ("camaro");
+			//print ("camaro");
 		} else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "RANDOM CAR 3")){
-			print("camaro");
+			//print("camaro");
 		} else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "RANDOM CAR 4")){
-			print("camaro");
+			//print("camaro");
 		} else if(GUI.Button( new Rect(50f, 190f, 200f, 30f) , "RANDOM CAR 5")){
-			print("camaro");
+			//print("camaro");
 		}
 	}
 
 	void ChooseColor(){
 		//GUI BOX (l,t,w,h)
-		GUI.Box(new Rect (25f, 25f, 250f, 205f), "CHOOSE YOUR CAR:");
+		GUI.Box(new Rect (25f, 25f, 250f, 205f), "WHICH COLOR DO YOU LIKE:");
 
 		if(GUI.Button( new Rect(50f, 50f, 200f, 30f) , "RED")){
 			color_choosen = "CHEVROLET_CAMARO_RED";
@@ -137,9 +134,11 @@ public class NetworkManager : MonoBehaviour {
 		} else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "WHITE")){
 			color_choosen = "CHEVROLET_CAMARO_WHITE";
 			isColorChosen = true;
-		} else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "MORE COMING SOON")){//really need better colors, now only white is acceptable :D
-
-		} /*else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "GREY")){
+		} else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "YELLOW")){
+			color_choosen = "CHEVROLET_CAMARO_YELLOW";
+			isColorChosen = true;
+		} else if(GUI.Button( new Rect(50f, 190f, 200f, 30f) , "MORE COMING SOON")){}
+		/*else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "GREY")){
 			car_choosen = "CHEVROLET_CAMARO_GREY";
 			isColorChosen = true;
 		} else if(GUI.Button( new Rect(50f, 190f, 200f, 30f) , "YELLOW")){
@@ -148,18 +147,20 @@ public class NetworkManager : MonoBehaviour {
 		}*/
 	}
 
+	private string playerCustomName;
 	void ServerMenu(){
-		if(GUI.Button(new Rect(25f, 25f, 150f, 30f), "Create Server")){
+		//(l,t,w,h)
+		if(GUI.Button(new Rect(25f, 15f, 150f, 30f), "Create Server")){
 			// Start server function here
 			StartServer();
 			isServerStarted = true;
 		}
-		
-		if(GUI.Button(new Rect(25f, 65f, 150f, 30f), "Find Game")){
+
+		if(GUI.Button(new Rect(25f, 55f, 150f, 30f), "Find Game")){
 			// Refresh server list funciton here
 			StartCoroutine("RefreshHostList");
 		}
-		
+
 		if(hostData != null){
 			for(int i = 0; i < hostData.Length; i++){
 				if(GUI.Button(new Rect(Screen.width/2, 65f+(30f*i), 300f, 30f), hostData[i].gameName)){
@@ -178,7 +179,6 @@ public class NetworkManager : MonoBehaviour {
 	private bool isServerStarted;
 
 	public void OnGUI(){
-
 
 		if(Network.isServer){
 			GUILayout.Label("Running as a server.");
