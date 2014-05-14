@@ -17,12 +17,13 @@ public class NetworkManager : MonoBehaviour {
 	private void SpawnPlayer(){
 		Debug.Log ("Spawning Player");
 		GameObject myCar = (GameObject) Network.Instantiate (Resources.Load(car_choosen+color_choosen), new Vector3 (0f, 10f, 0f), Quaternion.identity, 0);
+
 		GameObject myCam = (GameObject) Instantiate(Resources.Load("CarCamera"), new Vector3(0f, 10f, 0f), Quaternion.identity);
 		((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files
 		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
 
 		//hide the player name locally so it wont interrupt gameplay but show on others screen
-		myCar.GetComponentInChildren<TextMesh> ().renderer.enabled = false;
+		myCar.GetComponentInChildren<GUIText> ().enabled = false;
 	}
 	
 	public IEnumerator RefreshHostList(){
@@ -109,7 +110,7 @@ public class NetworkManager : MonoBehaviour {
 		if(GUI.Button( new Rect(50f, 50f, 200f, 30f) , "CHEVROLET CAMARO")){
 			car_choosen = "CHEVROLET_CAMARO/";
 			isCarChosen = true;
-		} else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "DODGE CHALLENGER")){
+		} else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "RANDOM CAR 2")){
 			//print ("camaro");
 		} else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "RANDOM CAR 3")){
 			//print("camaro");
@@ -124,19 +125,19 @@ public class NetworkManager : MonoBehaviour {
 		//GUI BOX (l,t,w,h)
 		GUI.Box(new Rect (25f, 25f, 250f, 205f), "WHICH COLOR DO YOU LIKE:");
 
-		if(GUI.Button( new Rect(50f, 50f, 200f, 30f) , "RED")){
-			color_choosen = "CHEVROLET_CAMARO_RED";
-			isColorChosen = true;
-		} else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "BLUE")){
-			color_choosen = "CHEVROLET_CAMARO_BLUE";
-			isColorChosen = true;
-		} else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "WHITE")){
+		if(GUI.Button( new Rect(50f, 50f, 200f, 30f) , "WHITE")){
 			color_choosen = "CHEVROLET_CAMARO_WHITE";
 			isColorChosen = true;
-		} else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "YELLOW")){
-			color_choosen = "CHEVROLET_CAMARO_YELLOW";
+		} /*else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "YELLOW")){
+			//color_choosen = "CHEVROLET_CAMARO_YELLOW";
+			//isColorChosen = true;
+		}*/ /*else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "RED")){
+			color_choosen = "CHEVROLET_CAMARO_RED";
 			isColorChosen = true;
-		} else if(GUI.Button( new Rect(50f, 190f, 200f, 30f) , "MORE COMING SOON")){}
+		} else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "BLUE")){
+			color_choosen = "CHEVROLET_CAMARO_BLUE";
+			isColorChosen = true;
+		}*/ else if(GUI.Button( new Rect(50f, 85f/*CHANGE*/, 200f, 30f) , "MORE COMING SOON")){}
 		/*else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "GREY")){
 			car_choosen = "CHEVROLET_CAMARO_GREY";
 			isColorChosen = true;
