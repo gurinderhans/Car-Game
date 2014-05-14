@@ -14,7 +14,7 @@ public class ChatControl : MonoBehaviour {
 
 		playerName = GameObject.FindGameObjectWithTag ("playerName").GetComponent<PlayerLabel> ().myName;
 		GUILayout.Space(50);//add space above b/c of name change field
-		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(200), GUILayout.Height(150));
+		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(200), GUILayout.Height(450));
 		foreach(string message in chatMessages){
 			//display the messages
 			GUILayout.Label(message);
@@ -35,6 +35,7 @@ public class ChatControl : MonoBehaviour {
 		}
 
 		GUILayout.EndHorizontal();
+		scrollPosition.y = 100000000000000000;
 	}
 
 	[RPC]

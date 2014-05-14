@@ -9,10 +9,10 @@ public class NetworkManager : MonoBehaviour {
 	private string car_choosen;
 	private string color_choosen;
 	
-	/*private void  Awake(){
-		MasterServer.ipAddress = "10.127.127.1";
+	private void  Awake(){
+		MasterServer.ipAddress = "10.82.32.35";
 		MasterServer.port = 23466;
-	}*/
+	}
 
 	private void SpawnPlayer(){
 		Debug.Log ("Spawning Player");
@@ -20,7 +20,7 @@ public class NetworkManager : MonoBehaviour {
 
 		GameObject myCam = (GameObject) Instantiate(Resources.Load("CarCamera"), new Vector3(0f, 10f, 0f), Quaternion.identity);
 		((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files
-		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
+		myCar.GetComponentInChildren<CarController> ().enabled = true;//for getting .cs files
 
 		//hide the player name locally so it wont interrupt gameplay but show on others screen
 		myCar.GetComponentInChildren<GUIText> ().enabled = false;
