@@ -9,19 +9,19 @@ public class NetworkManager : MonoBehaviour {
 	private string car_choosen;
 	private string color_choosen;
 	
-	private void  Awake(){
+	/*private void  Awake(){
 		MasterServer.ipAddress = "10.82.32.35";
 		MasterServer.port = 23466;
-	}
+	}*/
 
 	private void SpawnPlayer(){
 		Debug.Log ("Spawning Player");
 		GameObject myCar = (GameObject) Network.Instantiate (Resources.Load(car_choosen+color_choosen), new Vector3 (0f, 10f, 0f), Quaternion.identity, 0);
-
+		
 		GameObject myCam = (GameObject) Instantiate(Resources.Load("CarCamera"), new Vector3(0f, 10f, 0f), Quaternion.identity);
 		((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files
-		myCar.GetComponentInChildren<CarController> ().enabled = true;//for getting .cs files
-
+		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
+		
 		//hide the player name locally so it wont interrupt gameplay but show on others screen
 		myCar.GetComponentInChildren<GUIText> ().enabled = false;
 	}
@@ -137,7 +137,7 @@ public class NetworkManager : MonoBehaviour {
 		} else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "BLUE")){
 			color_choosen = "CHEVROLET_CAMARO_BLUE";
 			isColorChosen = true;
-		}*/ else if(GUI.Button( new Rect(50f, 85f/*CHANGE*/, 200f, 30f) , "MORE COMING SOON")){}
+		}*/// else if(GUI.Button( new Rect(50f, 85f/*CHANGE*/, 200f, 30f) , "MORE COMING SOON")){}
 		/*else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "GREY")){
 			car_choosen = "CHEVROLET_CAMARO_GREY";
 			isColorChosen = true;
