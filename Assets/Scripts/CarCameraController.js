@@ -76,7 +76,7 @@ function LateUpdate () {
         
         //car speed
         var veloc : int = car.rigidbody.velocity.magnitude;
-        //veloc = veloc * 2;
+        veloc = veloc * 2;
         var carSpeed = veloc.ToString();
         speedText.text = carSpeed + " km/h";
         //print(carSpeed);

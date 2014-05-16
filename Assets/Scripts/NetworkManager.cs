@@ -8,15 +8,46 @@ public class NetworkManager : MonoBehaviour {
 	public HostData[] hostData;
 	private string car_choosen;
 	private string color_choosen;
+
+	/********************/
+	public Transform spawnOne;
+	public Transform spawnTwo;
+	public Transform spawnThree;
+	public Transform spawnFour;
+	public Transform spawnFive;
+	/*******************/
 	
 	/*private void  Awake(){
 		MasterServer.ipAddress = "10.82.32.35";
 		MasterServer.port = 23466;
 	}*/
 
+	private Vector3 spawnPosition;
+	private Vector3 CalcSpawnPos(){
+		int randomNum = Random.Range (0, 5);
+
+		if(randomNum == 0){
+			spawnPosition = spawnOne.position;
+		} else if(randomNum == 1){
+			spawnPosition = spawnTwo.position;
+		} else if(randomNum == 2){
+			spawnPosition = spawnThree.position;
+		} else if(randomNum == 3){
+			spawnPosition  = spawnFour.position;
+		} else if(randomNum == 4){
+			spawnPosition = spawnFive.position;
+		} else{
+			spawnPosition = Vector3.zero;
+		}
+
+		return spawnPosition;
+	}
+
 	private void SpawnPlayer(){
+
+		Vector3 spawnPos = CalcSpawnPos ();
 		Debug.Log ("Spawning Player");
-		GameObject myCar = (GameObject) Network.Instantiate (Resources.Load(car_choosen+color_choosen), new Vector3 (0f, 10f, 0f), Quaternion.identity, 0);
+		GameObject myCar = (GameObject) Network.Instantiate (Resources.Load(car_choosen+color_choosen), spawnPos, Quaternion.identity, 0);
 		
 		GameObject myCam = (GameObject) Instantiate(Resources.Load("CarCamera"), new Vector3(0f, 10f, 0f), Quaternion.identity);
 		((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files

@@ -68,7 +68,7 @@ public class ChatControl : MonoBehaviour {
 
 
 		GUILayout.Space(Screen.height - (Screen.height - 120));//add space above b/c of name change field
-		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(200), GUILayout.Height(450));
+		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(200), GUILayout.Height(350));
 		foreach(string message in chatMessages){
 			//display the messages
 			GUILayout.Label(message);
