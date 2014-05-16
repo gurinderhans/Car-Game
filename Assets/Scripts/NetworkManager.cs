@@ -110,7 +110,7 @@ public class NetworkManager : MonoBehaviour {
 		if(GUI.Button( new Rect(50f, 50f, 200f, 30f) , "CHEVROLET CAMARO")){
 			car_choosen = "CHEVROLET_CAMARO/";
 			isCarChosen = true;
-		} else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "RANDOM CAR 2")){
+		} /*else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "RANDOM CAR 2")){
 			//print ("camaro");
 		} else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "RANDOM CAR 3")){
 			//print("camaro");
@@ -118,7 +118,7 @@ public class NetworkManager : MonoBehaviour {
 			//print("camaro");
 		} else if(GUI.Button( new Rect(50f, 190f, 200f, 30f) , "RANDOM CAR 5")){
 			//print("camaro");
-		}
+		}*/
 	}
 
 	void ChooseColor(){

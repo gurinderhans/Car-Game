@@ -29,6 +29,8 @@ public class CarController : MonoBehaviour {
 	
 	//the MAGIC VALUE
 	private float magicValue = 0.05f;//controls the time it takes for car to recover from drift:low->longer, high->faster
+
+	public Transform forceDown;
 	
 	/*
 	 * TODO
@@ -194,6 +196,7 @@ public class CarController : MonoBehaviour {
 		} else{
 			int force = 175;
 			rigidbody.AddForce(0,carSpeed*force*-1,0);
+			rigidbody.AddForceAtPosition(new Vector3(0, carSpeed*6,0), forceDown.position);
 			//print (force);
 		}
 	}

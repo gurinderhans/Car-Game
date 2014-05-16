@@ -49,22 +49,60 @@ public class PlayerLabel : MonoBehaviour {
 			}
 		}
 	}
+	public bool playerHasName;
 
-	void OnGUI(){
+	void GivePlayerName(){
 		if(networkView.isMine){
 			myName = GUI.TextField(new Rect(115f, 20.5f, 150f, 22.5f), myName, 25);
-
 			if (Event.current.isKey && Event.current.keyCode == KeyCode.Return || GUI.Button (new Rect (0f, 20.5f, 100f, 22.5f), "Update Name")){
 				networkView.RPC ("changeName", RPCMode.OthersBuffered, new object[]{myName});
+				playerHasName = true;
 			}
+		}
+	}
 
+	void OnGUI(){
+		if(!playerHasName){
+			GivePlayerName();
 		} else{
 			//Debug.Log (Vector3.Distance (camTransform.position, target.position));
 		}
 	}
 
+	public Color labelColor;
+
+	Color CalcNameColor(){
+
+		Color red = Color.red;
+		Color blue = Color.blue;
+		Color green = Color.green;
+		Color cyan = Color.cyan;
+		Color magenta = Color.magenta;
+		int randomNum = Random.Range (0, 5);
+
+		if(randomNum == 0){
+			labelColor = red;
+		} else if(randomNum == 1){
+			labelColor = blue;
+		} else if(randomNum == 2){
+			labelColor = cyan;
+		} else if(randomNum == 3){
+			labelColor = green;
+		} else if(randomNum == 4){
+			labelColor = magenta;
+		} else{
+			labelColor = Color.white;
+		}
+
+		return labelColor;
+
+	}
+
 	[RPC]
 	public void changeName(string pname){
 		this.GetComponent<GUIText> ().text = pname;
+		//change guiText Color
+		Color guiTextColor = CalcNameColor ();
+		this.GetComponent<GUIText> ().color = guiTextColor;
 	}
 }
