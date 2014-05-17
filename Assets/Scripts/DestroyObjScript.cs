@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class DestroyObjScript : MonoBehaviour {
-	public float bulletLifetime = 10;
-	public float skidMarkLifetime = 10;
+	public int bulletLifetime;
+	public int skidMarkLifetime;
 
 	private float timer;
 	
@@ -12,7 +12,9 @@ public class DestroyObjScript : MonoBehaviour {
 			timer += Time.deltaTime;
 			//bullet destroy
 			if(timer > bulletLifetime){
+				networkView.enabled = false;
 				Destroy(gameObject);
+				//Network.Destroy(GetComponent<NetworkView>().viewID);
 			}
 
 			//skidmarks lifetime

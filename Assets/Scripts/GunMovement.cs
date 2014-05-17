@@ -18,7 +18,7 @@ public class GunMovement : MonoBehaviour {
 
 			float cameraX = guncamera.transform.eulerAngles.x;
 			float cameraY = guncamera.transform.eulerAngles.y;
-			print ("CameraX: "+cameraX+" CameraY:"+cameraY);
+			//print ("CameraX: "+cameraX+" CameraY:"+cameraY);
 			Vector3 vectorRotation;
 			vectorRotation.x = cameraX;
 			vectorRotation.y = cameraY;

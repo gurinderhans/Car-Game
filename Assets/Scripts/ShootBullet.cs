@@ -24,12 +24,12 @@ public class ShootBullet : MonoBehaviour {
 			
 			if(Input.GetMouseButton(1)){
 				if(scriptCrossHair.whoIsIt=="Red"){
-					GameObject mySphere=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from_pos.position, transform.rotation);
+					GameObject mySphere=(GameObject) Network.Instantiate(Resources.Load("Bullet"),shoot_bullet_from_pos.position, transform.rotation,0);
 					mySphere.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
 				}
 			}
 			else if(Input.GetMouseButton(0)){
-				GameObject mySphere=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from_pos.position, transform.rotation);
+				GameObject mySphere=(GameObject) Network.Instantiate(Resources.Load("Bullet"),shoot_bullet_from_pos.position, transform.rotation,0);
 				mySphere.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
 			}
 		}

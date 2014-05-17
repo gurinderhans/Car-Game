@@ -65,7 +65,7 @@ public class CrossHair : MonoBehaviour {
 			
 			
 			
-			
+
 			//by Manshant Singh
 			RaycastHit hit;
 			if(Physics.Raycast (target.transform.position, target.transform.TransformDirection(Vector3.forward), out hit)){

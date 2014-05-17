@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CarCameraResize : MonoBehaviour {
+public class DriveCamResize : MonoBehaviour {
 
 	Rect smallScreen=new Rect(0.65f,0.55f,0.30f,0.40f);
 	bool driveMode=true;
@@ -20,4 +20,5 @@ public class CarCameraResize : MonoBehaviour {
 			}
 		}
 	}
+
 }

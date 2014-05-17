@@ -7,12 +7,11 @@ public class GunCameraMovement : MonoBehaviour {
 	public float speed;
 
 	Transform turret;
-	GameObject turretTrans;
 
 
 	public float behindPos;
 	public float upPos;
-	/*[HideInInspector] */public Rect rectShootCam;
+	[HideInInspector] public Rect rectShootCam;
 	Rect rectStored;
 	bool shootMode=false;
 	
@@ -20,8 +19,7 @@ public class GunCameraMovement : MonoBehaviour {
 		rectShootCam = camera.rect;
 		rectStored = camera.rect;
 
-		turretTrans = GameObject.Find ("gun TBS 001C");
-		turret = turretTrans.transform;
+		turret = GameObject.Find ("gun TBS 001C").transform;
 	}
 
 	void LateUpdate(){
