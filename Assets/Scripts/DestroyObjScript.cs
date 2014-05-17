@@ -11,9 +11,9 @@ public class DestroyObjScript : MonoBehaviour {
 		if(Time.timeScale!=0){
 			timer += Time.deltaTime;
 			//bullet destroy
-			/*if(timer > bulletLifetime){
+			if(timer > bulletLifetime){
 				Destroy(gameObject);
-			}*/
+			}
 
 			//skidmarks lifetime
 			if(timer > skidMarkLifetime){

@@ -1,0 +1,106 @@
+fileFormatVersion: 2
+guid: 4f32287736190dc43b70c13cf4748550
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: GUN base
+    100002: //RootNode
+    100004: Horizontal d
+    100006: SC ACU left
+    100008: SC ACU Right
+    100010: SC EXT CElla
+    100012: 'SC external '
+    100014: SC GUN energ
+    100016: SC TIBLIS Pu
+    100018: Vertical Dia
+    400000: GUN base
+    400002: //RootNode
+    400004: Horizontal d
+    400006: SC ACU left
+    400008: SC ACU Right
+    400010: SC EXT CElla
+    400012: 'SC external '
+    400014: SC GUN energ
+    400016: SC TIBLIS Pu
+    400018: Vertical Dia
+    2300000: GUN base
+    2300002: Horizontal d
+    2300004: SC ACU left
+    2300006: SC ACU Right
+    2300008: SC EXT CElla
+    2300010: 'SC external '
+    2300012: SC GUN energ
+    2300014: SC TIBLIS Pu
+    2300016: Vertical Dia
+    3300000: GUN base
+    3300002: Horizontal d
+    3300004: SC ACU left
+    3300006: SC ACU Right
+    3300008: SC EXT CElla
+    3300010: 'SC external '
+    3300012: SC GUN energ
+    3300014: SC TIBLIS Pu
+    3300016: Vertical Dia
+    4300000: GUN base
+    4300002: Horizontal d
+    4300004: 'SC external '
+    4300006: SC EXT CElla
+    4300008: Vertical Dia
+    4300010: SC GUN energ
+    4300012: SC TIBLIS Pu
+    4300014: SC ACU Right
+    4300016: SC ACU left
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .400000006
+    meshCompression: 3
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 1
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

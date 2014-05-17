@@ -49,12 +49,20 @@ public class NetworkManager : MonoBehaviour {
 		Debug.Log ("Spawning Player");
 		GameObject myCar = (GameObject) Network.Instantiate (Resources.Load(car_choosen+color_choosen), spawnPos, Quaternion.identity, 0);
 		
-		GameObject myCam = (GameObject) Instantiate(Resources.Load("CarCamera"), new Vector3(0f, 10f, 0f), Quaternion.identity);
+		GameObject myCam = (GameObject) Instantiate(Resources.Load("DriveCam"), new Vector3(0f, 10f, 0f), Quaternion.identity);
 		((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files
 		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
+		//enable the gun parts of car
+		myCar.GetComponentInChildren<GunMovement> ().enabled = true;
+		myCar.GetComponentInChildren<CrossHair> ().enabled = true;
+		myCar.GetComponentInChildren<ShootBullet> ().enabled = true;
 		
 		//hide the player name locally so it wont interrupt gameplay but show on others screen
 		myCar.GetComponentInChildren<GUIText> ().enabled = false;
+
+		//MSK stuff
+		Instantiate (Resources.Load ("GunCam"), new Vector3 (0f, 10f, 0f), Quaternion.identity);
+
 	}
 	
 	public IEnumerator RefreshHostList(){
