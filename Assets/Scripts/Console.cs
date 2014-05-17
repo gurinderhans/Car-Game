@@ -93,6 +93,8 @@ public class Console : MonoBehaviour
 		}
 		
 		GUILayout.EndScrollView();
+
+		scrollPosition.y = 100000000000000;
 		
 		GUI.contentColor = Color.white;
 		

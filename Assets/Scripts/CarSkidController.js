@@ -69,5 +69,5 @@ function SkidMesh(){
 	markMesh.uv = uvm;
 	filter.mesh = markMesh;
 	mark.renderer.material = skidMaterial;
-	mark.AddComponent(DestroyObjScript);
+	mark.AddComponent("DestroyObjScript");
 }
