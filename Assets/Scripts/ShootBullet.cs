@@ -13,10 +13,14 @@ public class ShootBullet : MonoBehaviour {
 
 	public bool iGetPoint;
 
+	//public CrossHair scriptCrossHair;
+
 	//public GameObject myCar;
 	
 	void Start(){
 		turret=GameObject.Find("gun TBS 001C");
+
+		//CrossHair scriptCrossHair=this.GetComponent<CrossHair>();//dont need to update this every from
 	}
 	
 	void Update () {
@@ -24,13 +28,11 @@ public class ShootBullet : MonoBehaviour {
 			transform.rotation=turret.transform.rotation;
 			transform.position=turret.transform.position;
 			
-			CrossHair scriptCrossHair=this.GetComponent<CrossHair>();
-			
 			if(Input.GetMouseButton(1)){
-				if(scriptCrossHair.whoIsIt=="Red"){
+				/*if(scriptCrossHair.whoIsIt=="Player"){
 					//GameObject myBullet=(GameObject) Network.Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation,0);
 					//myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
-				}
+				}*/
 			} else if(Input.GetMouseButtonDown(0)){
 				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
 				myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);

@@ -108,14 +108,18 @@ public class CrossHair : MonoBehaviour {
 			if(whoIsIt=="Green"){
 				verticalT.normal.background = greenTexture;
 				horizontalT.normal.background = greenTexture;
-			}else if(whoIsIt=="Red"){
+			} else if(whoIsIt=="Player"){
 				verticalT.normal.background = redTexture;
 				horizontalT.normal.background = redTexture;
+				rotSpeed = 60f;
 			}
 			else{
 				verticalT.normal.background = verticalTexture;
 				horizontalT.normal.background = horizontalTexture;
+				rotSpeed = 0f;
+				rotAngle = Mathf.Lerp(rotAngle, 0f, Time.deltaTime * 5f);
 			}
+
 			spread = Mathf.Clamp(spread, minSpread, maxSpread);
 			myspread = Mathf.Clamp(myspread, myminSpread, mymaxSpread);
 			Vector2 pivot = new Vector2(Screen.width/2, Screen.height/2);
