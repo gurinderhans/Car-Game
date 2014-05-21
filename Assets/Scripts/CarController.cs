@@ -29,8 +29,15 @@ public class CarController : MonoBehaviour {
 	
 	//the MAGIC VALUE
 	private float magicValue = 0.05f;//controls the time it takes for car to recover from drift:low->longer, high->faster
-
+	
 	public Transform forceUp;
+	
+	public float rotateAmount;
+	public Transform carBody;
+	
+	//Cheats On Car by MSK
+	float torqueMultiplier=1;
+	public GameObject allScripts;
 	
 	/*
 	 * TODO
@@ -45,6 +52,10 @@ public class CarController : MonoBehaviour {
 		//print(rigidbody.centerOfMass);
 		slipForwardFriction = 0.05f;
 		slipSidewayFriction = 0.018f;
+		
+		
+		//For Cheats
+		allScripts = GameObject.Find ("_SCRIPTS");
 		
 	}
 	
@@ -63,6 +74,23 @@ public class CarController : MonoBehaviour {
 		//print (rigidbody.velocity.magnitude);
 	}
 	
+	void CheatsControl(){
+		//cheats in Use
+		AllCheats cheats = allScripts.GetComponent<AllCheats>();
+		if(Input.GetKeyDown(KeyCode.LeftShift)&&cheats.nitroAllowed){
+			maxSpeed*=4;
+			torqueMultiplier=4;
+		}
+		
+		if(Input.GetKeyUp(KeyCode.LeftShift)&&cheats.nitroAllowed){
+			maxSpeed/=4;
+			torqueMultiplier=1;
+		}
+		
+		if(Input.GetKeyDown(KeyCode.E)&&cheats.jumpAllowed){
+			rigidbody.AddForce(Vector3.up*1000000);
+		}
+	}
 	
 	void WheelPosition(){
 		RaycastHit hit;
@@ -193,7 +221,7 @@ public class CarController : MonoBehaviour {
 			//hit.point is the point the raycast is hitting
 			rigidbody.AddForce(0,carSpeed*1000*-1,0);
 			//print ("1000");
-		} else{
+		} else{//car is in air
 			int force = 175;
 			rigidbody.AddForce(0,carSpeed*force*-1,0);
 			rigidbody.AddForceAtPosition(new Vector3(0, carSpeed*6,0), forceUp.position);
@@ -201,6 +229,27 @@ public class CarController : MonoBehaviour {
 		}
 	}
 	
+	public bool jumped;
+	public float jumpTimer;
+	void SingleJump(){
+		if(!jumped){
+			jumpTimer = 0f;
+			if(Input.GetKeyDown(KeyCode.E)){
+				//print (canJumpTimer);
+				rigidbody.AddForce(Vector3.up*1000000);
+				jumped = true;
+			}
+		}
+		
+		if(jumped){
+			jumpTimer += Time.deltaTime;
+			print (jumpTimer);
+			if(jumpTimer > 10f){
+				jumped = false;
+			}
+			//jumped = false;
+		}
+	}
 	//is called multiple times per frame ;)
 	void FixedUpdate(){
 		//if(Drift()){ slow down car -> add very little opposing force to slow it down}
@@ -208,6 +257,9 @@ public class CarController : MonoBehaviour {
 		Drift ();
 		WheelPosition ();
 		CalcDownForceOnCar ();
+		CheatsControl ();//call the cheats control function
+		SingleJump ();//for the single car jump
+		
 		
 		//check for car moving if no key pressed start slowing down
 		//this is also for brakes
@@ -218,7 +270,7 @@ public class CarController : MonoBehaviour {
 		int carSpeed = (int) rigidbody.velocity.magnitude;
 		//print (carSpeed);
 		if(carSpeed < maxSpeed){
-			maxTorque = 30f;
+			maxTorque = 30f * torqueMultiplier;
 			wheelRL.motorTorque = maxTorque * Input.GetAxis ("Vertical");
 			wheelRR.motorTorque = maxTorque * Input.GetAxis ("Vertical");
 		} else{
@@ -243,13 +295,31 @@ public class CarController : MonoBehaviour {
 		wheelFL.steerAngle = steerAngleforCar * Input.GetAxis ("Horizontal");
 		wheelFR.steerAngle = steerAngleforCar * Input.GetAxis ("Horizontal");
 		
+		//transform.rotation = Quaternion.identity; <- look at this later on
+		if(carSpeed != 0){
+			if(wheelFL.steerAngle > 0){//make this for slow speeds and increase 0.25 to about 0.35 for speeds larger thatn 70-80
+				float angle = wheelFL.steerAngle * -(Time.deltaTime + 0.1f);
+				//print(angle + ">0");
+				carBody.localEulerAngles = new Vector3 (angle, carBody.localEulerAngles.y, carBody.localEulerAngles.z);
+			} else if(wheelFL.steerAngle < 0){
+				float angle = wheelFL.steerAngle * -(Time.deltaTime + 0.1f);
+				//print (angle + "<0");
+				carBody.localEulerAngles = new Vector3 (angle, carBody.localEulerAngles.y, carBody.localEulerAngles.z);
+			} else{
+				carBody.localEulerAngles = Vector3.zero;
+			}
+		} else{
+			carBody.localEulerAngles = Vector3.zero;
+		}
+		//print (carBody.localEulerAngles);
+		
 		//decelerating when oppsite direction button pressed to direction of motion
 		//wheel.rpm and wheel.motortorque
 		//print (wheelRR.motorTorque);
 		
 		if(wheelRR.rpm > 0 && wheelRR.motorTorque < 0  ||  wheelRR.rpm < 0 && wheelRR.motorTorque > 0){
 			//if car is moving forward but has negative torque getting applied to it && other way -> slow the car down
-			maxTorque = 35.0f;//make 35 later
+			maxTorque = 35.0f  * torqueMultiplier;
 			wheelRL.motorTorque = maxTorque * Input.GetAxis ("Vertical");
 			wheelRR.motorTorque = maxTorque * Input.GetAxis ("Vertical");
 		}
@@ -258,7 +328,7 @@ public class CarController : MonoBehaviour {
 		if(wheelRR.rpm != 0){
 			if (wheelRR.rpm < 0 && wheelRR.motorTorque < 0){
 				if(carSpeed < 30){
-					maxTorque = 25.0f;
+					maxTorque = 25.0f * torqueMultiplier;
 					wheelRL.motorTorque = maxTorque * Input.GetAxis ("Vertical");
 					wheelRR.motorTorque = maxTorque * Input.GetAxis ("Vertical");
 				} else{

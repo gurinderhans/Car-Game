@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NetworkGunMovement : MonoBehaviour {
+public class BulletCollisionDetection : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

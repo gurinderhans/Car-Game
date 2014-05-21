@@ -10,7 +10,7 @@ public class ChatControl : MonoBehaviour {
 	public Vector2 scrollPosition;
 	public string playerName;
 	public bool showChatTextField;
-
+	
 	void Start(){
 		//chatMessages.Add ("Welcome to the Multiplayer Car-Game!");
 	}
@@ -30,43 +30,37 @@ public class ChatControl : MonoBehaviour {
 		
 		GUILayout.EndHorizontal();
 	}
-
+	
 	public bool playerNameCheck;
 	void Update(){
 		playerNameCheck = GameObject.FindGameObjectWithTag ("playerName").GetComponent<PlayerLabel> ().playerHasName;
 	}
-
+	
 	public void OnGUI(){
 		playerName = GameObject.FindGameObjectWithTag ("playerName").GetComponent<PlayerLabel> ().myName;
-
-
-		if(playerNameCheck){
+		
+		if(Time.timeScale != 0){
 			
-			if(Event.current.keyCode == KeyCode.BackQuote)
-				showChatTextField = true;
-			
-			if(Event.current.keyCode == KeyCode.Escape)
-				showChatTextField = false;
-			
-			if(showChatTextField){
-				Rect windowRect = new Rect(0,Screen.height - 50,270,70);
-				windowRect = GUI.Window(1, windowRect, windowFunc, "Chat");
+			if(playerNameCheck){
+				//player chat will have to go before the next class build so this whole thing will have to removed :(
+				
+				if(Event.current.keyCode == KeyCode.BackQuote)
+					showChatTextField = true;
+				
+				if(Event.current.keyCode == KeyCode.Escape)
+					showChatTextField = false;
+				
+				if(showChatTextField){
+					Rect windowRect = new Rect(0,Screen.height - 50,270,70);
+					windowRect = GUI.Window(1, windowRect, windowFunc, "Chat");
+				}
+				
 			}
-
+			
 		}
-
-		/*if(Event.current.keyCode == KeyCode.BackQuote)
-			showChatTextField = true;
 		
-		if(Event.current.keyCode == KeyCode.Escape)
-			showChatTextField = false;
-		
-		if(showChatTextField){
-			Rect windowRect = new Rect(0,Screen.height - 50,270,70);
-			windowRect = GUI.Window(1, windowRect, windowFunc, "Chat");
-		}*/
-
-
+		//even for now and later on we dont want to hide display messages on game pasue b/c that will show game status and a whole lot of other thigns
+		//so keep this outside
 		GUILayout.Space(Screen.height - (Screen.height - 120));//add space above b/c of name change field
 		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(200), GUILayout.Height(350));
 		foreach(string message in chatMessages){
@@ -74,7 +68,7 @@ public class ChatControl : MonoBehaviour {
 			GUILayout.Label(message);
 		}
 		GUILayout.EndScrollView ();
-
+		
 		scrollPosition.y = 100000000000000000;//hopefully this never ends
 	}
 	
