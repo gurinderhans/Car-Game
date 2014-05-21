@@ -44,6 +44,9 @@ public class ShootBullet : MonoBehaviour {
 	[RPC]
 	void PlayerFire(){
 		RaycastHit hit;
+		//need shoot_bullet_from transform because gun position isnt same as crosshair position on screen
+		//also still need to change shoot_bullet_from position little more up so it falls very close tot crosshair pos
+
 		if(Physics.Raycast(shoot_bullet_from.position, transform.forward, out hit, 300)){//make ray length larger
 			//hit.transform.gameObject.tag;
 			//string objHit = hit.transform.gameObject.tag;

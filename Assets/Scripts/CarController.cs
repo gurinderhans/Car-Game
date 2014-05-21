@@ -243,7 +243,7 @@ public class CarController : MonoBehaviour {
 		
 		if(jumped){
 			jumpTimer += Time.deltaTime;
-			print (jumpTimer);
+			//print (jumpTimer);
 			if(jumpTimer > 10f){
 				jumped = false;
 			}
@@ -257,24 +257,24 @@ public class CarController : MonoBehaviour {
 		if(carSpeed != 0){
 			if(wheelFL.steerAngle > 0){//make this for slow speeds and increase 0.25 to about 0.35 for speeds larger thatn 70-80
 				float angle = wheelFL.steerAngle * -(Time.deltaTime + 0.1f);
-				//print(angle + ">0");
-				carBody.localEulerAngles = new Vector3 (angle, carBody.localEulerAngles.y, carBody.localEulerAngles.z);
+				carBody.localRotation = Quaternion.Slerp(carBody.localRotation, Quaternion.Euler(angle, 0f, 0f), Time.deltaTime * 10f);
 			} else if(wheelFL.steerAngle < 0){
 				float angle = wheelFL.steerAngle * -(Time.deltaTime + 0.1f);
-				//print (angle + "<0");
-				carBody.localEulerAngles = new Vector3 (angle, carBody.localEulerAngles.y, carBody.localEulerAngles.z);
+				carBody.localRotation = Quaternion.Slerp(carBody.localRotation, Quaternion.Euler(angle, 0f, 0f), Time.deltaTime * 10f);
 			} else{
-				carBody.localEulerAngles = Vector3.zero;
+				carBody.localRotation = Quaternion.Slerp(carBody.localRotation, Quaternion.identity, Time.deltaTime * 5f);
 			}
 		} else{
-			carBody.localEulerAngles = Vector3.zero;
+			carBody.localRotation = Quaternion.Slerp(carBody.localRotation, Quaternion.identity, Time.deltaTime);
 		}
-		print (carBody.localEulerAngles);
+		///print (carBody.rotation);
 	}
 	//is called multiple times per frame ;)
 	void FixedUpdate(){
 		//if(Drift()){ slow down car -> add very little opposing force to slow it down}
 		//if car currently drifting and only Input.GetAxis("Vertical") is pressed then speed it to make it go forward
+
+		//all functions for car
 		Drift ();
 		WheelPosition ();
 		CalcDownForceOnCar ();
@@ -282,10 +282,8 @@ public class CarController : MonoBehaviour {
 		SingleJump ();//for the single car jump
 		CarBodyMove ();
 		
-		//check for car moving if no key pressed start slowing down
-		//this is also for brakes
-		
-		
+
+
 		//max speed
 		//int carSpeed = (int) Mathf.Abs(2 * Mathf.PI * wheelRR.radius * wheelRR.rpm * 60 / 1000);
 		int carSpeed = (int) rigidbody.velocity.magnitude;
