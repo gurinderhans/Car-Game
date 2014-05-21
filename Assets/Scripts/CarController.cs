@@ -250,6 +250,27 @@ public class CarController : MonoBehaviour {
 			//jumped = false;
 		}
 	}
+
+	void CarBodyMove(){
+		int carSpeed = (int) rigidbody.velocity.magnitude;
+		//transform.rotation = Quaternion.identity; <- look at this later on
+		if(carSpeed != 0){
+			if(wheelFL.steerAngle > 0){//make this for slow speeds and increase 0.25 to about 0.35 for speeds larger thatn 70-80
+				float angle = wheelFL.steerAngle * -(Time.deltaTime + 0.1f);
+				//print(angle + ">0");
+				carBody.localEulerAngles = new Vector3 (angle, carBody.localEulerAngles.y, carBody.localEulerAngles.z);
+			} else if(wheelFL.steerAngle < 0){
+				float angle = wheelFL.steerAngle * -(Time.deltaTime + 0.1f);
+				//print (angle + "<0");
+				carBody.localEulerAngles = new Vector3 (angle, carBody.localEulerAngles.y, carBody.localEulerAngles.z);
+			} else{
+				carBody.localEulerAngles = Vector3.zero;
+			}
+		} else{
+			carBody.localEulerAngles = Vector3.zero;
+		}
+		print (carBody.localEulerAngles);
+	}
 	//is called multiple times per frame ;)
 	void FixedUpdate(){
 		//if(Drift()){ slow down car -> add very little opposing force to slow it down}
@@ -259,7 +280,7 @@ public class CarController : MonoBehaviour {
 		CalcDownForceOnCar ();
 		CheatsControl ();//call the cheats control function
 		SingleJump ();//for the single car jump
-		
+		CarBodyMove ();
 		
 		//check for car moving if no key pressed start slowing down
 		//this is also for brakes
@@ -295,23 +316,7 @@ public class CarController : MonoBehaviour {
 		wheelFL.steerAngle = steerAngleforCar * Input.GetAxis ("Horizontal");
 		wheelFR.steerAngle = steerAngleforCar * Input.GetAxis ("Horizontal");
 		
-		//transform.rotation = Quaternion.identity; <- look at this later on
-		if(carSpeed != 0){
-			if(wheelFL.steerAngle > 0){//make this for slow speeds and increase 0.25 to about 0.35 for speeds larger thatn 70-80
-				float angle = wheelFL.steerAngle * -(Time.deltaTime + 0.1f);
-				//print(angle + ">0");
-				carBody.localEulerAngles = new Vector3 (angle, carBody.localEulerAngles.y, carBody.localEulerAngles.z);
-			} else if(wheelFL.steerAngle < 0){
-				float angle = wheelFL.steerAngle * -(Time.deltaTime + 0.1f);
-				//print (angle + "<0");
-				carBody.localEulerAngles = new Vector3 (angle, carBody.localEulerAngles.y, carBody.localEulerAngles.z);
-			} else{
-				carBody.localEulerAngles = Vector3.zero;
-			}
-		} else{
-			carBody.localEulerAngles = Vector3.zero;
-		}
-		//print (carBody.localEulerAngles);
+
 		
 		//decelerating when oppsite direction button pressed to direction of motion
 		//wheel.rpm and wheel.motortorque

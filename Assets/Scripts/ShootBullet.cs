@@ -31,9 +31,9 @@ public class ShootBullet : MonoBehaviour {
 					//GameObject myBullet=(GameObject) Network.Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation,0);
 					//myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
 				}
-			} else if(Input.GetMouseButton(0)){
-				//GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
-				//myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
+			} else if(Input.GetMouseButtonDown(0)){
+				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
+				myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
 				networkView.RPC ("PlayerFire", RPCMode.All);
 			}
 			Debug.DrawRay(shoot_bullet_from.position, transform.forward*100);
