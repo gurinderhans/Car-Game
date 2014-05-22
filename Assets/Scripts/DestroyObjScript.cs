@@ -21,7 +21,7 @@ public class DestroyObjScript : MonoBehaviour {
 
 			//skidmarks lifetime
 			if(timer > skidMarkLifetime){
-				Destroy(gameObject);
+				//Destroy(gameObject);
 			}
 		}
 	}

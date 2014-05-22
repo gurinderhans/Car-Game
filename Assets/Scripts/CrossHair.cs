@@ -26,30 +26,24 @@ public class CrossHair : MonoBehaviour {
 	public float rotSpeed = 0.0f;
 	
 	//by Manshant Singh
-	Transform target;
-	GameObject shootCamera,targetTrans;
 	[HideInInspector] public string whoIsIt;
 	public Texture2D redTexture;
 	public Texture2D greenTexture;
 	Rect rectShootCamera;
 	bool modeFS;
+	public Transform shoot_bullet_from;
 	
 	[HideInInspector] public Texture2D temp;
 	[HideInInspector] public float spread,myspread;
 	
-	void Start ()
-	{
+	void Start () {
 		crosshairPreset = preset.none;
 		whoIsIt = null;
-		//shootCamera = GameObject.Find ("ShootCamera");
-		targetTrans = GameObject.Find ("gun TBS 001C");
-		target = targetTrans.transform;
 		
 	}
 	
 	void Update(){
 		//from the other Camera -MSK
-		//cameraMovement scriptShootCamera = shootCamera.gameObject.GetComponent<cameraMovement>();
 		//Rect OriCamShoot = scriptShootCamera.rectShootCam;
 		Rect OriCamShoot = new Rect (0.65f, 0.55f, 0.4f, 0.3f);
 		rectShootCamera = new Rect (Screen.width*OriCamShoot.x, Screen.height*OriCamShoot.y, Screen.width*OriCamShoot.width, Screen.height*OriCamShoot.height);
@@ -68,8 +62,8 @@ public class CrossHair : MonoBehaviour {
 
 			//by Manshant Singh
 			RaycastHit hit;
-			Debug.DrawRay(target.transform.position, transform.forward * 1000);
-			if(Physics.Raycast (target.transform.position, target.transform.TransformDirection(Vector3.forward), out hit)){
+			Debug.DrawRay(shoot_bullet_from.transform.position, transform.forward * this.GetComponent<ShootBullet>().shootLength);
+			if(Physics.Raycast(shoot_bullet_from.position, transform.forward, out hit, this.GetComponent<ShootBullet>().shootLength)){
 				whoIsIt=hit.transform.gameObject.tag;
 			}
 			else
@@ -111,13 +105,22 @@ public class CrossHair : MonoBehaviour {
 			} else if(whoIsIt=="Player"){
 				verticalT.normal.background = redTexture;
 				horizontalT.normal.background = redTexture;
-				rotSpeed = 60f;
 			}
 			else{
 				verticalT.normal.background = verticalTexture;
 				horizontalT.normal.background = horizontalTexture;
 				rotSpeed = 0f;
-				rotAngle = Mathf.Lerp(rotAngle, 0f, Time.deltaTime * 5f);
+				rotAngle = Mathf.Lerp(rotAngle, 0f, Time.deltaTime * 3f);
+			}
+
+			//print (this.GetComponent<ShootBullet>().smartFire);
+			//we want cross hair to rotate only on smart hit
+			if(this.GetComponent<ShootBullet>().smartFire){
+				rotSpeed = 0f;
+				rotAngle = Mathf.Lerp(rotAngle, 135f, Time.deltaTime * 3f);
+			} else{
+				rotSpeed = 0f;
+				rotAngle = Mathf.Lerp(rotAngle, 0f, Time.deltaTime * 3f);
 			}
 
 			spread = Mathf.Clamp(spread, minSpread, maxSpread);

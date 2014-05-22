@@ -18,8 +18,6 @@ public class PlayerLabel : MonoBehaviour {
 	public string myName;
 	
 	void Start (){
-		//cameraToUse = GameObject.FindGameObjectWithTag("PlayerLabelCam").camera;
-
 		thisTransform = transform;
 		if (useMainCamera){
 			cam = Camera.main;

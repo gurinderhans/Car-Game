@@ -8,6 +8,8 @@ public class GunCameraMovement : MonoBehaviour {
 
 	Transform turret;
 
+	//Camera guncam;
+	public Camera driveCam;
 
 	public float behindPos;
 	public float upPos;
@@ -16,6 +18,10 @@ public class GunCameraMovement : MonoBehaviour {
 	bool shootMode=false;
 	
 	void Start(){
+		/*set the cameras*/
+		//guncam = GameObject.FindGameObjectWithTag ("GunCam").camera;
+		driveCam = GameObject.FindGameObjectWithTag ("MainCamera").camera;
+
 		rectShootCam = camera.rect;
 		rectStored = camera.rect;
 
@@ -44,12 +50,17 @@ public class GunCameraMovement : MonoBehaviour {
 				if(!shootMode){
 					camera.rect = new Rect(0,0,Screen.width,Screen.height);
 					shootMode = true;
+					//GameObject.FindGameObjectWithTag("MainCamera").camera.GetComponent<GUILayer>().enabled = false;
 				}
 				else{
 					camera.rect = rectStored;
-					camera.depth+=2;
+					camera.depth += 2;
 					shootMode = false;
-					print("Shoot Camera's depth is "+ camera.depth);
+					print ("shoot mode is false");
+					driveCam.GetComponent<GUILayer>().enabled = true;
+					this.GetComponent<GUILayer>().enabled = false;
+					//guncam.GetComponent<GUILayer>().enabled = false;
+					//print("Shoot Camera's depth is "+ camera.depth);
 				}
 			}
 			

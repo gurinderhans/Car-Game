@@ -28,7 +28,6 @@ public class GunMovement : MonoBehaviour {
 			//transform.rotation = Quaternion.Slerp (transform.rotation, targetRotation, speed);
 			transform.rotation = targetRotation;
 
-
 		}
 	}
 
