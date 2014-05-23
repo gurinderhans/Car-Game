@@ -31,14 +31,14 @@ follow = GameObject.Find("Follow");
 
 target = follow.transform;
 
-
+/*
 private var car : GameObject;
 private var speedTextObj : GameObject;
 speedTextObj = GameObject.Find("Car Speed");
 private var speedText : GUIText;
 speedText = speedTextObj.guiText;
 
-car = GameObject.FindGameObjectWithTag("Player");
+car = GameObject.FindGameObjectWithTag("Player");*/
 
 
 
@@ -75,9 +75,9 @@ function LateUpdate () {
         transform.LookAt (target);
         
         //car speed
-        var veloc : int = car.rigidbody.velocity.magnitude;
+        /*var veloc : int = car.rigidbody.velocity.magnitude;
         veloc = veloc * 2;
         var carSpeed = veloc.ToString();
-        speedText.text = carSpeed + " km/h";
+        speedText.text = carSpeed + " km/h";*/
         //print(carSpeed);
 }

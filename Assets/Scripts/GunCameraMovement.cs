@@ -58,7 +58,7 @@ public class GunCameraMovement : MonoBehaviour {
 					shootMode = false;
 					print ("shoot mode is false");
 					driveCam.GetComponent<GUILayer>().enabled = true;
-					this.GetComponent<GUILayer>().enabled = false;
+					//this.GetComponent<GUILayer>().enabled = false;
 					//guncam.GetComponent<GUILayer>().enabled = false;
 					//print("Shoot Camera's depth is "+ camera.depth);
 				}

@@ -8,6 +8,7 @@ private var skidmarks : Skidmarks = null;//To hold the skidmarks object
 private var lastSkidmark : int = -1;//To hold last skidmarks data
 private var wheel_col : WheelCollider;//To hold self wheel collider
 
+var newSkidPoint : GameObject;
 
 var skidSmoke: GameObject;
 var smokeDepth : float = 0.4;
@@ -35,23 +36,35 @@ function FixedUpdate () //This has to be in fixed update or it wont get time to 
 	var GroundHit : WheelHit; //variable to store hit data
 	wheel_col.GetGroundHit( GroundHit );//store hit data into GroundHit
 	var wheelSlipAmount = Mathf.Abs( GroundHit.sidewaysSlip );
-
-	if ( wheelSlipAmount > startSlipValue ) //if sideways slip is more than desired value
-	{
-	
-	skidSmoke.particleEmitter.emit = true;
+	var forwardSlip = Mathf.Abs(GroundHit.forwardSlip);
 	
 	/*Calculate skid point:
 	Since the body moves very fast, the skidmarks would appear away from the wheels because by the time the
 	skidmarks are made the body would have moved forward. So we multiply the rigidbody's velocity vector x 2 
 	to get the correct position
 	*/
-
+	
 	var skidPoint : Vector3 = GroundHit.point + 2*(skidCaller.rigidbody.velocity) * Time.deltaTime;
+	
+	if ( wheelSlipAmount > startSlipValue ) //if sideways slip is more than desired value
+	{
+	
+	skidSmoke.particleEmitter.emit = true;
+	
+	
+
+	//Add skidmark at the point using AddSkidMark function of the Skidmarks object
+	//Syntax: AddSkidMark(Point, Normal, Intensity(max value 1), Last Skidmark index);
+	lastSkidmark = skidmarks.AddSkidMark(skidPoint, GroundHit.normal, wheelSlipAmount/25, lastSkidmark);
+	
+	} else if(forwardSlip > 2){
+	
+	//var skidPoint : Vector3 = GroundHit.point + 2*(skidCaller.rigidbody.velocity) * Time.deltaTime;
 	
 	//Add skidmark at the point using AddSkidMark function of the Skidmarks object
 	//Syntax: AddSkidMark(Point, Normal, Intensity(max value 1), Last Skidmark index);
-	lastSkidmark = skidmarks.AddSkidMark(skidPoint, GroundHit.normal, wheelSlipAmount/25, lastSkidmark);	
+	lastSkidmark = skidmarks.AddSkidMark(skidPoint, GroundHit.normal, wheelSlipAmount*10/*Set intensity to high for forward slip*/, lastSkidmark);	
+	
 	}
 	else
 	{

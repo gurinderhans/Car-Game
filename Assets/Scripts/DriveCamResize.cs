@@ -24,7 +24,7 @@ public class DriveCamResize : MonoBehaviour {
 				print ("shoot mode is true");
 
 				//driveCam.GetComponent<GUILayer>().enabled = false;
-				guncam.GetComponent<GUILayer>().enabled = true;
+				//guncam.GetComponent<GUILayer>().enabled = true;
 				this.GetComponent<GUILayer>().enabled = false;
 
 				driveMode=false;

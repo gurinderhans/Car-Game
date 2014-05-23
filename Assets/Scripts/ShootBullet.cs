@@ -15,8 +15,12 @@ public class ShootBullet : MonoBehaviour {
 
 	public float shootLength;
 
+	GUIText updateToPlayer;
+
 
 	void Start(){
+		updateToPlayer = GameObject.FindGameObjectWithTag ("playerUpdates").guiText;
+
 		turret=GameObject.Find("gun TBS 001C");
 	}
 
@@ -55,14 +59,16 @@ public class ShootBullet : MonoBehaviour {
 			//hit.transform.gameObject.tag;
 			//string objHit = hit.transform.gameObject.tag;
 			//print (objHit);
-			
+			//updateToPlayer.text = "test";
 			//print (hit.point);
 			//print (hit.transform.name);
 			if(hit.transform.gameObject.tag == "Player"){
 				smartFire = true;
+				//well do a big bullet here or somehting
+				//instantiating multiple bullets wrecks the whole animation with the crosshair rotating
 
-				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
-				myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
+				//GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
+				//myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
 
 
 				//print(hit.transform.GetComponent<Health>().health);
@@ -71,6 +77,11 @@ public class ShootBullet : MonoBehaviour {
 				if(hit.transform.gameObject.GetComponent<Health>().health < 30){//this isnt quick enough, need another method for chekcing if we have killed another player
 					//usually the last health update we get is 20 so we kinda have to assume player has died when health goes below 30 on our side
 					//print ("Killed other player");
+					updateToPlayer.text = "Killed " + hit.transform.gameObject.GetComponentInChildren<GUIText>().text;
+
+					//right now on other player we will get a null refernce error beacuse we are updating it from our side but not on others even though 
+					//its the same guiText we are changing so to fix this we can instantiate the GUIText object callled PlayerUpdates
+
 					iGetPoint = true;
 				}
 			} else{
@@ -79,7 +90,8 @@ public class ShootBullet : MonoBehaviour {
 			
 			if(iGetPoint){//not very fast either but for now its good as well
 				iGetPoint = false;
-				myPoints += 10f;//add 10 points for each kill
+				myPoints += 5f;//add 5 points for each kill kinda~~
+				//updateToPlayer.text = "test";
 				print (myPoints);
 			}
 			
@@ -111,13 +123,14 @@ public class ShootBullet : MonoBehaviour {
 				if(hit.transform.gameObject.GetComponent<Health>().health < 30){//this isnt quick enough, need another method for chekcing if we have killed another player
 					//usually the last health update we get is 20 so we kinda have to assume player has died when health goes below 30 on our side
 					//print ("Killed other player");
+					updateToPlayer.text = "Killed " + hit.transform.gameObject.GetComponentInChildren<GUIText>().text;
 					iGetPoint = true;
 				}
 			}
 
 			if(iGetPoint){//not very fast either but for now its good as well
 				iGetPoint = false;
-				myPoints += 10f;//add 10 points for each kill
+				myPoints += 5f;//add 5 points for each kill kinda~~
 				print (myPoints);
 			}
 

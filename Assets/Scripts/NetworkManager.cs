@@ -53,16 +53,17 @@ public class NetworkManager : MonoBehaviour {
 		((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files
 		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
 		myCar.GetComponent<Health> ().enabled = true;
+
 		//enable the gun parts of car
-		myCar.GetComponentInChildren<GunMovement> ().enabled = true;
+		/*myCar.GetComponentInChildren<GunMovement> ().enabled = true;
 		myCar.GetComponentInChildren<CrossHair> ().enabled = true;
-		myCar.GetComponentInChildren<ShootBullet> ().enabled = true;
+		myCar.GetComponentInChildren<ShootBullet> ().enabled = true;*/
 
 		//keep this in case unity gives problem and gives you ability to control other players guns
-		/*GameObject myGun = (GameObject) myCar.transform.FindChild ("gun TBS 001C").gameObject;
+		GameObject myGun = (GameObject) myCar.transform.FindChild ("gun TBS 001C").gameObject;
 		myGun.GetComponent<GunMovement> ().enabled = true;
 		myGun.GetComponent<CrossHair> ().enabled = true;
-		myGun.GetComponent<ShootBullet> ().enabled = true;*/
+		myGun.GetComponent<ShootBullet> ().enabled = true;
 		
 		//hide the player name locally so it wont interrupt gameplay but show on others screen
 		myCar.GetComponentInChildren<GUIText> ().enabled = false;

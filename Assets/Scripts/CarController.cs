@@ -15,11 +15,11 @@ public class CarController : MonoBehaviour {
 	public Transform wheelRRTrans;//rear right
 	
 	//Skidding variables
-	private float slipSidewayFriction;
-	private float slipForwardFriction;
+	float slipSidewayFriction;
+	float slipForwardFriction;
 	
 	//torque
-	private float maxTorque;
+	float maxTorque;
 	
 	//deceleration by itself
 	public int deceleration;
@@ -28,7 +28,7 @@ public class CarController : MonoBehaviour {
 	public int maxSpeed;
 	
 	//the MAGIC VALUE
-	private float magicValue = 0.05f;//controls the time it takes for car to recover from drift:low->longer, high->faster
+	float magicValue = 0.05f;//controls the time it takes for car to recover from drift:low->longer, high->faster
 	
 	public Transform forceUp;
 	
@@ -37,7 +37,11 @@ public class CarController : MonoBehaviour {
 	
 	//Cheats On Car by MSK
 	float torqueMultiplier=1;
-	public GameObject allScripts;
+	GameObject allScripts;
+	bool forSingleJump;
+
+	/*each car individual stuff*/
+	public Transform cof;
 	
 	/*
 	 * TODO
@@ -48,7 +52,8 @@ public class CarController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		rigidbody.centerOfMass = new Vector3 (0.0f, -0.9f, 0.0f);
+		//rigidbody.centerOfMass = new Vector3 (0.0f, -0.9f, 0.0f);
+		rigidbody.centerOfMass = cof.localPosition;
 		//print(rigidbody.centerOfMass);
 		slipForwardFriction = 0.05f;
 		slipSidewayFriction = 0.018f;
@@ -60,7 +65,6 @@ public class CarController : MonoBehaviour {
 	}
 	
 	void Update(){
-		
 		//make wheels spin
 		wheelFLTrans.Rotate (0,0,wheelFL.rpm / 60 * 360 * Time.deltaTime);
 		wheelFRTrans.Rotate (0,0,wheelFL.rpm / 60 * 360 * Time.deltaTime);
@@ -72,6 +76,11 @@ public class CarController : MonoBehaviour {
 		wheelFRTrans.localEulerAngles = new Vector3 (wheelFRTrans.localEulerAngles.x, wheelFR.steerAngle, wheelFRTrans.localEulerAngles.z);
 		
 		//print (rigidbody.velocity.magnitude);
+		
+		//Cheats need to be added in Update or it causes errors.
+		//Besides it does not move car, it only changes the multiple for torque which is used in fixedUpdate
+		//but this needs to called every frame. So leave it here.
+		CheatsControl ();
 	}
 	
 	void CheatsControl(){
@@ -90,6 +99,7 @@ public class CarController : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.E)&&cheats.jumpAllowed){
 			rigidbody.AddForce(Vector3.up*1000000);
 		}
+		forSingleJump = !cheats.jumpAllowed;
 	}
 	
 	void WheelPosition(){
@@ -212,7 +222,8 @@ public class CarController : MonoBehaviour {
 		//print (wheelRL.brakeTorque);
 		//print ("SIDEWAYS FRIC: "+wheelRL.sidewaysFriction.stiffness+" FORWARD FRIC: "+wheelRL.forwardFriction.stiffness);
 	}
-	
+
+	bool ejump;
 	void CalcDownForceOnCar(){
 		RaycastHit hit;
 		int carSpeed = (int) rigidbody.velocity.magnitude;
@@ -224,7 +235,9 @@ public class CarController : MonoBehaviour {
 		} else{//car is in air
 			int force = 175;
 			rigidbody.AddForce(0,carSpeed*force*-1,0);
-			rigidbody.AddForceAtPosition(new Vector3(0, carSpeed*6,0), forceUp.position);
+			if(!ejump){
+				rigidbody.AddForceAtPosition(new Vector3(0, carSpeed*6,0), forceUp.position);
+			}
 			//print (force);
 		}
 	}
@@ -232,25 +245,29 @@ public class CarController : MonoBehaviour {
 	public bool jumped;
 	public float jumpTimer;
 	void SingleJump(){
-		if(!jumped){
-			jumpTimer = 0f;
-			if(Input.GetKeyDown(KeyCode.E)){
-				//print (canJumpTimer);
-				rigidbody.AddForce(Vector3.up*1000000);
-				jumped = true;
+		if(forSingleJump){
+			if(!jumped){
+				jumpTimer = 0f;
+				if(Input.GetKeyDown(KeyCode.E)){
+					//print (canJumpTimer);
+					rigidbody.AddForce(Vector3.up*1000000);
+					jumped = true;
+					ejump = true;
+				}
 			}
-		}
-		
-		if(jumped){
-			jumpTimer += Time.deltaTime;
-			//print (jumpTimer);
-			if(jumpTimer > 10f){
-				jumped = false;
+			
+			if(jumped){
+				jumpTimer += Time.deltaTime;
+				//print (jumpTimer);
+				if(jumpTimer > 10f){
+					jumped = false;
+					ejump = false;
+				}
+				//jumped = false;
 			}
-			//jumped = false;
 		}
 	}
-
+	
 	void CarBodyMove(){
 		int carSpeed = (int) rigidbody.velocity.magnitude;
 		//transform.rotation = Quaternion.identity; <- look at this later on
@@ -273,17 +290,16 @@ public class CarController : MonoBehaviour {
 	void FixedUpdate(){
 		//if(Drift()){ slow down car -> add very little opposing force to slow it down}
 		//if car currently drifting and only Input.GetAxis("Vertical") is pressed then speed it to make it go forward
-
+		//print (wheelRL.brakeTorque);
 		//all functions for car
 		Drift ();
 		WheelPosition ();
 		CalcDownForceOnCar ();
-		CheatsControl ();//call the cheats control function
 		SingleJump ();//for the single car jump
 		CarBodyMove ();
 		
-
-
+		
+		
 		//max speed
 		//int carSpeed = (int) Mathf.Abs(2 * Mathf.PI * wheelRR.radius * wheelRR.rpm * 60 / 1000);
 		int carSpeed = (int) rigidbody.velocity.magnitude;
@@ -314,7 +330,7 @@ public class CarController : MonoBehaviour {
 		wheelFL.steerAngle = steerAngleforCar * Input.GetAxis ("Horizontal");
 		wheelFR.steerAngle = steerAngleforCar * Input.GetAxis ("Horizontal");
 		
-
+		
 		
 		//decelerating when oppsite direction button pressed to direction of motion
 		//wheel.rpm and wheel.motortorque
