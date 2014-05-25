@@ -3,9 +3,9 @@ using System.Collections;
 
 public class DestroyObjScript : MonoBehaviour {
 	//public int bulletLifetime;
-	public float myLR = 0.05f;
+	float myLR = 10f;
 
-	public float timer;
+	float timer;
 	
 	void Update () {
 		if(Time.timeScale!=0){

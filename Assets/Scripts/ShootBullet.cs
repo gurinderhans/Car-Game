@@ -17,6 +17,8 @@ public class ShootBullet : MonoBehaviour {
 
 	GUIText updateToPlayer;
 
+	public float cannonForce;
+
 
 	void Start(){
 		updateToPlayer = GameObject.FindGameObjectWithTag ("playerUpdates").guiText;
@@ -39,6 +41,7 @@ public class ShootBullet : MonoBehaviour {
 			} else if(Input.GetMouseButtonDown(0)){
 				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
 				myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
+
 				networkView.RPC ("PlayerFire", RPCMode.All);
 				smartFire = false;
 			} else{
@@ -75,7 +78,10 @@ public class ShootBullet : MonoBehaviour {
 				LineRenderer myLR = myShootFX.GetComponent<LineRenderer>();
 				myLR.SetPosition(0, shoot_bullet_from.position);
 				myLR.SetPosition(1, hit.point);
-				print (hit.point);
+				//print (hit.point);
+
+				/*GameObject myTrailRend = (GameObject) Instantiate(Resources.Load("ShootFXTrailRenderer"), shoot_bullet_from.position, Quaternion.identity);
+				myTrailRend.transform.position = Vector3.Lerp(myTrailRend.transform.position, hit.point);*/
 
 
 				//print(hit.transform.GetComponent<Health>().health);
@@ -124,6 +130,7 @@ public class ShootBullet : MonoBehaviour {
 			//hit.transform.gameObject.tag;
 			//string objHit = hit.transform.gameObject.tag;
 			//print (objHit);
+
 
 			//print (hit.point);
 			//print (hit.transform.name);

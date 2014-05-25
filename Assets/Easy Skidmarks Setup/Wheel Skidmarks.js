@@ -8,8 +8,6 @@ private var skidmarks : Skidmarks = null;//To hold the skidmarks object
 private var lastSkidmark : int = -1;//To hold last skidmarks data
 private var wheel_col : WheelCollider;//To hold self wheel collider
 
-var newSkidPoint : GameObject;
-
 var skidSmoke: GameObject;
 var smokeDepth : float = 0.4;
 
@@ -44,7 +42,7 @@ function FixedUpdate () //This has to be in fixed update or it wont get time to 
 	to get the correct position
 	*/
 	
-	var skidPoint : Vector3 = GroundHit.point + 2*(skidCaller.rigidbody.velocity) * Time.deltaTime;
+	var skidPoint : Vector3 = GroundHit.point + (skidCaller.rigidbody.velocity) * Time.deltaTime;
 	
 	if ( wheelSlipAmount > startSlipValue ) //if sideways slip is more than desired value
 	{
