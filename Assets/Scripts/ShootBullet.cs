@@ -34,6 +34,7 @@ public class ShootBullet : MonoBehaviour {
 			transform.position=turret.transform.position;
 			
 			if(Input.GetMouseButton(1)){
+
 				networkView.RPC ("SmartFire", RPCMode.All);
 			} else if(Input.GetMouseButtonDown(0)){
 				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
@@ -70,6 +71,12 @@ public class ShootBullet : MonoBehaviour {
 				//GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
 				//myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
 
+				GameObject myShootFX = (GameObject) Instantiate(Resources.Load("ShootFXLineRenderer"), Vector3.zero, Quaternion.identity);
+				LineRenderer myLR = myShootFX.GetComponent<LineRenderer>();
+				myLR.SetPosition(0, shoot_bullet_from.position);
+				myLR.SetPosition(1, hit.point);
+				print (hit.point);
+
 
 				//print(hit.transform.GetComponent<Health>().health);
 				hit.transform.gameObject.GetComponent<Health>().hit = true;
@@ -77,7 +84,11 @@ public class ShootBullet : MonoBehaviour {
 				if(hit.transform.gameObject.GetComponent<Health>().health < 30){//this isnt quick enough, need another method for chekcing if we have killed another player
 					//usually the last health update we get is 20 so we kinda have to assume player has died when health goes below 30 on our side
 					//print ("Killed other player");
-					updateToPlayer.text = "Killed " + hit.transform.gameObject.GetComponentInChildren<GUIText>().text;
+
+
+					//updateToPlayer.text = "Killed " + hit.transform.gameObject.GetComponentInChildren<GUIText>().text;
+
+
 
 					//right now on other player we will get a null refernce error beacuse we are updating it from our side but not on others even though 
 					//its the same guiText we are changing so to fix this we can instantiate the GUIText object callled PlayerUpdates

@@ -24,11 +24,9 @@ public class GunMovement : MonoBehaviour {
 		if(Time.timeScale!=0){
 
 			if(this.transform.gameObject.name == "gun TBS 001C"){
-				print ("gun TBS 001C");
 				gunUp = 3f;
 				gunBehind = 7f;
 			} else if(this.transform.gameObject.name == "Khari Cupid_26208_assignsubmission_file_turret"){
-				print ("Khari Cupid_26208_assignsubmission_file_turret");
 				gunUp = 3.1f;
 				gunBehind = 4.5f;
 			}

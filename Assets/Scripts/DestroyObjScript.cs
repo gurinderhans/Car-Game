@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class DestroyObjScript : MonoBehaviour {
-	public int bulletLifetime;
-	public float skidMarkLifetime = 10f;
+	//public int bulletLifetime;
+	public float myLR = 0.05f;
 
 	public float timer;
 	
@@ -20,8 +20,8 @@ public class DestroyObjScript : MonoBehaviour {
 			}*/
 
 			//skidmarks lifetime
-			if(timer > skidMarkLifetime){
-				//Destroy(gameObject);
+			if(timer > myLR){
+				Destroy(gameObject);
 			}
 		}
 	}
