@@ -6,6 +6,8 @@ public class GunCameraMovement : MonoBehaviour {
 
 	public float speed;
 
+	string turretName;
+
 	Transform turret;
 
 	//Camera guncam;
@@ -19,18 +21,19 @@ public class GunCameraMovement : MonoBehaviour {
 	
 	void Start(){
 		/*set the cameras*/
-		//guncam = GameObject.FindGameObjectWithTag ("GunCam").camera;
 		driveCam = GameObject.FindGameObjectWithTag ("MainCamera").camera;
 
 		rectShootCam = camera.rect;
 		rectStored = camera.rect;
 
-		turret = GameObject.Find ("gun TBS 001C").transform;
+		turret = GameObject.FindGameObjectWithTag ("Gun").transform;
 	}
 
 	void LateUpdate(){
 		if(Time.timeScale!=0){
-			
+			behindPos = turret.GetComponent<GunMovement> ().gunBehind;
+			upPos = turret.GetComponent<GunMovement> ().gunUp;
+
 			transform.position = turret.position;
 			transform.Translate (-Vector3.forward * behindPos);
 			transform.Translate(Vector3.up * upPos);
@@ -45,22 +48,16 @@ public class GunCameraMovement : MonoBehaviour {
 	
 	void Update () {
 		if(Time.timeScale!=0){
-			
 			if(Input.GetKeyDown(KeyCode.Y)){
 				if(!shootMode){
 					camera.rect = new Rect(0,0,Screen.width,Screen.height);
 					shootMode = true;
-					//GameObject.FindGameObjectWithTag("MainCamera").camera.GetComponent<GUILayer>().enabled = false;
 				}
 				else{
 					camera.rect = rectStored;
 					camera.depth += 2;
 					shootMode = false;
-					print ("shoot mode is false");
 					driveCam.GetComponent<GUILayer>().enabled = true;
-					//this.GetComponent<GUILayer>().enabled = false;
-					//guncam.GetComponent<GUILayer>().enabled = false;
-					//print("Shoot Camera's depth is "+ camera.depth);
 				}
 			}
 			

@@ -32,7 +32,6 @@ public class CarController : MonoBehaviour {
 	
 	public Transform forceUp;
 	
-	public float rotateAmount;
 	public Transform carBody;
 	
 	//Cheats On Car by MSK
@@ -76,7 +75,7 @@ public class CarController : MonoBehaviour {
 		wheelFRTrans.localEulerAngles = new Vector3 (wheelFRTrans.localEulerAngles.x, wheelFR.steerAngle, wheelFRTrans.localEulerAngles.z);
 		
 		//print (rigidbody.velocity.magnitude);
-		
+
 		//Cheats need to be added in Update or it causes errors.
 		//Besides it does not move car, it only changes the multiple for torque which is used in fixedUpdate
 		//but this needs to called every frame. So leave it here.

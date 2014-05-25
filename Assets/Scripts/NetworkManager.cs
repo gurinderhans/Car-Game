@@ -55,15 +55,15 @@ public class NetworkManager : MonoBehaviour {
 		myCar.GetComponent<Health> ().enabled = true;
 
 		//enable the gun parts of car
-		/*myCar.GetComponentInChildren<GunMovement> ().enabled = true;
+		myCar.GetComponentInChildren<GunMovement> ().enabled = true;
 		myCar.GetComponentInChildren<CrossHair> ().enabled = true;
-		myCar.GetComponentInChildren<ShootBullet> ().enabled = true;*/
+		myCar.GetComponentInChildren<ShootBullet> ().enabled = true;
 
 		//keep this in case unity gives problem and gives you ability to control other players guns
-		GameObject myGun = (GameObject) myCar.transform.FindChild ("gun TBS 001C").gameObject;
+		/*GameObject myGun = (GameObject) myCar.transform.FindChild ("gun TBS 001C").gameObject;
 		myGun.GetComponent<GunMovement> ().enabled = true;
 		myGun.GetComponent<CrossHair> ().enabled = true;
-		myGun.GetComponent<ShootBullet> ().enabled = true;
+		myGun.GetComponent<ShootBullet> ().enabled = true;*/
 		
 		//hide the player name locally so it wont interrupt gameplay but show on others screen
 		myCar.GetComponentInChildren<GUIText> ().enabled = false;
@@ -71,6 +71,8 @@ public class NetworkManager : MonoBehaviour {
 		//MSK stuff
 		Instantiate (Resources.Load ("GunCam"), new Vector3 (0f, 10f, 0f), Quaternion.identity);
 
+		//Instantiate HostPublicMessages stuff
+		//Instantiate (Resources.Load ("HostPublicMessages"), Vector3.zero, Quaternion.identity);
 	}
 	
 	public IEnumerator RefreshHostList(){
@@ -157,9 +159,10 @@ public class NetworkManager : MonoBehaviour {
 		if(GUI.Button( new Rect(50f, 50f, 200f, 30f) , "CHEVROLET CAMARO")){
 			car_choosen = "CHEVROLET_CAMARO/";
 			isCarChosen = true;
-		} /*else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "RANDOM CAR 2")){
-			//print ("camaro");
-		} else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "RANDOM CAR 3")){
+		} else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "WAEZ CAR")){
+			car_choosen = "waez_buksh_26179_assignsubmission_file_waezcar2/";
+			isCarChosen = true;
+		} /*else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "RANDOM CAR 3")){
 			//print("camaro");
 		} else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "RANDOM CAR 4")){
 			//print("camaro");
@@ -173,7 +176,7 @@ public class NetworkManager : MonoBehaviour {
 		GUI.Box(new Rect (25f, 25f, 250f, 205f), "WHICH COLOR DO YOU LIKE:");
 
 		if(GUI.Button( new Rect(50f, 50f, 200f, 30f) , "WHITE")){
-			color_choosen = "CHEVROLET_CAMARO_WHITE";
+			color_choosen = "WHITE";
 			isColorChosen = true;
 		} /*else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "YELLOW")){
 			//color_choosen = "CHEVROLET_CAMARO_YELLOW";

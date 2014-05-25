@@ -21,7 +21,7 @@ public class ShootBullet : MonoBehaviour {
 	void Start(){
 		updateToPlayer = GameObject.FindGameObjectWithTag ("playerUpdates").guiText;
 
-		turret=GameObject.Find("gun TBS 001C");
+		turret = GameObject.FindGameObjectWithTag ("Gun");
 	}
 
 	void OnGUI(){

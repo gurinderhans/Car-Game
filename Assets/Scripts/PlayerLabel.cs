@@ -30,7 +30,7 @@ public class PlayerLabel : MonoBehaviour {
 	
 	
 	void Update(){
-		if(!networkView.isMine){
+		if(!networkView.isMine){//to hide gui text on own player screen
 			if(Vector3.Distance (camTransform.position, target.position) > 200){
 				this.GetComponent<GUIText> ().enabled = false;//disable gui Text
 			} else{
@@ -55,7 +55,7 @@ public class PlayerLabel : MonoBehaviour {
 		if(networkView.isMine){
 			myName = GUI.TextField(new Rect(115f, 20.5f, 150f, 22.5f), myName, 25);
 			if (Event.current.isKey && Event.current.keyCode == KeyCode.Return || GUI.Button (new Rect (0f, 20.5f, 100f, 22.5f), "Update Name")){
-				networkView.RPC ("changeName", RPCMode.OthersBuffered, new object[]{myName});
+				networkView.RPC ("changeName", RPCMode.AllBuffered, new object[]{myName});
 				playerHasName = true;
 			}
 		}
