@@ -42,7 +42,7 @@ function FixedUpdate () //This has to be in fixed update or it wont get time to 
 	to get the correct position
 	*/
 	
-	var skidPoint : Vector3 = GroundHit.point + (skidCaller.rigidbody.velocity) * Time.deltaTime;
+	var skidPoint : Vector3 = GroundHit.point + 2*(skidCaller.rigidbody.velocity) * Time.deltaTime;
 	
 	if ( wheelSlipAmount > startSlipValue ) //if sideways slip is more than desired value
 	{

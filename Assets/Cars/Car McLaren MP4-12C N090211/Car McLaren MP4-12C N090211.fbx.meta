@@ -1,0 +1,137 @@
+fileFormatVersion: 2
+guid: e3f0f4e6f11f9dd47adf7502361a8a55
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: bonnet_ok
+    100002: boot_ok
+    100004: bump_front
+    100006: bump_rear_
+    100008: //RootNode
+    100010: chassis
+    100012: door_lf_ok
+    100014: door_rf_ok
+    100016: door_rr_ok
+    100018: interior
+    100020: mp412crim
+    100022: mp412crim0
+    100024: newengine
+    100026: sedalki
+    100028: stukladole
+    100030: windscreen
+    400000: bonnet_ok
+    400002: boot_ok
+    400004: bump_front
+    400006: bump_rear_
+    400008: //RootNode
+    400010: chassis
+    400012: door_lf_ok
+    400014: door_rf_ok
+    400016: door_rr_ok
+    400018: interior
+    400020: mp412crim
+    400022: mp412crim0
+    400024: newengine
+    400026: sedalki
+    400028: stukladole
+    400030: windscreen
+    2300000: bonnet_ok
+    2300002: boot_ok
+    2300004: bump_front
+    2300006: bump_rear_
+    2300008: chassis
+    2300010: door_lf_ok
+    2300012: door_rf_ok
+    2300014: door_rr_ok
+    2300016: interior
+    2300018: mp412crim
+    2300020: mp412crim0
+    2300022: newengine
+    2300024: sedalki
+    2300026: stukladole
+    2300028: windscreen
+    3300000: bonnet_ok
+    3300002: boot_ok
+    3300004: bump_front
+    3300006: bump_rear_
+    3300008: chassis
+    3300010: door_lf_ok
+    3300012: door_rf_ok
+    3300014: door_rr_ok
+    3300016: interior
+    3300018: mp412crim
+    3300020: mp412crim0
+    3300022: newengine
+    3300024: sedalki
+    3300026: stukladole
+    3300028: windscreen
+    4300000: mp412crim0
+    4300002: chassis
+    4300004: stukladole
+    4300006: bump_rear_
+    4300008: bump_front
+    4300010: door_rf_ok
+    4300012: door_lf_ok
+    4300014: boot_ok
+    4300016: windscreen
+    4300018: bonnet_ok
+    4300020: door_rr_ok
+    4300022: sedalki
+    4300024: interior
+    4300026: newengine
+    4300028: mp412crim
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 3.29999995
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

@@ -56,7 +56,9 @@ public class CarController : MonoBehaviour {
 		//print(rigidbody.centerOfMass);
 		slipForwardFriction = 0.05f;
 		slipSidewayFriction = 0.018f;
-		
+
+		//little camera stuff
+		//if(this.transform.gameObject.tag == "
 		
 		//For Cheats
 		allScripts = GameObject.Find ("_SCRIPTS");

@@ -1,0 +1,126 @@
+fileFormatVersion: 2
+guid: 7d2944b796c506d4ea1000365cab6e85
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: FITIL
+    100004: Object01
+    100006: PHOTOCELL
+    100008: Rectangle01
+    100010: Rectangle02
+    100012: Rectangle03
+    100014: Rectangle04
+    100016: Rectangle06
+    100018: Rectangle07
+    100020: Rectangle08
+    100022: Rectangle09
+    100024: Rectangle10
+    100026: Rectangle11
+    400000: //RootNode
+    400002: FITIL
+    400004: Object01
+    400006: PHOTOCELL
+    400008: Rectangle01
+    400010: Rectangle02
+    400012: Rectangle03
+    400014: Rectangle04
+    400016: Rectangle06
+    400018: Rectangle07
+    400020: Rectangle08
+    400022: Rectangle09
+    400024: Rectangle10
+    400026: Rectangle11
+    2300000: FITIL
+    2300002: Object01
+    2300004: PHOTOCELL
+    2300006: Rectangle01
+    2300008: Rectangle02
+    2300010: Rectangle03
+    2300012: Rectangle04
+    2300014: Rectangle06
+    2300016: Rectangle07
+    2300018: Rectangle08
+    2300020: Rectangle09
+    2300022: Rectangle10
+    2300024: Rectangle11
+    3300000: FITIL
+    3300002: Object01
+    3300004: PHOTOCELL
+    3300006: Rectangle01
+    3300008: Rectangle02
+    3300010: Rectangle03
+    3300012: Rectangle04
+    3300014: Rectangle06
+    3300016: Rectangle07
+    3300018: Rectangle08
+    3300020: Rectangle09
+    3300022: Rectangle10
+    3300024: Rectangle11
+    4300000: PHOTOCELL
+    4300002: Rectangle01
+    4300004: Rectangle04
+    4300006: FITIL
+    4300008: Rectangle03
+    4300010: Rectangle08
+    4300012: Object01
+    4300014: Rectangle09
+    4300016: Rectangle07
+    4300018: Rectangle11
+    4300020: Rectangle06
+    4300022: Rectangle02
+    4300024: Rectangle10
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .0799999982
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  userData: 

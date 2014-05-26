@@ -162,9 +162,10 @@ public class NetworkManager : MonoBehaviour {
 		} else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "WAEZ CAR")){
 			car_choosen = "waez_buksh_26179_assignsubmission_file_waezcar2/";
 			isCarChosen = true;
-		} /*else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "RANDOM CAR 3")){
-			//print("camaro");
-		} else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "RANDOM CAR 4")){
+		} else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "McLaren MP4-12C N090211")){
+			car_choosen = "Car McLaren MP4-12C N090211/";
+			isCarChosen = true;
+		} /*else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "RANDOM CAR 4")){
 			//print("camaro");
 		} else if(GUI.Button( new Rect(50f, 190f, 200f, 30f) , "RANDOM CAR 5")){
 			//print("camaro");
