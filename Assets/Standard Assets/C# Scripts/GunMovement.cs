@@ -27,8 +27,8 @@ public class GunMovement : MonoBehaviour {
 				gunUp = 3f;
 				gunBehind = 7f;
 			} else if(this.transform.gameObject.name == "Khari Cupid_26208_assignsubmission_file_turret"){
-				gunUp = 3.1f;
-				gunBehind = 4.5f;
+				gunUp = 4f;
+				gunBehind = 3.5f;
 			}
 
 			float cameraX = guncamera.transform.eulerAngles.x;

@@ -36,7 +36,6 @@ public class ShootBullet : MonoBehaviour {
 			transform.position=turret.transform.position;
 			
 			if(Input.GetMouseButton(1)){
-
 				networkView.RPC ("SmartFire", RPCMode.All);
 			} else if(Input.GetMouseButtonDown(0)){
 				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
@@ -78,6 +77,12 @@ public class ShootBullet : MonoBehaviour {
 				LineRenderer myLR = myShootFX.GetComponent<LineRenderer>();
 				myLR.SetPosition(0, shoot_bullet_from.position);
 				myLR.SetPosition(1, hit.point);
+
+
+				/*GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
+				myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);*/
+
+
 				//print (hit.point);
 
 				/*GameObject myTrailRend = (GameObject) Instantiate(Resources.Load("ShootFXTrailRenderer"), shoot_bullet_from.position, Quaternion.identity);

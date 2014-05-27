@@ -12,9 +12,9 @@ Then we apply the smoothed values to the transform's position.
 
 
 // The distance in the x-z plane to the target
-var distance = 10.0;
+var distance;// = 10.0;
 // the height we want the camera to be above the target
-var height = 5.0;
+var height;// = 5.0;
 // How much we 
 var heightDamping = 2.0;
 var rotationDamping = 3.0;
@@ -31,16 +31,21 @@ follow = GameObject.Find("Follow");
 
 target = follow.transform;
 
-/*
+
 private var car : GameObject;
 private var speedTextObj : GameObject;
 speedTextObj = GameObject.Find("Car Speed");
 private var speedText : GUIText;
 speedText = speedTextObj.guiText;
 
-car = GameObject.FindGameObjectWithTag("Player");*/
+car = GameObject.FindGameObjectWithTag("Player");
 
-
+function Update(){
+	//all c# scripts have been put in standard assets folder because only then JS or anohter language can read them, a Unity thing
+	distance = car.GetComponent(CarController).carCamPosBehind;
+	
+	height = car.GetComponent(CarController).carCamPosUp;
+}
 
 function LateUpdate () {
         // Early out if we don't have a target
@@ -75,9 +80,9 @@ function LateUpdate () {
         transform.LookAt (target);
         
         //car speed
-        /*var veloc : int = car.rigidbody.velocity.magnitude;
+        var veloc : int = car.rigidbody.velocity.magnitude;
         veloc = veloc * 2;
         var carSpeed = veloc.ToString();
-        speedText.text = carSpeed + " km/h";*/
+        speedText.text = carSpeed + " km/h";
         //print(carSpeed);
 }

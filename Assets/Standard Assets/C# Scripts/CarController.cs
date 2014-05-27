@@ -41,6 +41,12 @@ public class CarController : MonoBehaviour {
 
 	/*each car individual stuff*/
 	public Transform cof;
+
+	/*carcamera position stuff*/
+	//we'll give these values to DriveCam for distance behind and up b/c its going to be different for each car
+	public float carCamPosUp;
+	public float carCamPosBehind;
+
 	
 	/*
 	 * TODO

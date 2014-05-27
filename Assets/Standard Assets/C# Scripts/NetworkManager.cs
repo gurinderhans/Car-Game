@@ -71,8 +71,6 @@ public class NetworkManager : MonoBehaviour {
 		//MSK stuff
 		Instantiate (Resources.Load ("GunCam"), new Vector3 (0f, 10f, 0f), Quaternion.identity);
 
-		//Instantiate HostPublicMessages stuff
-		//Instantiate (Resources.Load ("HostPublicMessages"), Vector3.zero, Quaternion.identity);
 	}
 	
 	public IEnumerator RefreshHostList(){
@@ -165,9 +163,13 @@ public class NetworkManager : MonoBehaviour {
 		} else if(GUI.Button( new Rect(50f, 120f, 200f, 30f) , "McLaren MP4-12C N090211")){
 			car_choosen = "Car McLaren MP4-12C N090211/";
 			isCarChosen = true;
-		} /*else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "RANDOM CAR 4")){
-			//print("camaro");
-		} else if(GUI.Button( new Rect(50f, 190f, 200f, 30f) , "RANDOM CAR 5")){
+		} else if(GUI.Button( new Rect(50f, 155f, 200f, 30f) , "California Ferrari")){
+			car_choosen = "California Ferrari/";
+			isCarChosen = true;
+		} else if(GUI.Button( new Rect(50f, 190f, 200f, 30f) , "MERCIELAGO640")){
+			car_choosen = "MERCIELAGO640/";
+			isCarChosen = true;
+		}/*else if(GUI.Button( new Rect(50f, 190f, 200f, 30f) , "RANDOM CAR 5")){
 			//print("camaro");
 		}*/
 	}
@@ -176,8 +178,8 @@ public class NetworkManager : MonoBehaviour {
 		//GUI BOX (l,t,w,h)
 		GUI.Box(new Rect (25f, 25f, 250f, 205f), "WHICH COLOR DO YOU LIKE:");
 
-		if(GUI.Button( new Rect(50f, 50f, 200f, 30f) , "WHITE")){
-			color_choosen = "WHITE";
+		if(GUI.Button( new Rect(50f, 50f, 200f, 30f) , "DEFAULT")){
+			color_choosen = "DEFAULT";
 			isColorChosen = true;
 		} /*else if(GUI.Button( new Rect(50f, 85f, 200f, 30f) , "YELLOW")){
 			//color_choosen = "CHEVROLET_CAMARO_YELLOW";

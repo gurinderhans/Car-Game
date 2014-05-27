@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DestroyObjScript : MonoBehaviour {
 	//public int bulletLifetime;
-	float myLR = 10.001f;
+	float myLR = 0.001f;
 
 	float timer;
 	
