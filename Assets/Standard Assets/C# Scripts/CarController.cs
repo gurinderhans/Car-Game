@@ -238,11 +238,9 @@ public class CarController : MonoBehaviour {
 		if(Physics.Raycast(wheelFL.transform.position, -wheelFL.transform.up, out hit,wheelFL.radius + wheelFL.suspensionDistance)){
 			//hit.point is the point the raycast is hitting
 			rigidbody.AddForce(0,carSpeed*1000*-1,0);
-			Time.timeScale = 1f;
 			//print ("1000");
 		} else{//car is in air
 			int force = 175;
-			Time.timeScale = 0.3f;
 			rigidbody.AddForce(0,carSpeed*force*-1,0);
 			if(!ejump){
 				rigidbody.AddForceAtPosition(new Vector3(0, carSpeed*6,0), forceUp.position);
