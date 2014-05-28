@@ -10,29 +10,38 @@ public class ChatControl : MonoBehaviour {
 	public Vector2 scrollPosition;
 	public string playerName;
 	public bool showChatTextField;
+
+	public string hostMessage;
+
+	public GameObject hostMessageGameObj;
 	
 	void Start(){
 		//chatMessages.Add ("Welcome to the Multiplayer Car-Game!");
+		hostMessageGameObj = GameObject.FindGameObjectWithTag("HostMessage");
 	}
 	
 
 	private void windowFunc(int id){
-		GUILayout.BeginHorizontal(GUILayout.Width(250));
-		messageToSend = GUILayout.TextField (messageToSend, GUILayout.MinWidth(150));
-		if(GUILayout.Button("Send", GUILayout.MinWidth(50)) || Event.current.isKey && Event.current.keyCode == KeyCode.Return){//add or press Enter later
+
+		GUILayout.BeginHorizontal (GUILayout.Width (250));
+		messageToSend = GUILayout.TextField (messageToSend, GUILayout.MinWidth (150));
+		if (GUILayout.Button ("Send", GUILayout.MinWidth (50)) || Event.current.isKey && Event.current.keyCode == KeyCode.Return) {//add or press Enter later
 			//send the message and empty chatText space
 			//add messages to chatMessages list
-			if(Network.isServer){
-				print ("this is for server");//chat for server where hostpublic messages will come in
-			} else{
-				if(messageToSend.Length > 0){//we dont send empty messages
-					networkView.RPC("sendMessage", RPCMode.AllBuffered, new object[]{messageToSend, playerName});
+			if (Network.isServer) {
+				//if we are server/host then we send special messages to all clients
+				networkView.RPC ("SendHostMessage", RPCMode.AllBuffered, new object[]{messageToSend});
+				messageToSend = string.Empty;
+			} else {
+				if (messageToSend.Length > 0) {//we dont send empty messages
+					networkView.RPC ("SendClientMessage", RPCMode.AllBuffered, new object[]{messageToSend, playerName});
 					messageToSend = string.Empty;
 				}
 			}
 		}
 		
-		GUILayout.EndHorizontal();
+		GUILayout.EndHorizontal ();
+
 	}
 	
 	public bool playerNameCheck;
@@ -41,6 +50,9 @@ public class ChatControl : MonoBehaviour {
 		playerNameCheck = GameObject.FindGameObjectWithTag ("playerName").GetComponent<PlayerLabel> ().playerHasName;
 		if(Input.GetKeyDown(KeyCode.BackQuote))
 			showChatTextField = !showChatTextField;
+
+
+
 	}
 	
 	public void OnGUI(){
@@ -72,9 +84,16 @@ public class ChatControl : MonoBehaviour {
 		
 		scrollPosition.y = 100000000000000000;//hopefully this never ends
 	}
-	
+
 	[RPC]
-	public void sendMessage(string msg, string pname){
+	public void SendHostMessage(string hostmsg){
+		hostMessage = "From Server : " + hostmsg;
+
+		hostMessageGameObj.GetComponent<GUIText>().text = hostMessage;
+	}
+
+	[RPC]
+	public void SendClientMessage(string msg, string pname){
 		//send the message
 		chatMessages.Add("[-" + pname + "-]"+" : "+ msg);
 	}

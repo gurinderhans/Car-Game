@@ -17,8 +17,7 @@ public class ShootBullet : MonoBehaviour {
 
 	GUIText updateToPlayer;
 
-	public float cannonForce;
-
+	public Transform instantiateBulletFrom;
 
 	void Start(){
 		updateToPlayer = GameObject.FindGameObjectWithTag ("playerUpdates").guiText;
@@ -38,7 +37,7 @@ public class ShootBullet : MonoBehaviour {
 			if(Input.GetMouseButton(1)){
 				networkView.RPC ("SmartFire", RPCMode.All);
 			} else if(Input.GetMouseButtonDown(0)){
-				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),transform.position, transform.rotation);
+				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),instantiateBulletFrom.position, transform.rotation);
 				myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
 
 				networkView.RPC ("PlayerFire", RPCMode.All);

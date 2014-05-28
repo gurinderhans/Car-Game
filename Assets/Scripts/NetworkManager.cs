@@ -50,7 +50,10 @@ public class NetworkManager : MonoBehaviour {
 		GameObject myCar = (GameObject) Network.Instantiate (Resources.Load(car_choosen+color_choosen), spawnPos, Quaternion.identity, 0);
 		
 		GameObject myCam = (GameObject) Instantiate(Resources.Load("DriveCam"), new Vector3(0f, 10f, 0f), Quaternion.identity);
-		((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files
+		//((MonoBehaviour)myCam.GetComponent ("CarCameraController")).enabled = true;//for getting .js files
+
+		myCam.GetComponent<DriveCamController> ().enabled = true;
+
 		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
 		myCar.GetComponent<Health> ().enabled = true;
 
