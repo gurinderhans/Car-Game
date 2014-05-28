@@ -49,8 +49,7 @@ public class CarController : MonoBehaviour {
 
 	
 	/*
-	 * TODO
-	 * When handbrake is pressed cars rear wheels should stop spinning
+	 * Cool IDEAS TODO
 	 * remote control missile
 	 * bullet that changes other players car controls temporarily
 	 */
@@ -105,6 +104,7 @@ public class CarController : MonoBehaviour {
 		
 		if(Input.GetKeyDown(KeyCode.E)&&cheats.jumpAllowed){
 			rigidbody.AddForce(Vector3.up*1000000);
+			ejump = true;
 		}
 		forSingleJump = !cheats.jumpAllowed;
 	}
