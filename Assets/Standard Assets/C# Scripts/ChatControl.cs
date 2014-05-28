@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;//need for the list
 
 public class ChatControl : MonoBehaviour {
 	
 	public string messageToSend;
-
-	public bool showMessageInputField;
-
-	public string hostMessage;//this gets displayed
-
-
-
+	public List<string> chatMessages = new List<string>();
+	//make string empty because we dont want to send null values over network
+	public Vector2 scrollPosition;
+	public string playerName;
+	public bool showChatTextField;
+	
+	void Start(){
+		//chatMessages.Add ("Welcome to the Multiplayer Car-Game!");
+	}
+	
 
 	private void windowFunc(int id){
 		GUILayout.BeginHorizontal(GUILayout.Width(250));
@@ -18,44 +22,60 @@ public class ChatControl : MonoBehaviour {
 		if(GUILayout.Button("Send", GUILayout.MinWidth(50)) || Event.current.isKey && Event.current.keyCode == KeyCode.Return){//add or press Enter later
 			//send the message and empty chatText space
 			//add messages to chatMessages list
-			if(messageToSend.Length > 0){//we dont send empty messages
-				networkView.RPC("sendMessage", RPCMode.AllBuffered, new object[]{messageToSend});
-				messageToSend = string.Empty;
+			if(Network.isServer){
+				print ("this is for server");//chat for server where hostpublic messages will come in
+			} else{
+				if(messageToSend.Length > 0){//we dont send empty messages
+					networkView.RPC("sendMessage", RPCMode.AllBuffered, new object[]{messageToSend, playerName});
+					messageToSend = string.Empty;
+				}
 			}
 		}
 		
 		GUILayout.EndHorizontal();
 	}
 	
+	public bool playerNameCheck;
+
 	void Update(){
+		playerNameCheck = GameObject.FindGameObjectWithTag ("playerName").GetComponent<PlayerLabel> ().playerHasName;
 		if(Input.GetKeyDown(KeyCode.BackQuote))
-			showMessageInputField = !showMessageInputField;
+			showChatTextField = !showChatTextField;
 	}
 	
 	public void OnGUI(){
+		playerName = GameObject.FindGameObjectWithTag ("playerName").GetComponent<PlayerLabel> ().myName;
+		
 		if(Time.timeScale != 0){
 			
-			if(Network.isServer){
-				if(showMessageInputField){
+			if(playerNameCheck){
+				//player chat will have to go before the next class build so this whole thing will have to removed :(
+				
+				if(showChatTextField){
 					Rect windowRect = new Rect(0,Screen.height - 50,270,70);
-					windowRect = GUI.Window(1, windowRect, windowFunc, "HostMessage");
+					windowRect = GUI.Window(1, windowRect, windowFunc, "Chat");
 				}
+				
 			}
 			
 		}
-
-		//we dont want to hide display messages on game pasue b/c that will show all messages host sends live
+		
+		//even for now and later on we dont want to hide display messages on game pasue b/c that will show game status and a whole lot of other thigns
 		//so keep this outside
 		GUILayout.Space(Screen.height - (Screen.height - 120));//add space above b/c of name change field
-
-		GUI.Label (new Rect ((Screen.width/2) ,Screen.height - 50,100,50), " " + hostMessage);
+		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(200), GUILayout.Height(350));
+		foreach(string message in chatMessages){
+			//display the messages
+			GUILayout.Label(message);
+		}
+		GUILayout.EndScrollView ();
+		
+		scrollPosition.y = 100000000000000000;//hopefully this never ends
 	}
 	
 	[RPC]
-	public void sendMessage(string msg){
+	public void sendMessage(string msg, string pname){
 		//send the message
-
-		hostMessage = msg;
+		chatMessages.Add("[-" + pname + "-]"+" : "+ msg);
 	}
-	
 }

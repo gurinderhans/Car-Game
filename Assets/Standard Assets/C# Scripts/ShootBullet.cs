@@ -38,7 +38,7 @@ public class ShootBullet : MonoBehaviour {
 			if(Input.GetMouseButton(1)){
 				networkView.RPC ("SmartFire", RPCMode.All);
 			} else if(Input.GetMouseButtonDown(0)){
-				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
+				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),transform.position, transform.rotation);
 				myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
 
 				networkView.RPC ("PlayerFire", RPCMode.All);

@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent (typeof (GUIText))]
 public class HostPublicMessages : MonoBehaviour {
-	
+
 	//GameObject scripts;
 	
 	bool showEditOptions;
