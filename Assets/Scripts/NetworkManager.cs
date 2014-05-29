@@ -55,7 +55,7 @@ public class NetworkManager : MonoBehaviour {
 		myCam.GetComponent<DriveCamController> ().enabled = true;
 
 		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
-		myCar.GetComponent<Health> ().enabled = true;
+		myCar.GetComponentInChildren<Health> ().enabled = true;
 
 		//enable the gun parts of car
 		myCar.GetComponentInChildren<GunMovement> ().enabled = true;
@@ -70,6 +70,9 @@ public class NetworkManager : MonoBehaviour {
 		
 		//hide the player name locally so it wont interrupt gameplay but show on others screen
 		myCar.GetComponentInChildren<GUIText> ().enabled = false;
+
+		//hide the 3D text on local player as it interferes with gun shooting
+		myCar.GetComponentInChildren<TextMesh>().renderer.enabled = false;
 
 		//MSK stuff
 		Instantiate (Resources.Load ("GunCam"), new Vector3 (0f, 10f, 0f), Quaternion.identity);

@@ -63,9 +63,8 @@ public class CrossHair : MonoBehaviour {
 			//by Manshant Singh
 			RaycastHit hit;
 			Debug.DrawRay(shoot_bullet_from.transform.position, transform.forward * this.GetComponent<ShootBullet>().shootLength);
-			if(Physics.Raycast(shoot_bullet_from.position, transform.forward, out hit, this.GetComponent<ShootBullet>().shootLength)){
+			if(Physics.Raycast(shoot_bullet_from.position, transform.forward, out hit, this.GetComponent<ShootBullet>().shootLength))
 				whoIsIt=hit.transform.gameObject.tag;
-			}
 			else
 				whoIsIt=null;
 
@@ -113,7 +112,6 @@ public class CrossHair : MonoBehaviour {
 				rotAngle = Mathf.Lerp(rotAngle, 0f, Time.deltaTime * 3f);
 			}
 
-			//print (this.GetComponent<ShootBullet>().smartFire);
 			//we want cross hair to rotate only on smart hit
 			if(this.GetComponent<ShootBullet>().smartFire){
 				rotSpeed = 0f;

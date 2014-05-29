@@ -13,8 +13,8 @@ public class GunCameraMovement : MonoBehaviour {
 	//Camera guncam;
 	public Camera driveCam;
 
-	public float behindPos;
-	public float upPos;
+	float behindPos;
+	float upPos;
 	/*[HideInInspector]*/ public Rect rectShootCam;
 	Rect rectStored;
 	bool shootMode=false;
