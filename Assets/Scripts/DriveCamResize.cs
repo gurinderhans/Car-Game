@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class DriveCamResize : MonoBehaviour {
-
+	/*
 	Rect smallScreen=new Rect(0.65f,0.55f,0.30f,0.40f);
 	bool driveMode=true;
 
@@ -10,7 +10,7 @@ public class DriveCamResize : MonoBehaviour {
 	//Camera driveCam;
 
 	void Start(){
-		/*set the cameras*/
+		//**set the cameras**
 		guncam = GameObject.FindGameObjectWithTag ("GunCam").camera;
 		//driveCam = GameObject.FindGameObjectWithTag ("MainCamera").camera;
 	}
@@ -35,6 +35,6 @@ public class DriveCamResize : MonoBehaviour {
 				driveMode=true;
 			}
 		}
-	}
-
+	}*/
+	
 }
