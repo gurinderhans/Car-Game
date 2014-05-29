@@ -15,6 +15,8 @@ public class ShootBullet : MonoBehaviour {
 	public Transform instantiateBulletFrom;
 	public GUIStyle myStyle;
 
+	Ray tstray;
+
 
 	void Start(){
 		//updateToPlayer = GameObject.FindGameObjectWithTag ("playerUpdates").guiText;
@@ -27,6 +29,7 @@ public class ShootBullet : MonoBehaviour {
 	}
 
 	void Update () {
+		tstray = this.GetComponent<CrossHair> ().gunCamRay;
 		if(Time.timeScale!=0){
 			transform.rotation=turret.transform.rotation;
 			transform.position=turret.transform.position;
@@ -54,7 +57,7 @@ public class ShootBullet : MonoBehaviour {
 		//need shoot_bullet_from transform because gun position isnt same as crosshair position on screen
 		//also still need to change shoot_bullet_from position little more up so it falls very close to crosshair pos
 		
-		if(Physics.Raycast(shoot_bullet_from.position, transform.forward, out hit, shootLength)){//make ray length larger
+		if(Physics.Raycast(tstray, out hit, shootLength)){//make ray length larger
 			if(hit.transform.gameObject.tag == "Player"){
 				smartFire = true;
 
@@ -100,9 +103,10 @@ public class ShootBullet : MonoBehaviour {
 		//need shoot_bullet_from transform because gun position isnt same as crosshair position on screen
 		//also still need to change shoot_bullet_from position little more up so it falls very close tot crosshair pos
 
-		if(Physics.Raycast(shoot_bullet_from.position, transform.forward, out hit, shootLength)){//make ray length larger
+		if(Physics.Raycast(tstray, out hit, shootLength)){//make ray length larger
 
 			if(hit.transform.gameObject.tag == "Player"){
+				print ("Player");
 				hit.transform.gameObject.GetComponentInChildren<Health>().hit = true;
 				if(hit.transform.gameObject.GetComponentInChildren<Health>().health < 30){
 

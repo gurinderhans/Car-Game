@@ -32,11 +32,18 @@ public class CrossHair : MonoBehaviour {
 	Rect rectShootCamera;
 	bool modeFS;
 	public Transform shoot_bullet_from;
-	
+
+	public Ray gunCamRay;
+
 	[HideInInspector] public Texture2D temp;
 	[HideInInspector] public float spread,myspread;
+
+	public Camera gunCam;
 	
 	void Start () {
+
+		gunCam = GameObject.FindGameObjectWithTag ("GunCam").camera;
+
 		crosshairPreset = preset.none;
 		whoIsIt = null;
 		
@@ -62,8 +69,9 @@ public class CrossHair : MonoBehaviour {
 
 			//by Manshant Singh
 			RaycastHit hit;
-			Debug.DrawRay(shoot_bullet_from.transform.position, transform.forward * this.GetComponent<ShootBullet>().shootLength);
-			if(Physics.Raycast(shoot_bullet_from.position, transform.forward, out hit, this.GetComponent<ShootBullet>().shootLength))
+			gunCamRay = gunCam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));//this shoots exactly from the middle of camera
+			//Debug.Log(ray);
+			if(Physics.Raycast(gunCamRay, out hit, this.GetComponent<ShootBullet>().shootLength))
 				whoIsIt=hit.transform.gameObject.tag;
 			else
 				whoIsIt=null;

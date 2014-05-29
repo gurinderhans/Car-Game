@@ -43,7 +43,8 @@ public class ChatControl : MonoBehaviour {
 			if (Network.isServer) {
 				//if we are server/host then we send special messages to all clients
 				ApplyAllChanges();
-				networkView.RPC ("SendHostMessage", RPCMode.AllBuffered, new object[]{messageToSend, mySize, myFontStyle, Rcolor, Gcolor, Bcolor, Acolor});
+				if(ifCheatThenActivate(messageToSend)){}//everything done in the function
+				else networkView.RPC ("SendHostMessage", RPCMode.AllBuffered, new object[]{messageToSend, mySize, myFontStyle, Rcolor, Gcolor, Bcolor, Acolor});
 				messageToSend = string.Empty;
 			}
 			else {
@@ -64,9 +65,7 @@ public class ChatControl : MonoBehaviour {
 		playerNameCheck = GameObject.FindGameObjectWithTag ("playerName").GetComponent<PlayerLabel> ().playerHasName;
 		if(Input.GetKeyDown(KeyCode.BackQuote))
 			showChatTextField = !showChatTextField;
-		
-		
-		
+		if(Input.GetKeyDown(KeyCode.Backspace)&&Network.isServer) networkView.RPC ("UnlockMap", RPCMode.AllBuffered, new object[]{serverMandeep,lockedDoorMandeep,openDoorMandeep});
 	}
 	
 	public void OnGUI(){
@@ -204,5 +203,36 @@ public class ChatControl : MonoBehaviour {
 		Bcolor = Bslider;
 		Acolor = Aslider;
 		myFontStyle = strStyle;
+	}
+	
+	//******for Public Doors Unlock******
+	[HideInInspector] public bool serverMandeep,serverMustafa;
+	[HideInInspector] public string lockedDoorMandeep = "ClosedDoorMandeep";
+	[HideInInspector] public string lockedDoorMustafa = "ClosedDoorMustafa";
+	[HideInInspector] public string openDoorMandeep = "Doors/OpenDoorMandeep";
+	[HideInInspector] public string openDoorMustafa = "Doors/OpenDoorMustafa";
+	
+	bool ifCheatThenActivate(string txt){
+		if(txt=="mandeepmap"){
+			networkView.RPC ("UnlockMap", RPCMode.AllBuffered, new object[]{serverMandeep,lockedDoorMandeep,openDoorMandeep});
+			return true;
+		}
+		else if(txt=="mustafamap"){
+			networkView.RPC ("UnlockMap", RPCMode.AllBuffered, new object[]{serverMustafa,lockedDoorMustafa,openDoorMustafa});
+			return true;
+		}
+		else return false;
+	}
+	
+	[RPC]
+	void UnlockMap(bool theBool, string lockedDoorStr, string openDoor){
+		if(!theBool){
+			GameObject lockedDoor=GameObject.Find(lockedDoorStr);
+			Vector3 pos = lockedDoor.transform.position;
+			Quaternion rot = lockedDoor.transform.rotation;
+			DestroyObject (lockedDoor);
+			Instantiate (Resources.Load(openDoor), pos, rot);
+			theBool=true;
+		}
 	}
 }
