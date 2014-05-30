@@ -17,10 +17,10 @@ public class NetworkManager : MonoBehaviour {
 	public Transform spawnFive;
 	/*******************/
 	
-	/*private void  Awake(){
-		MasterServer.ipAddress = "10.82.32.35";
+	private void  Awake(){
+		MasterServer.ipAddress = "192.168.0.13";
 		MasterServer.port = 23466;
-	}*/
+	}
 
 	private Vector3 spawnPosition;
 	private Vector3 CalcSpawnPos(){

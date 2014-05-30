@@ -12,6 +12,7 @@ public class ChatControl : MonoBehaviour {
 	public bool showChatTextField;
 	
 	public GameObject hostMessageGameObj;
+	public GameObject main_scripts;
 	
 	void Start(){
 		//chatMessages.Add ("Welcome to the Multiplayer Car-Game!");
@@ -30,6 +31,8 @@ public class ChatControl : MonoBehaviour {
 		else if(styleStart==FontStyle.BoldAndItalic) strStyle="Bold and Italic";
 		else strStyle="Normal";
 		ApplyAllChanges ();
+
+		main_scripts = GameObject.Find ("_SCRIPTS");
 	}
 	
 	

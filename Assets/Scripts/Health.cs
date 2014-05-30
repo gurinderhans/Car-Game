@@ -16,6 +16,8 @@ public class Health : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		//print ("hit is " + hit);
+
 		if(hit){
 			//health -= 25f;
 			//hit = false;

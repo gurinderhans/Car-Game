@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class CrossHair : MonoBehaviour {
-
+	
 	public enum preset { none, shotgunPreset, crysisPreset }
 	public preset crosshairPreset = preset.none;
 	
@@ -32,18 +32,11 @@ public class CrossHair : MonoBehaviour {
 	Rect rectShootCamera;
 	bool modeFS;
 	public Transform shoot_bullet_from;
-
-	public Ray gunCamRay;
-
+	
 	[HideInInspector] public Texture2D temp;
 	[HideInInspector] public float spread,myspread;
-
-	public Camera gunCam;
 	
 	void Start () {
-
-		gunCam = GameObject.FindGameObjectWithTag ("GunCam").camera;
-
 		crosshairPreset = preset.none;
 		whoIsIt = null;
 		
@@ -66,17 +59,19 @@ public class CrossHair : MonoBehaviour {
 			
 			
 			
-
+			
 			//by Manshant Singh
 			RaycastHit hit;
-			gunCamRay = gunCam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));//this shoots exactly from the middle of camera
-			//Debug.Log(ray);
-			if(Physics.Raycast(gunCamRay, out hit, this.GetComponent<ShootBullet>().shootLength))
+			Debug.DrawRay(shoot_bullet_from.transform.position, transform.forward * this.GetComponent<ShootBullet>().shootLength);
+
+
+
+			if(Physics.Raycast(shoot_bullet_from.position, transform.forward, out hit, this.GetComponent<ShootBullet>().shootLength))
 				whoIsIt=hit.transform.gameObject.tag;
 			else
 				whoIsIt=null;
-
-
+			
+			
 			//Used just for test (weapon script should change spread).
 			if(isMoving()){
 				spread += spreadPerSecond * Time.deltaTime;
@@ -106,7 +101,7 @@ public class CrossHair : MonoBehaviour {
 			GUIStyle verticalT = new GUIStyle();
 			GUIStyle horizontalT = new GUIStyle();
 			
-			if(whoIsIt=="Green"){
+			if(whoIsIt=="raycastTarget"){
 				verticalT.normal.background = greenTexture;
 				horizontalT.normal.background = greenTexture;
 			} else if(whoIsIt=="Player"){
@@ -119,8 +114,9 @@ public class CrossHair : MonoBehaviour {
 				rotSpeed = 0f;
 				rotAngle = Mathf.Lerp(rotAngle, 0f, Time.deltaTime * 3f);
 			}
-
+			
 			//we want cross hair to rotate only on smart hit
+
 			if(this.GetComponent<ShootBullet>().smartFire){
 				rotSpeed = 0f;
 				rotAngle = Mathf.Lerp(rotAngle, 135f, Time.deltaTime * 3f);
@@ -128,10 +124,10 @@ public class CrossHair : MonoBehaviour {
 				rotSpeed = 0f;
 				rotAngle = Mathf.Lerp(rotAngle, 0f, Time.deltaTime * 3f);
 			}
-
+			
 			spread = Mathf.Clamp(spread, minSpread, maxSpread);
 			myspread = Mathf.Clamp(myspread, myminSpread, mymaxSpread);
-
+			
 			Vector2 pivotFS = new Vector2(Screen.width/2, Screen.height/2);
 			Vector2 pivotSS = new Vector2(rectShootCamera.x + rectShootCamera.width * 0.37f, rectShootCamera.y * 0.734f - rectShootCamera.height/2);
 			//Vector2 pivot = new Vector2(Screen.width/2, Screen.height/2);
@@ -164,7 +160,7 @@ public class CrossHair : MonoBehaviour {
 				if(!modeFS){
 					//GUIUtility.RotateAroundPivot(rotAngle%360,pivot);
 					GUIUtility.RotateAroundPivot(rotAngle%360,pivotSS);
-
+					
 					//Horizontal
 					GUI.Box(new Rect(rectShootCamera.x + (rectShootCamera.width - mycWidth)*0.37f, rectShootCamera.y*0.734f - (rectShootCamera.height + myspread)/2 - mycLength/2, mycWidth, mycLength), temp, horizontalT);
 					GUI.Box(new Rect(rectShootCamera.x + (rectShootCamera.width - mycWidth)*0.37f, rectShootCamera.y*0.734f - (rectShootCamera.height - myspread)/2 - mycLength/2, mycWidth, mycLength), temp, horizontalT);
@@ -175,7 +171,7 @@ public class CrossHair : MonoBehaviour {
 				if(modeFS){
 					//GUIUtility.RotateAroundPivot(rotAngle%360,pivot);
 					GUIUtility.RotateAroundPivot(rotAngle%360,pivotFS);
-
+					
 					//Horizontal
 					GUI.Box(new Rect((Screen.width - cWidth)/2,(Screen.height - spread)/2 - cLength/2, cWidth, cLength), temp, horizontalT);
 					GUI.Box(new Rect((Screen.width - cWidth)/2,(Screen.height + spread)/2 - cLength/2, cWidth, cLength), temp, horizontalT);
@@ -186,5 +182,5 @@ public class CrossHair : MonoBehaviour {
 			}
 		}
 	}
-
+	
 }
