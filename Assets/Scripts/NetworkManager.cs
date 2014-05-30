@@ -21,6 +21,7 @@ public class NetworkManager : MonoBehaviour {
 		MasterServer.ipAddress = "192.168.0.13";
 		MasterServer.port = 23466;
 	}
+	public Camera gameViewCam;
 
 	private Vector3 spawnPosition;
 	private Vector3 CalcSpawnPos(){
@@ -59,7 +60,7 @@ public class NetworkManager : MonoBehaviour {
 
 		//enable the gun parts of car
 		myCar.GetComponentInChildren<GunMovement> ().enabled = true;
-		myCar.GetComponentInChildren<CrossHair> ().enabled = true;
+		//myCar.GetComponentInChildren<CrossHair> ().enabled = true;
 		myCar.GetComponentInChildren<ShootBullet> ().enabled = true;
 
 		//keep this in case unity gives problem and gives you ability to control other players guns
@@ -75,7 +76,9 @@ public class NetworkManager : MonoBehaviour {
 		myCar.GetComponentInChildren<TextMesh>().renderer.enabled = false;
 
 		//MSK stuff
-		Instantiate (Resources.Load ("GunCam"), new Vector3 (0f, 10f, 0f), Quaternion.identity);
+		//Instantiate (Resources.Load ("GunCam"), new Vector3 (0f, 10f, 0f), Quaternion.identity);
+
+		gameViewCam.enabled = false;
 
 	}
 	

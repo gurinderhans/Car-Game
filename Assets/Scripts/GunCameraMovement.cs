@@ -2,72 +2,19 @@
 using System.Collections;
 
 public class GunCameraMovement : MonoBehaviour {
-	
-	
-	public float speed;
-	
-	string turretName;
-	
-	Transform turret;
-	
-	//Camera guncam;
-	//public Camera driveCam;
-	
-	float behindPos;
-	float upPos;
-	[HideInInspector] public Rect rectShootCam;
-	Rect rectStored;
-	bool shootMode=false;
-	
-	void Start(){
-		/*set the cameras*/
-		//driveCam = GameObject.FindGameObjectWithTag ("MainCamera").camera;
-		
-		rectShootCam = camera.rect;
-		rectStored = camera.rect;
-		
-		turret = GameObject.FindGameObjectWithTag ("Gun").transform;
-	}
-	
+
 	void LateUpdate(){
 		if(Time.timeScale!=0){
-			behindPos = turret.GetComponent<GunMovement> ().gunBehind;
-			upPos = turret.GetComponent<GunMovement> ().gunUp;
 			
-			transform.position = turret.position;
-			if(!shootMode){
-				transform.Translate (-Vector3.forward * behindPos);
-				transform.Translate(Vector3.up * upPos);
-			}
-			else if(shootMode){
-				transform.Translate (-Vector3.forward * 25);
-				transform.Translate(Vector3.up * 6);
-			}
+			transform.position = GameObject.FindGameObjectWithTag ("Gun").transform.position;
+			transform.Translate (-Vector3.forward * 25);
+			transform.Translate(Vector3.up * 6);
+
 			float angleX = transform.eulerAngles.x;
 			float angleY = transform.eulerAngles.y;
-			angleX -= Input.GetAxis ("Mouse Y") * speed;
-			angleY += Input.GetAxis ("Mouse X") * speed;
+			angleX -= Input.GetAxis ("Mouse Y") * 5f;
+			angleY += Input.GetAxis ("Mouse X") * 5f;
 			transform.rotation = Quaternion.Euler (angleX, angleY, 0);
-		}
-	}
-	
-	void Update () {
-		if(Time.timeScale!=0){
-			if(Input.GetKeyDown(KeyCode.Y)){
-				if(!shootMode){
-					camera.rect = new Rect(0,0,Screen.width,Screen.height);
-					shootMode = true;
-				}
-				else{
-					camera.rect = rectStored;
-					//camera.depth += 2;
-					shootMode = false;
-					//driveCam.GetComponent<GUILayer>().enabled = true;
-				}
-			}
-			
-			rectShootCam = camera.rect;
-			
 		}
 	}
 }

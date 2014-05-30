@@ -36,6 +36,8 @@ public class DriveCamController : MonoBehaviour {
 		//get floats of distance and height of camera from car b/c each car has different values
 		distance = car.GetComponent<CarController> ().carCamPosBehind;
 		height = car.GetComponent<CarController> ().carCamPosUp;
+
+		transform.position = Vector3.Lerp (transform.position, transform.position, Time.deltaTime);
 		
 	}
 	

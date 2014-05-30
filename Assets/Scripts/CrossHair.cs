@@ -31,7 +31,8 @@ public class CrossHair : MonoBehaviour {
 	public Texture2D greenTexture;
 	Rect rectShootCamera;
 	bool modeFS;
-	public Transform shoot_bullet_from;
+
+	//public GameObject shootingGun; //using this to check smartFire or not
 	
 	[HideInInspector] public Texture2D temp;
 	[HideInInspector] public float spread,myspread;
@@ -54,19 +55,13 @@ public class CrossHair : MonoBehaviour {
 		mymaxSpread = maxSpread * (OriCamShoot.width + OriCamShoot.height) / 2;
 		
 		if(Time.timeScale!=0){
-			//switch between modes
-			if(Input.GetKeyDown(KeyCode.Y)) modeFS=!modeFS;
-			
-			
-			
-			
-			//by Manshant Singh
+
 			RaycastHit hit;
-			Debug.DrawRay(shoot_bullet_from.transform.position, transform.forward * this.GetComponent<ShootBullet>().shootLength);
+			//Debug.DrawRay(transform.position, transform.forward * 200);
+			Ray crosshairRay = Camera.main.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
 
 
-
-			if(Physics.Raycast(shoot_bullet_from.position, transform.forward, out hit, this.GetComponent<ShootBullet>().shootLength))
+			if(Physics.Raycast(crosshairRay, out hit, 200))//we'll alawys shoot raycast from the exact middle of screen
 				whoIsIt=hit.transform.gameObject.tag;
 			else
 				whoIsIt=null;
@@ -117,36 +112,31 @@ public class CrossHair : MonoBehaviour {
 			
 			//we want cross hair to rotate only on smart hit
 
-			if(this.GetComponent<ShootBullet>().smartFire){
+			/*if(this.GetComponent<ShootBullet>().smartFire){
 				rotSpeed = 0f;
 				rotAngle = Mathf.Lerp(rotAngle, 135f, Time.deltaTime * 3f);
 			} else{
 				rotSpeed = 0f;
 				rotAngle = Mathf.Lerp(rotAngle, 0f, Time.deltaTime * 3f);
-			}
+			}*/
 			
 			spread = Mathf.Clamp(spread, minSpread, maxSpread);
 			myspread = Mathf.Clamp(myspread, myminSpread, mymaxSpread);
 			
-			Vector2 pivotFS = new Vector2(Screen.width/2, Screen.height/2);
-			Vector2 pivotSS = new Vector2(rectShootCamera.x + rectShootCamera.width * 0.37f, rectShootCamera.y * 0.734f - rectShootCamera.height/2);
-			//Vector2 pivot = new Vector2(Screen.width/2, Screen.height/2);
+			Vector2 pivot = new Vector2(Screen.width/2, Screen.height/2);
 			
 			if(crosshairPreset == preset.crysisPreset){
 				
 				GUI.Box(new Rect((Screen.width - 2)/2, (Screen.height - spread)/2 - 14, 2, 14), temp, horizontalT);
-				//GUIUtility.RotateAroundPivot(45,pivot);
-				GUIUtility.RotateAroundPivot(45,pivotFS);
+				GUIUtility.RotateAroundPivot(45,pivot);
 				GUI.Box(new Rect((Screen.width + spread)/2, (Screen.height - 2)/2, 14, 2), temp, verticalT);
-				//GUIUtility.RotateAroundPivot(0,pivot);
-				GUIUtility.RotateAroundPivot(0,pivotFS);
+				GUIUtility.RotateAroundPivot(0,pivot);
 				GUI.Box(new Rect((Screen.width - 2)/2, (Screen.height + spread)/2, 2, 14), temp, horizontalT);
 			}
 			
 			if(crosshairPreset == preset.shotgunPreset){
 				
-				//GUIUtility.RotateAroundPivot(45,pivot);
-				GUIUtility.RotateAroundPivot(45,pivotFS);
+				GUIUtility.RotateAroundPivot(45,pivot);
 				
 				//Horizontal
 				GUI.Box(new Rect((Screen.width - 14)/2, (Screen.height - spread)/2 - 3, 14, 3), temp, horizontalT);
@@ -157,28 +147,16 @@ public class CrossHair : MonoBehaviour {
 			}
 			
 			if(crosshairPreset == preset.none){
-				if(!modeFS){
-					//GUIUtility.RotateAroundPivot(rotAngle%360,pivot);
-					GUIUtility.RotateAroundPivot(rotAngle%360,pivotSS);
-					
-					//Horizontal
-					GUI.Box(new Rect(rectShootCamera.x + (rectShootCamera.width - mycWidth)*0.37f, rectShootCamera.y*0.734f - (rectShootCamera.height + myspread)/2 - mycLength/2, mycWidth, mycLength), temp, horizontalT);
-					GUI.Box(new Rect(rectShootCamera.x + (rectShootCamera.width - mycWidth)*0.37f, rectShootCamera.y*0.734f - (rectShootCamera.height - myspread)/2 - mycLength/2, mycWidth, mycLength), temp, horizontalT);
-					//Vertical
-					GUI.Box(new Rect(rectShootCamera.x + (rectShootCamera.width - myspread)*0.37f - mycLength/2, rectShootCamera.y*0.73f - (rectShootCamera.height - mycWidth)/2, mycLength, mycWidth), temp, verticalT);
-					GUI.Box(new Rect(rectShootCamera.x + (rectShootCamera.width + myspread)*0.37f - mycLength/2, rectShootCamera.y*0.73f - (rectShootCamera.height - mycWidth)/2, mycLength, mycWidth), temp, verticalT);
-				}
-				if(modeFS){
-					//GUIUtility.RotateAroundPivot(rotAngle%360,pivot);
-					GUIUtility.RotateAroundPivot(rotAngle%360,pivotFS);
-					
-					//Horizontal
-					GUI.Box(new Rect((Screen.width - cWidth)/2,(Screen.height - spread)/2 - cLength/2, cWidth, cLength), temp, horizontalT);
-					GUI.Box(new Rect((Screen.width - cWidth)/2,(Screen.height + spread)/2 - cLength/2, cWidth, cLength), temp, horizontalT);
-					//Vertical
-					GUI.Box(new Rect((Screen.width - spread)/2 - cLength/2, (Screen.height - cWidth)/2, cLength, cWidth), temp, verticalT);
-					GUI.Box(new Rect((Screen.width + spread)/2 - cLength/2, (Screen.height - cWidth)/2, cLength, cWidth), temp, verticalT);
-				}
+
+				GUIUtility.RotateAroundPivot(rotAngle%360,pivot);
+				
+				//Horizontal
+				GUI.Box(new Rect((Screen.width - cWidth)/2,(Screen.height - spread)/2 - cLength/2, cWidth, cLength), temp, horizontalT);
+				GUI.Box(new Rect((Screen.width - cWidth)/2,(Screen.height + spread)/2 - cLength/2, cWidth, cLength), temp, horizontalT);
+				//Vertical
+				GUI.Box(new Rect((Screen.width - spread)/2 - cLength/2, (Screen.height - cWidth)/2, cLength, cWidth), temp, verticalT);
+				GUI.Box(new Rect((Screen.width + spread)/2 - cLength/2, (Screen.height - cWidth)/2, cLength, cWidth), temp, verticalT);
+
 			}
 		}
 	}

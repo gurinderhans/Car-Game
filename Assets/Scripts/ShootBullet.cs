@@ -5,7 +5,6 @@ public class ShootBullet : MonoBehaviour {
 	
 	
 	public float shootForce;
-	GameObject turret;
 	
 	public Transform shoot_bullet_from;
 	public float myPoints = 0f;
@@ -14,22 +13,47 @@ public class ShootBullet : MonoBehaviour {
 	//GUIText updateToPlayer;
 	public Transform instantiateBulletFrom;
 	public GUIStyle myStyle;
-	
+
+	//get the gunCam
+	public Transform gunCamera;
+
+	/******************************************************************
+	******************************************************************
+	******************************************************************
+	******************************************************************
+	******************************************************************
+	******************************************************************
+
+	***********NOTE => Create a seperate script which controls all the script turning on and off***************
+
+	******************************************************************
+	******************************************************************
+	******************************************************************
+	******************************************************************
+	******************************************************************/
+
 	
 	void Start(){
 		//updateToPlayer = GameObject.FindGameObjectWithTag ("playerUpdates").guiText;
 		
-		turret = GameObject.FindGameObjectWithTag ("Gun");
 	}
-	
+
+	Vector3 rayOriginPos;
+
 	void OnGUI(){
 		GUI.Label (new Rect (0,Screen.height - 50,100,50), myPoints.ToString() +": points", myStyle);
 	}
 	
 	void Update () {
+		//gunCamera = this.GetComponent<GunMovement> ().myCamera.transform.parent.gameObject.transform;
+
+		if(gunCamera == null)
+			return;
+
+		rayOriginPos = gunCamera.position;
+		//print ("SHOOT BULLET "+rayOriginPos);
+
 		if(Time.timeScale!=0){
-			transform.rotation=turret.transform.rotation;
-			transform.position=turret.transform.position;
 			
 			if(Input.GetMouseButton(1)){
 				networkView.RPC ("SmartFire", RPCMode.All);
@@ -42,7 +66,7 @@ public class ShootBullet : MonoBehaviour {
 			} else{
 				smartFire = false;
 			}
-			//Debug.DrawRay(shoot_bullet_from.position, transform.forward*shootLength, Color.green);
+			Debug.DrawRay(rayOriginPos, transform.forward * shootLength);
 		}
 	}
 	
@@ -98,9 +122,10 @@ public class ShootBullet : MonoBehaviour {
 		RaycastHit hit;
 		//need shoot_bullet_from transform because gun position isnt same as crosshair position on screen
 		//also still need to change shoot_bullet_from position little more up so it falls very close tot crosshair pos
-		
-		if(Physics.Raycast(shoot_bullet_from.position, transform.forward, out hit, shootLength)){//make ray length larger
-			
+
+		if(Physics.Raycast(rayOriginPos, transform.forward, out hit, shootLength)){//make ray length larger
+			//print("player hit status: "+hit.transform.gameObject.GetComponentInChildren<Health>().hit);
+			print ("I hit " + hit.transform.gameObject.tag + "with tag "+hit.transform.gameObject.tag);
 			if(hit.transform.gameObject.tag == "Player"){
 				hit.transform.gameObject.GetComponentInChildren<Health>().hit = true;
 				if(hit.transform.gameObject.GetComponentInChildren<Health>().health < 30){
@@ -109,12 +134,13 @@ public class ShootBullet : MonoBehaviour {
 					iGetPoint = true;
 				}
 			}
+			if(iGetPoint){//not very fast either but for now its good as well
+				iGetPoint = false;
+				myPoints += 5f;//add 5 points for each kill kinda it usually adds 10 or more~~
+			}
 		}
-		if(iGetPoint){//not very fast either but for now its good as well
-			iGetPoint = false;
-			myPoints += 5f;//add 5 points for each kill kinda it usually adds 10 or more~~
-		}
-		//Debug.DrawRay(shoot_bullet_from.position, transform.forward * shootLength);
+
+		Debug.DrawRay(rayOriginPos, transform.forward * shootLength, Color.green);
 	}
 	
 }
