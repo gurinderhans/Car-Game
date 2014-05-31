@@ -17,10 +17,12 @@ public class NetworkManager : MonoBehaviour {
 	public Transform spawnFive;
 	/*******************/
 	
-	private void  Awake(){
+	/*private void  Awake(){
 		MasterServer.ipAddress = "192.168.0.13";
 		MasterServer.port = 23466;
 	}
+	*/
+
 	public Camera gameViewCam;
 
 	private Vector3 spawnPosition;
@@ -59,9 +61,11 @@ public class NetworkManager : MonoBehaviour {
 		myCar.GetComponentInChildren<Health> ().enabled = true;
 
 		//enable the gun parts of car
-		myCar.GetComponentInChildren<GunMovement> ().enabled = true;
+
+
+		//myCar.GetComponentInChildren<GunMovement> ().enabled = true;
 		//myCar.GetComponentInChildren<CrossHair> ().enabled = true;
-		myCar.GetComponentInChildren<ShootBullet> ().enabled = true;
+		//myCar.GetComponentInChildren<ShootBullet> ().enabled = true;
 
 		//keep this in case unity gives problem and gives you ability to control other players guns
 		/*GameObject myGun = (GameObject) myCar.transform.FindChild ("gun TBS 001C").gameObject;

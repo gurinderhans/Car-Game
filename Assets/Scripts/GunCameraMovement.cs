@@ -2,10 +2,8 @@
 using System.Collections;
 
 public class GunCameraMovement : MonoBehaviour {
-
 	void LateUpdate(){
 		if(Time.timeScale!=0){
-			
 			transform.position = GameObject.FindGameObjectWithTag ("Gun").transform.position;
 			transform.Translate (-Vector3.forward * 25);
 			transform.Translate(Vector3.up * 6);

@@ -57,15 +57,15 @@ public class CrossHair : MonoBehaviour {
 		if(Time.timeScale!=0){
 
 			RaycastHit hit;
-			//Debug.DrawRay(transform.position, transform.forward * 200);
 			Ray crosshairRay = Camera.main.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
 
+			Debug.DrawRay(crosshairRay.origin, crosshairRay.direction*200, Color.green);
 
 			if(Physics.Raycast(crosshairRay, out hit, 200))//we'll alawys shoot raycast from the exact middle of screen
 				whoIsIt=hit.transform.gameObject.tag;
 			else
 				whoIsIt=null;
-			
+
 			
 			//Used just for test (weapon script should change spread).
 			if(isMoving()){
@@ -89,8 +89,6 @@ public class CrossHair : MonoBehaviour {
 	}
 	
 	void OnGUI(){
-		
-		
 		
 		if(showCrosshair && verticalTexture && horizontalTexture && Time.timeScale!=0){
 			GUIStyle verticalT = new GUIStyle();
