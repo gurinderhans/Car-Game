@@ -9,8 +9,15 @@ public class GameModeManager : MonoBehaviour {
 	/*GUN Componenets*/
 	GameObject gun;
 
+	//GUI style
+	public GUIStyle pointsDisplayStyle;
+
 	void Start(){
 		gun = GameObject.FindGameObjectWithTag ("Gun");
+	}
+
+	void OnGUI(){
+		GUI.Label (new Rect (0,Screen.height - 50,100,50), gun.GetComponent<ShootBullet>().myPoints.ToString() +": points", pointsDisplayStyle);
 	}
 
 	void Update () {
@@ -28,9 +35,6 @@ public class GameModeManager : MonoBehaviour {
 			gun.GetComponent<GunMovement>().enabled = true;
 			gun.GetComponent<ShootBullet>().enabled = true;
 
-			/*Bring the Gun UP*/
-			//gun.transform.localPosition = Vector3.up * 6f;//this is to move gun up and down / hide || show it
-
 
 		} else{
 
@@ -41,9 +45,6 @@ public class GameModeManager : MonoBehaviour {
 			/*Disabling Gun Components*/
 			gun.GetComponent<GunMovement>().enabled = false;
 			gun.GetComponent<ShootBullet>().enabled = false;
-
-			/*Put the Gun Down*/
-			//gun.transform.localPosition = Vector3.down * 2f;//this is to move gun up and down / hide || show it
 
 		}
 	}

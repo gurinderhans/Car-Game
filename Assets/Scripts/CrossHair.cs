@@ -32,7 +32,7 @@ public class CrossHair : MonoBehaviour {
 	Rect rectShootCamera;
 	bool modeFS;
 
-	//public GameObject shootingGun; //using this to check smartFire or not
+	public GameObject gun; //using this to check smartFire or not
 	
 	[HideInInspector] public Texture2D temp;
 	[HideInInspector] public float spread,myspread;
@@ -40,7 +40,8 @@ public class CrossHair : MonoBehaviour {
 	void Start () {
 		crosshairPreset = preset.none;
 		whoIsIt = null;
-		
+
+		gun = GameObject.FindGameObjectWithTag ("Gun").gameObject;
 	}
 	
 	void Update(){
@@ -110,13 +111,13 @@ public class CrossHair : MonoBehaviour {
 			
 			//we want cross hair to rotate only on smart hit
 
-			/*if(this.GetComponent<ShootBullet>().smartFire){
+			if(gun.GetComponent<ShootBullet>().smartFire){
 				rotSpeed = 0f;
 				rotAngle = Mathf.Lerp(rotAngle, 135f, Time.deltaTime * 3f);
 			} else{
 				rotSpeed = 0f;
 				rotAngle = Mathf.Lerp(rotAngle, 0f, Time.deltaTime * 3f);
-			}*/
+			}
 			
 			spread = Mathf.Clamp(spread, minSpread, maxSpread);
 			myspread = Mathf.Clamp(myspread, myminSpread, mymaxSpread);

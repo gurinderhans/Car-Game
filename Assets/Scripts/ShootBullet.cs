@@ -12,7 +12,6 @@ public class ShootBullet : MonoBehaviour {
 	public float shootLength;
 	//GUIText updateToPlayer;
 	public Transform shoot_bullet_from;
-	public GUIStyle pointsDisplayStyle;//used for points display
 	
 	//get the gunCam
 	public Camera mainCam;
@@ -21,10 +20,6 @@ public class ShootBullet : MonoBehaviour {
 	void Start(){
 		//updateToPlayer = GameObject.FindGameObjectWithTag ("playerUpdates").guiText;
 		mainCam = GameObject.FindGameObjectWithTag ("MainCamera").camera;
-	}
-	
-	void OnGUI(){
-		GUI.Label (new Rect (0,Screen.height - 50,100,50), myPoints.ToString() +": points", pointsDisplayStyle);
 	}
 	
 	void Update () {
