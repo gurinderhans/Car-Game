@@ -50,7 +50,7 @@ public class AllCheats : MonoBehaviour {
 	}
 	
 	void isPasswordRight(){
-		if(passwordTry=="GURIorMSK") developerMode=!developerMode;
+		if(passwordTry=="GURIorMSK") developerMode=!developerMode;//probably dont want to turn this false so just set to true later
 		if(passwordTry=="kangaroo") jumpAllowed=!jumpAllowed;
 		if(passwordTry=="rapid") nitroAllowed=!nitroAllowed;
 		if(passwordTry=="mandeepmap") UnlockMandeepMap();

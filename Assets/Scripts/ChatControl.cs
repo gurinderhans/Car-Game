@@ -48,14 +48,13 @@ public class ChatControl : MonoBehaviour {
 				ApplyAllChanges();
 				if(ifCheatThenActivate(messageToSend)){}//everything done in the function
 				else networkView.RPC ("SendHostMessage", RPCMode.AllBuffered, new object[]{messageToSend, mySize, myFontStyle, Rcolor, Gcolor, Bcolor, Acolor});
-				messageToSend = string.Empty;
 			}
 			else {
 				if (messageToSend.Length > 0) {//we dont send empty messages
 					networkView.RPC ("SendClientMessage", RPCMode.AllBuffered, new object[]{messageToSend, playerName});
-					messageToSend = string.Empty;
 				}
 			}
+			messageToSend = string.Empty;
 		}
 		
 		GUILayout.EndHorizontal ();
@@ -65,20 +64,19 @@ public class ChatControl : MonoBehaviour {
 	public bool playerNameCheck;
 	
 	void Update(){
-		playerNameCheck = GameObject.FindGameObjectWithTag ("playerName").GetComponent<PlayerLabel> ().playerHasName;
+		playerNameCheck = main_scripts.GetComponent<NetworkManager> ().playerHasName;
+		print (playerNameCheck);
 		if(Input.GetKeyDown(KeyCode.BackQuote))
 			showChatTextField = !showChatTextField;
 		if(Input.GetKeyDown(KeyCode.Backspace)&&Network.isServer) networkView.RPC ("UnlockMap", RPCMode.AllBuffered, new object[]{serverMandeep,lockedDoorMandeep,openDoorMandeep});
 	}
 	
 	public void OnGUI(){
-		playerName = GameObject.FindGameObjectWithTag ("playerName").GetComponent<PlayerLabel> ().myName;
+		playerName = main_scripts.GetComponent<NetworkManager> ().myName;
 		
 		if(Time.timeScale != 0){
 			
 			if(playerNameCheck){
-				//player chat will have to go before the next class build so this whole thing will have to removed :(
-				
 				if(showChatTextField){
 					Rect windowRect = new Rect(0,Screen.height - 50,270,70);
 					windowRect = GUI.Window(1, windowRect, windowFunc, "Chat");

@@ -16,6 +16,8 @@ public class NetworkManager : MonoBehaviour {
 	public Transform spawnFour;
 	public Transform spawnFive;
 	/*******************/
+
+	public bool playerHasName;
 	
 	/*private void  Awake(){
 		MasterServer.ipAddress = "192.168.0.13";
@@ -216,13 +218,14 @@ public class NetworkManager : MonoBehaviour {
 		}*/
 	}
 
-	private string playerCustomName;
 	void ServerMenu(){
-		//(l,t,w,h)
-		if(GUI.Button(new Rect(25f, 15f, 150f, 30f), "Create Server")){
-			// Start server function here
-			StartServer();
-			isServerStarted = true;
+		if(this.GetComponent<AllCheats>().developerMode){
+			//(l,t,w,h)
+			if(GUI.Button(new Rect(25f, 15f, 150f, 30f), "Create Server")){
+				// Start server function here
+				StartServer();
+				isServerStarted = true;
+			}
 		}
 
 		if(GUI.Button(new Rect(25f, 55f, 150f, 30f), "Find Game")){
@@ -241,6 +244,14 @@ public class NetworkManager : MonoBehaviour {
 		
 	}
 
+	public string myName;
+	void GivePlayerName(){
+		myName = GUI.TextField(new Rect(115f, 20.5f, 150f, 22.5f), myName, 25);
+		if (Event.current.isKey && Event.current.keyCode == KeyCode.Return || GUI.Button (new Rect (0f, 20.5f, 100f, 22.5f), "Create Name")){
+			//networkView.RPC ("changeName", RPCMode.AllBuffered, new object[]{myName});
+			playerHasName = true;
+		}
+	}
 
 	//GUI STUFF
 	private bool isCarChosen;
@@ -248,6 +259,8 @@ public class NetworkManager : MonoBehaviour {
 	private bool isServerStarted;
 
 	public void OnGUI(){
+
+		//print (myName);
 
 		if(Network.isServer){
 			GUILayout.Label("Running as a server.");
@@ -261,11 +274,9 @@ public class NetworkManager : MonoBehaviour {
 			if(!isColorChosen){
 				ChooseColor();
 			} else {
-				if(!isServerStarted){
-					ServerMenu();
-				} else{
-					//do nothing here
-				}
+				if(!playerHasName) GivePlayerName();
+				else
+					if(!isServerStarted) ServerMenu();
 			}
 		}
 	}

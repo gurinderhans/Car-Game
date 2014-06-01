@@ -15,7 +15,12 @@ public class PlayerLabel : MonoBehaviour {
 	Transform camTransform;
 
 	/*****NAME STUFF****/
-	public string myName;
+	//public string myName;
+
+	//find _SCRIPTS GameObj
+	GameObject all_scripts;
+
+	bool sendInitNameChangeRPC = true;//we only want the RPC call to go once in the start when name is changed
 	
 	void Start (){
 		thisTransform = transform;
@@ -26,6 +31,8 @@ public class PlayerLabel : MonoBehaviour {
 		}
 
 		camTransform = cam.transform;
+
+		all_scripts = GameObject.Find ("_SCRIPTS");
 	}
 	
 	
@@ -47,25 +54,17 @@ public class PlayerLabel : MonoBehaviour {
 					thisTransform.position = cam.WorldToViewportPoint(target.position + offset);//lerp this for smoothness
 				}
 			}
-		}
-	}
-	public bool playerHasName;
 
-	void GivePlayerName(){
+		}
+
 		if(networkView.isMine){
-			myName = GUI.TextField(new Rect(115f, 20.5f, 150f, 22.5f), myName, 25);
-			if (Event.current.isKey && Event.current.keyCode == KeyCode.Return || GUI.Button (new Rect (0f, 20.5f, 100f, 22.5f), "Update Name")){
-				networkView.RPC ("changeName", RPCMode.AllBuffered, new object[]{myName});
-				playerHasName = true;
+			if(all_scripts.GetComponent<NetworkManager>().playerHasName && sendInitNameChangeRPC){
+				//print ("yes name");
+				//print (all_scripts.GetComponent<NetworkManager>().myName);
+				sendInitNameChangeRPC = false;
+				print ("Changin Name");
+				networkView.RPC("changeName", RPCMode.AllBuffered, new object[]{all_scripts.GetComponent<NetworkManager>().myName});
 			}
-		}
-	}
-
-	void OnGUI(){
-		if(!playerHasName){
-			GivePlayerName();
-		} else{
-			//Debug.Log (Vector3.Distance (camTransform.position, target.position));
 		}
 	}
 

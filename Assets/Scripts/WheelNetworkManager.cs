@@ -5,6 +5,8 @@ public class WheelNetworkManager : MonoBehaviour {
 
 	private Quaternion currentPlayerRot = Quaternion.identity;
 	private Quaternion correctPlayerRot = Quaternion.identity;
+	
+
 	public float SmoothingDelay = 5;
 	
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info){
