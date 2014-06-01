@@ -154,8 +154,7 @@ public class CarController : MonoBehaviour {
 		
 		
 	}
-	
-	
+
 	//set slip function
 	void MakeSlip (float forwardFriction , float sidewayFriction){
 		/*<WheelFrictionCurve> is a struct so we cant change it directly
@@ -299,6 +298,7 @@ public class CarController : MonoBehaviour {
 		//if car currently drifting and only Input.GetAxis("Vertical") is pressed then speed it to make it go forward
 		//print (wheelRL.brakeTorque);
 		//all functions for car
+
 		Drift ();
 		WheelPosition ();
 		CalcDownForceOnCar ();
