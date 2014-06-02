@@ -65,7 +65,7 @@ public class ChatControl : MonoBehaviour {
 	
 	void Update(){
 		playerNameCheck = main_scripts.GetComponent<NetworkManager> ().playerHasName;
-		print (playerNameCheck);
+		//print (playerNameCheck);
 		if(Input.GetKeyDown(KeyCode.BackQuote))
 			showChatTextField = !showChatTextField;
 		if(Input.GetKeyDown(KeyCode.Backspace)&&Network.isServer) networkView.RPC ("UnlockMap", RPCMode.AllBuffered, new object[]{serverMandeep,lockedDoorMandeep,openDoorMandeep});

@@ -2,12 +2,12 @@
 using System.Collections;
 
 public class DriveCamController : MonoBehaviour {
-
+	
 	// the distance we want the camera to be behind the target
 	float distance;
 	// the height we want the camera to be above the target
 	float height;
-
+	
 	// How much 
 	public float heightDamping = 2.0f;
 	public float rotationDamping = 3.0f;
@@ -16,27 +16,42 @@ public class DriveCamController : MonoBehaviour {
 	
 	public GameObject car;//get the car for other stuff like speed
 	
+	public GameObject zoomPlane;//the sniper feature plane
+
+
+	//car speed text gui stuff
+	GameObject speedTextObj;
+	GUIText speedText;
+
 	
 	void Start(){
 		target = GameObject.Find ("Follow").transform;
 		
 		car = GameObject.FindGameObjectWithTag("Player");
 		
-	}
+		//the sniper feature disabled when this script is activated
+		Color temp = zoomPlane.renderer.material.color;
+		temp.a = 0;
+		zoomPlane.renderer.material.color = temp;
+		camera.fieldOfView = 60f;
 
+		speedTextObj = GameObject.Find ("Car Speed");
+		speedText = speedTextObj.guiText;
+	}
+	
 	/*Private variables*/
 	float wantedRotationAngle;
 	float wantedHeight;
 	float currentRotationAngle;
 	float currentHeight;
 	Quaternion currentRotation;
-
+	
 	
 	void Update(){
 		//get floats of distance and height of camera from car b/c each car has different values
 		distance = car.GetComponent<CarController> ().carCamPosBehind;
 		height = car.GetComponent<CarController> ().carCamPosUp;
-
+		
 		transform.position = Vector3.Lerp (transform.position, transform.position, Time.deltaTime);
 		
 	}
@@ -74,7 +89,11 @@ public class DriveCamController : MonoBehaviour {
 		
 		// Always look at the target
 		transform.LookAt (target);
-		
-	}
 
+
+		int carVelocity = (int) car.rigidbody.velocity.magnitude * 2;
+		string carVelocityToString = carVelocity.ToString ();
+		speedText.text = carVelocityToString + " km/h";
+	}
+	
 }
