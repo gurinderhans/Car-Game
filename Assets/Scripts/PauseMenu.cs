@@ -11,7 +11,6 @@ public class PauseMenu : MonoBehaviour {
 	float menuY;
 	
 	void Start(){
-		Screen.showCursor = true;
 		menuX = (Screen.width - 50)/4;
 		menuY = (Screen.height - 50)/4;
 	}
@@ -21,8 +20,9 @@ public class PauseMenu : MonoBehaviour {
 		
 		//menuX /= 4;
 		//menuY /= 4;
+		if(Input.GetKeyDown(KeyCode.C)) Screen.showCursor = !Screen.showCursor;
 		
-		if(Input.GetKeyDown(KeyCode.F)) Screen.fullScreen=!Screen.fullScreen;
+		//if(Input.GetKeyDown(KeyCode.F)) Screen.fullScreen=!Screen.fullScreen;
 		
 		if (Input.GetKeyDown(KeyCode.P)){
 			if(whereInPause=="quit"){
@@ -31,13 +31,13 @@ public class PauseMenu : MonoBehaviour {
 			else if(gamePaused){
 				Time.timeScale=1;
 				gamePaused=false;
-				Screen.showCursor=true;
+				//Screen.showCursor=true;
 				whereInPause=null;
 			}
 			else {
 				Time.timeScale=0;
 				gamePaused=true;
-				Screen.showCursor=true;
+				//Screen.showCursor=true;
 				whereInPause="main";
 			}
 		}

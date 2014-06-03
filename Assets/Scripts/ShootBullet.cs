@@ -16,6 +16,9 @@ public class ShootBullet : MonoBehaviour {
 	//get the gunCam
 	public Camera mainCam;
 
+	/*Few Checks*/
+	public bool pointsUpdated;
+
 	
 	void Start(){
 		//updateToPlayer = GameObject.FindGameObjectWithTag ("playerUpdates").guiText;
@@ -24,7 +27,7 @@ public class ShootBullet : MonoBehaviour {
 	
 	void Update () {
 		if(Time.timeScale!=0){
-			
+			//print (pointsUpdated);
 			if(Input.GetMouseButton(1)){
 				networkView.RPC ("SmartFire", RPCMode.All);
 			} else if(Input.GetMouseButtonDown(0)){
@@ -34,6 +37,7 @@ public class ShootBullet : MonoBehaviour {
 				networkView.RPC ("PlayerFire", RPCMode.All);
 				smartFire = false;
 			} else{
+				pointsUpdated = false;
 				smartFire = false;
 			}
 			Debug.DrawRay(shoot_ray_from.position, shoot_ray_from.transform.forward * shootLength, Color.red);
@@ -58,7 +62,8 @@ public class ShootBullet : MonoBehaviour {
 			if(iGetPoint){//not very fast either but for now its good as well
 				iGetPoint = false;
 				myPoints += 5f;//add 5 points for each kill kinda it usually adds 10 or more~~
-			}
+				pointsUpdated = true;
+			} else pointsUpdated = false;
 		}
 		
 		Debug.DrawRay(shoot_ray_from.position, shoot_ray_from.transform.forward * shootLength, Color.blue);
@@ -98,9 +103,9 @@ public class ShootBullet : MonoBehaviour {
 			if(iGetPoint){//not very fast either but for now its good as well
 				iGetPoint = false;
 				myPoints += 5f;//add 5 points for each kill kinda~~
+				pointsUpdated = true;
 				//updateToPlayer.text = "test"; //will be using this soon too.
 			}
-			
 		} else{
 			smartFire = false;
 		}

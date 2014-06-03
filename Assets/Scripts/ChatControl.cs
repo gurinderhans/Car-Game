@@ -7,7 +7,7 @@ public class ChatControl : MonoBehaviour {
 	public string messageToSend;
 	public List<string> chatMessages = new List<string>();
 	//make string empty because we dont want to send null values over network
-	public Vector2 scrollPosition;
+	Vector2 scrollPosition;
 	public string playerName;
 	public bool showChatTextField;
 	

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;//need for the list
 
 public class NetworkManager : MonoBehaviour {
 
@@ -18,7 +19,11 @@ public class NetworkManager : MonoBehaviour {
 	/*******************/
 
 	public bool playerHasName;
-	
+
+	//create the list to store all player info
+	List<Player> allPlayers = new List<Player>();
+
+
 	/*private void  Awake(){
 		MasterServer.ipAddress = "192.168.0.13";
 		MasterServer.port = 23466;
@@ -86,6 +91,9 @@ public class NetworkManager : MonoBehaviour {
 
 		gameViewCam.enabled = false;
 
+		//hide cursor when game starts initially after all the menu stuff
+		//Screen.showCursor = false;
+
 	}
 	
 	public IEnumerator RefreshHostList(){
@@ -113,9 +121,10 @@ public class NetworkManager : MonoBehaviour {
 		MasterServer.RegisterHost (reg_game_name, "Unity3D Game", "Enjoy!");
 	}
 
-	void OnServerInitialized(){
+	void OnServerInitialized(){//when the server itself has connected to master server
 		Debug.Log ("OnServerInitialized");
 		SpawnPlayer ();
+		//print (myName);
 	}
 
 	void OnMasterServerEvent(MasterServerEvent masterServerEvent){
@@ -124,10 +133,11 @@ public class NetworkManager : MonoBehaviour {
 		}
 	}
 
-	void OnConnectedToServer(){
+	void OnConnectedToServer(){//when a client connects to server
 		SpawnPlayer ();
+		//print (myName);
 	}
-	
+
 	void OnDisconnectedFromServer(NetworkDisconnection info){
 		Application.LoadLevel (0);
 	}
@@ -138,6 +148,7 @@ public class NetworkManager : MonoBehaviour {
 
 	void OnPlayerConnected(NetworkPlayer player){
 		Debug.Log ("Player connected from:" + player.ipAddress + ":" + player.port);
+		print ("Player ID is " + player.ToString ());
 	}
 
 	void OnPlayerDisconnected(NetworkPlayer player){
@@ -259,14 +270,17 @@ public class NetworkManager : MonoBehaviour {
 	private bool isServerStarted;
 
 	public void OnGUI(){
-
+		foreach(Player name in allPlayers){
+			//display the messages
+			GUILayout.Label(name.playerName);
+		}
 		//print (myName);
 
-		if(Network.isServer){
+		/*if(Network.isServer){
 			GUILayout.Label("Running as a server.");
 		} else if(Network.isClient){
 			GUILayout.Label("Running as a client.");
-		}
+		}*/
 
 		if(!isCarChosen){
 			ChooseCar();

@@ -41,7 +41,7 @@ public class Health : MonoBehaviour {
 		health -= 10;
 		hit = false;
 
-		Debug.Log (health);
+		//Debug.Log (health);
 
 		switch(health){
 			
