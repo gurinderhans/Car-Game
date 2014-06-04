@@ -25,7 +25,7 @@ public class ShowHitBorder : MonoBehaviour {
 		else if(a > 0.05f) a -= speed;
 		else a=0;
 		
-		print ("The alpha should be "+a.ToString ());
+		//print ("The alpha should be "+a.ToString ());
 		forAlpha.a = a;
 		guiTexture.color = forAlpha;
 	}

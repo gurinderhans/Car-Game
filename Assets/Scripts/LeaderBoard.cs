@@ -16,7 +16,7 @@ public class LeaderBoard : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.L)) showLeaderBoard = !showLeaderBoard;
 
 
-		print (allPlayers.Count);
+		//print ("allPlayers contains " + allPlayers.Count + " elements");
 
 		if(playerConnected){
 			ourPlayer = GameObject.FindGameObjectWithTag ("Player");
@@ -25,7 +25,10 @@ public class LeaderBoard : MonoBehaviour {
 			if(ourPlayer.GetComponentInChildren<ShootBullet>().pointsUpdated){
 
 
-				allPlayers.Clear();
+				//allPlayers.Clear();
+
+
+
 				networkView.RPC ("AddPlayer", RPCMode.AllBuffered, new object[]{this.GetComponent<NetworkManager> ().myName, playerPoints});
 
 
@@ -65,7 +68,8 @@ public class LeaderBoard : MonoBehaviour {
 		ourPlayer = GameObject.FindGameObjectWithTag ("Player");
 		int playerPoints = (int)ourPlayer.GetComponentInChildren<ShootBullet> ().myPoints;
 
-		networkView.RPC ("AddPlayer", RPCMode.AllBuffered, new object[]{this.GetComponent<NetworkManager> ().myName, playerPoints});
+		allPlayers.Add(new PlayerScore (this.GetComponent<NetworkManager> ().myName, playerPoints));
+
 		playerConnected = true;
 	}
 
@@ -73,7 +77,8 @@ public class LeaderBoard : MonoBehaviour {
 		ourPlayer = GameObject.FindGameObjectWithTag ("Player");
 		int playerPoints = (int) ourPlayer.GetComponentInChildren<ShootBullet> ().myPoints;
 
-		networkView.RPC ("AddPlayer", RPCMode.AllBuffered, new object[]{this.GetComponent<NetworkManager> ().myName, playerPoints});
+		allPlayers.Add(new PlayerScore (this.GetComponent<NetworkManager> ().myName, playerPoints));
+
 		playerConnected = true;
 	}
 
@@ -84,12 +89,21 @@ public class LeaderBoard : MonoBehaviour {
 
 	[RPC]
 	void AddPlayer(string name, int point){
-		print ("Name "+name);
-		print ("Points "+point);
+		//print ("Name "+name);
+		//print ("Points "+point);
 
 		//string playerString = name + " \t" + point + " points";
 
-		allPlayers.Add (new PlayerScore (name, point));
+		int index = allPlayers.FindIndex(myItem => myItem.playerName == this.GetComponent<NetworkManager> ().myName);
+		print (name + " player's index is " + index);
+
+		allPlayers.RemoveAll(myItem => myItem.playerName == this.GetComponent<NetworkManager> ().myName);
+		print ("removing" + name);
+
+		allPlayers.Add(new PlayerScore (name, point));
+
+		//need a way to remove other players old score when updating score
+		//right now it only removes our players score from our machine and the ohter players on that players screen
 
 		//leaderboardStuff += playerString;
 

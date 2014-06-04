@@ -27,7 +27,7 @@ public class ShootBullet : MonoBehaviour {
 	
 	void Update () {
 		if(Time.timeScale!=0){
-			print (pointsUpdated);
+			//print (pointsUpdated);
 			if(Input.GetMouseButton(1)){
 				networkView.RPC ("SmartFire", RPCMode.All);
 			} else if(Input.GetMouseButtonDown(0)){
