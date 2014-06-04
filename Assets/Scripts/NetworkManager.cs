@@ -24,11 +24,11 @@ public class NetworkManager : MonoBehaviour {
 	//List<Player> allPlayers = new List<Player>();
 
 
-	/*private void  Awake(){
-		MasterServer.ipAddress = "192.168.0.13";
+	private void  Awake(){
+		MasterServer.ipAddress = "10.82.32.35";
 		MasterServer.port = 23466;
 	}
-	*/
+
 
 	public Camera gameViewCam;
 

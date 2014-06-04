@@ -5,7 +5,7 @@ public class AllCheats : MonoBehaviour {
 	
 	public bool developerMode;
 	[HideInInspector] public bool nitroAllowed,jumpAllowed,checkPassword,showDeveloperMenu,isMandeepMapAvailable,isMustafaMapAvailable,zoomAllowed;
-	string passwordTry="Enter Password";
+	string passwordTry="EnterPassword";
 	
 	string checkStatus(bool YESorNO){
 		if(YESorNO){
@@ -57,7 +57,7 @@ public class AllCheats : MonoBehaviour {
 		//if(passwordTry=="CheatCode") var=!var;
 		//if(passwordTry=="CheatCode") var=!var;
 		
-		passwordTry="Enter Password";
+		passwordTry="EnterPassword";
 		checkPassword = false;
 		Time.timeScale = 1;
 	}
@@ -89,8 +89,8 @@ public class AllCheats : MonoBehaviour {
 			//if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+200,200,35),"Var"+checkStatus(var))) var=!var;
 			//if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+240,200,35),"Var"+checkStatus(var))) var=!var;
 			//if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+280,200,35),"Var"+checkStatus(var))) var=!var;
-			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+240,200,35),"Personal Mandeep's map"+checkMapUnlocked(isMandeepMapAvailable))) UnlockMandeepMap();
-			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+280,200,35),"Personal Mustafa's map"+checkMapUnlocked(isMustafaMapAvailable))) UnlockMustafaMap();
+			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+240,200,35),"Mandeep's map"+checkMapUnlocked(isMandeepMapAvailable))) UnlockMandeepMap();
+			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+280,200,35),"Mustafa's map"+checkMapUnlocked(isMustafaMapAvailable))) UnlockMustafaMap();
 		}
 		else if(checkPassword){
 			GUIStyle myStyle = new GUIStyle(GUI.skin.textField);

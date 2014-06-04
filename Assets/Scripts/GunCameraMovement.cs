@@ -13,6 +13,12 @@ public class GunCameraMovement : MonoBehaviour {
 	float fieldOfView;
 	float lerpSpeed=20f;
 	float mouseRotationMultiplier=1;
+
+
+	GameObject car;//get the car for other stuff like speed
+	//car speed text gui stuff
+	GameObject speedTextObj;
+	GUIText speedText;
 	
 	void Start(){
 		//current field of view
@@ -25,6 +31,11 @@ public class GunCameraMovement : MonoBehaviour {
 		
 		//to get the cheats component
 		allScripts = GameObject.Find ("_SCRIPTS");
+
+		//car speed stuff and car find
+		car = GameObject.FindGameObjectWithTag("Player");
+		speedTextObj = GameObject.Find ("Car Speed");
+		speedText = speedTextObj.guiText;
 	}
 	
 	void Update(){
@@ -67,5 +78,10 @@ public class GunCameraMovement : MonoBehaviour {
 			angleY += Input.GetAxis ("Mouse X") * 5f * mouseRotationMultiplier;
 			transform.rotation = Quaternion.Euler (angleX, angleY, 0);
 		}
+
+		int carVelocity = (int) car.rigidbody.velocity.magnitude * 2;
+		string carVelocityToString = carVelocity.ToString ();
+		speedText.text = carVelocityToString + " km/h";
+
 	}
 }

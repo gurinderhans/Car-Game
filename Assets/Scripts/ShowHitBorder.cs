@@ -5,8 +5,8 @@ public class ShowHitBorder : MonoBehaviour {
 	
 	
 	Color forAlpha;
-	public bool shouldIncreseAlpha;
-	float speed=0.1f;
+	[HideInInspector] public bool shouldIncreseAlpha;
+	float speed=0.05f;
 	
 	void Start(){
 		guiTexture.pixelInset = new Rect (0,0,0,0);//works perfectly when 0,0,0,0
