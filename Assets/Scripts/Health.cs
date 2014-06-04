@@ -21,6 +21,7 @@ public class Health : MonoBehaviour {
 		if(hit){
 			//health -= 25f;
 			//hit = false;
+			GameObject.Find ("OnHitTexture").GetComponent<ShowHitBorder>().shouldIncreseAlpha=true;
 			CalculateHealth ();
 			networkView.RPC("PlayerHealthSync", RPCMode.AllBuffered, new object[]{guiTextLines, health});
 		}

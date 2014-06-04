@@ -21,7 +21,7 @@ public class NetworkManager : MonoBehaviour {
 	public bool playerHasName;
 
 	//create the list to store all player info
-	List<Player> allPlayers = new List<Player>();
+	//List<Player> allPlayers = new List<Player>();
 
 
 	/*private void  Awake(){
@@ -88,6 +88,9 @@ public class NetworkManager : MonoBehaviour {
 
 		//MSK stuff
 		//Instantiate (Resources.Load ("GunCam"), new Vector3 (0f, 10f, 0f), Quaternion.identity);
+
+		//enable guiTexture when player spawned
+		GameObject.Find ("OnHitTexture").GetComponent<GUITexture> ().enabled = true;
 
 		gameViewCam.enabled = false;
 
@@ -270,10 +273,10 @@ public class NetworkManager : MonoBehaviour {
 	private bool isServerStarted;
 
 	public void OnGUI(){
-		foreach(Player name in allPlayers){
+		/*foreach(Player name in allPlayers){
 			//display the messages
 			GUILayout.Label(name.playerName);
-		}
+		}*/
 		//print (myName);
 
 		/*if(Network.isServer){
