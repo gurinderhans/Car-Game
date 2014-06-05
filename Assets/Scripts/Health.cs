@@ -16,11 +16,7 @@ public class Health : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//print ("hit is " + hit);
-
 		if(hit){
-			//health -= 25f;
-			//hit = false;
 			GameObject.Find ("OnHitTexture").GetComponent<ShowHitBorder>().shouldIncreseAlpha=true;
 			CalculateHealth ();
 			networkView.RPC("PlayerHealthSync", RPCMode.AllBuffered, new object[]{guiTextLines, health});
@@ -28,8 +24,7 @@ public class Health : MonoBehaviour {
 
 		if(health <= 0){
 			networkView.RPC("PlayerHealthSync", RPCMode.AllBuffered, new object[]{"I I I I I I I I I I", health});
-			//Network.Destroy(GetComponent<NetworkView>().viewID);
-			//gameObject.SetActive(false);
+
 			networkView.RPC("RespawnPlayer", RPCMode.AllBuffered);
 
 		}
@@ -41,8 +36,6 @@ public class Health : MonoBehaviour {
 
 		health -= 10;
 		hit = false;
-
-		//Debug.Log (health);
 
 		switch(health){
 			
@@ -99,12 +92,11 @@ public class Health : MonoBehaviour {
 
 	[RPC]
 	void RespawnPlayer(){
-		//gameObject.SetActive (false);
-		//car.gameObject.transform.parent.gameObject;
 
 		this.gameObject.transform.parent.gameObject.transform.position = new Vector3 (0, 10f, 0);
 
-		//transform.GetComponent<Health> ().enabled = true;
+		this.gameObject.transform.parent.gameObject.transform.rotation = Quaternion.identity;
+
 		health = 100;
 
 	}

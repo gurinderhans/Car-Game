@@ -3,46 +3,45 @@ using System.Collections;
 using System.Collections.Generic;//need for the list
 
 public class LeaderBoard : MonoBehaviour {
-
-	//create the list to store all player info
-	List<PlayerScore> allPlayers = new List<PlayerScore>();
+	
 	bool showLeaderBoard;
 
 	bool playerConnected;
 
 	public GameObject ourPlayer;
 
+	List<PlayerScore> allPlayersOnServer = new List<PlayerScore>();
+
+	//List<PlayerScore> allClientsList = new List<PlayerScore>();
+
 	void Update(){
 		if(Input.GetKeyDown(KeyCode.L)) showLeaderBoard = !showLeaderBoard;
 
-
-		//print ("allPlayers contains " + allPlayers.Count + " elements");
+		//print ("allPlayersOnServer contains " + allPlayersOnServer.Count + " elements");
 
 		if(playerConnected){
 			ourPlayer = GameObject.FindGameObjectWithTag ("Player");
 			int playerPoints = (int) ourPlayer.GetComponentInChildren<ShootBullet>().myPoints;
 
 			if(ourPlayer.GetComponentInChildren<ShootBullet>().pointsUpdated){
+				//allPlayersOnServer.Clear();
+
+				networkView.RPC ("AddPlayerScore", RPCMode.AllBuffered, new object[]{this.GetComponent<NetworkManager> ().myName, playerPoints});
 
 
-				//allPlayers.Clear();
+				//this is local for adding the server scores
+				/*allPlayersOnServer.RemoveAll(myItem => myItem.playerName == this.GetComponent<NetworkManager> ().myName);
+				print ("getting player name: " + this.GetComponent<NetworkManager> ().myName);
+				allPlayersOnServer.Add(new PlayerScore (this.GetComponent<NetworkManager> ().myName, playerPoints));*/
 
 
 
-				networkView.RPC ("AddPlayer", RPCMode.AllBuffered, new object[]{this.GetComponent<NetworkManager> ().myName, playerPoints});
+				//transfer all data in allPlayersOnServer to allClientsList
+				/*foreach(PlayerScore playerData in allPlayersOnServer){
+					allClientsList.Add( new PlayerScore(playerData.playerName, playerData.points));
+				}*/
 
-
-
-
-				//int index = System.Array.IndexOf(allPlayers, this.GetComponent<NetworkManager>().myName);
-				//print (index);
-				//allPlayers.RemoveAt(0);
-				//print (playerPoints);
-				//int index = allPlayers.FindIndex (x => x == playerPoints);
-				//networkView.RPC ("AddPlayer", RPCMode.AllBuffered, new object[]{this.GetComponent<NetworkManager> ().myName, playerPoints});
 			}
-			//networkView.RPC ("AddPlayer", RPCMode.AllBuffered, new object[]{this.GetComponent<NetworkManager> ().myName, playerPoints,0,0});
-			//call this when pointsUpdated from shootbullet.cs has been set to true
 		}
 
 	}
@@ -51,7 +50,7 @@ public class LeaderBoard : MonoBehaviour {
 
 		scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(Screen.width/2.1f), GUILayout.Height(220));
 
-		foreach(PlayerScore player in allPlayers){
+		foreach(PlayerScore player in allPlayersOnServer){
 			//display the messages
 			GUILayout.BeginHorizontal(GUILayout.Width(250));
 				GUILayout.Label(player.playerName);
@@ -68,53 +67,57 @@ public class LeaderBoard : MonoBehaviour {
 		ourPlayer = GameObject.FindGameObjectWithTag ("Player");
 		int playerPoints = (int)ourPlayer.GetComponentInChildren<ShootBullet> ().myPoints;
 
-		allPlayers.Add(new PlayerScore (this.GetComponent<NetworkManager> ().myName, playerPoints));
+		//allPlayersOnServer.Add(new PlayerScore (this.GetComponent<NetworkManager> ().myName, playerPoints));
+
+		networkView.RPC ("AddPlayerScore", RPCMode.AllBuffered, new object[]{this.GetComponent<NetworkManager> ().myName, playerPoints});
 
 		playerConnected = true;
 	}
 
-	void OnConnectedToServer(){//add clinet to leaderboard
+	void OnConnectedToServer(){//add client to leaderboard
 		ourPlayer = GameObject.FindGameObjectWithTag ("Player");
 		int playerPoints = (int) ourPlayer.GetComponentInChildren<ShootBullet> ().myPoints;
 
-		allPlayers.Add(new PlayerScore (this.GetComponent<NetworkManager> ().myName, playerPoints));
+		networkView.RPC ("AddPlayerScore", RPCMode.AllBuffered, new object[]{this.GetComponent<NetworkManager> ().myName, playerPoints});
 
 		playerConnected = true;
 	}
 
 	void OnPlayerDisconnected(NetworkPlayer player){
-		//allPlayers.re // remove the entry from leaderboard
-		print ("player disconnected");
+		// remove the entry from leaderboard
+		ourPlayer = GameObject.FindGameObjectWithTag ("Player");
+		int playerPoints = (int) ourPlayer.GetComponentInChildren<ShootBullet> ().myPoints;
+
+		//this doesnt work right now will look at it later
+		//networkView.RPC ("RemovePlayerScore", RPCMode.AllBuffered, new object[]{this.GetComponent<NetworkManager> ().myName, playerPoints});
 	}
 
+	//removes the player score from scoreboard/leaderboard
 	[RPC]
-	void AddPlayer(string name, int point){
+	void RemovePlayerScore(string name, int point){
+		allPlayersOnServer.RemoveAll(myItem => myItem.playerName == name);
+		print ("getting player name: " + name);
+	}
+
+
+	//adds the player score to scoreboard/leaderboard
+	[RPC]
+	void AddPlayerScore(string name, int point){
 		//print ("Name "+name);
 		//print ("Points "+point);
 
 		//string playerString = name + " \t" + point + " points";
 
-		int index = allPlayers.FindIndex(myItem => myItem.playerName == this.GetComponent<NetworkManager> ().myName);
+		/*int index = allPlayersOnServer.FindIndex(myItem => myItem.playerName == this.GetComponent<NetworkManager> ().myName);
 		print (name + " player's index is " + index);
 
-		allPlayers.RemoveAll(myItem => myItem.playerName == this.GetComponent<NetworkManager> ().myName);
-		print ("removing" + name);
+		allPlayersOnServer.RemoveAt (index);*/
 
-		allPlayers.Add(new PlayerScore (name, point));
+		allPlayersOnServer.RemoveAll(myItem => myItem.playerName == name);
+		print ("getting player name: " + name);
 
-		//need a way to remove other players old score when updating score
-		//right now it only removes our players score from our machine and the ohter players on that players screen
+		allPlayersOnServer.Add(new PlayerScore (name, point));
 
-		//leaderboardStuff += playerString;
-
-
-
-
-		/*allPlayers.Add (playerString);
-
-		int index = allPlayers.FindIndex (x => x == playerString);
-		allPlayers.RemoveAt (index);
-		allPlayers.Add (playerString);*/
 	}
 
 	void OnGUI () {
@@ -132,7 +135,7 @@ public class PlayerScore{
 	public string playerName;
 	public int points;
 	
-	//get set stuff
+	//the constructor
 	public PlayerScore(string name, int point){
 		playerName = name;
 		points = point;

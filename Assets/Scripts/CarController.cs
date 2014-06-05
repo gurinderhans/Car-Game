@@ -365,14 +365,10 @@ public class CarController : MonoBehaviour {
 		}
 		
 		//reset
-		if(Input.GetKeyDown("q")){
+		if(Input.GetKey("q")){
 			transform.position = new Vector3(0, 15, 0);
 			transform.rotation = Quaternion.identity;
 			rigidbody.Sleep ();
 		}
-		/*
-		 * When max speed reached and if you hold back key without letting go of front key car will lock at max speed
-		 * 
-		 */
 	}
 }

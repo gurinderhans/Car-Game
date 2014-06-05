@@ -20,9 +20,6 @@ public class NetworkManager : MonoBehaviour {
 
 	public bool playerHasName;
 
-	//create the list to store all player info
-	//List<Player> allPlayers = new List<Player>();
-
 
 	/*private void  Awake(){
 		MasterServer.ipAddress = "10.82.32.35";
@@ -262,7 +259,6 @@ public class NetworkManager : MonoBehaviour {
 	void GivePlayerName(){
 		myName = GUI.TextField(new Rect(115f, 20.5f, 150f, 22.5f), myName, 25);
 		if (Event.current.isKey && Event.current.keyCode == KeyCode.Return || GUI.Button (new Rect (0f, 20.5f, 100f, 22.5f), "Create Name")){
-			//networkView.RPC ("changeName", RPCMode.AllBuffered, new object[]{myName});
 			playerHasName = true;
 		}
 	}
@@ -273,17 +269,12 @@ public class NetworkManager : MonoBehaviour {
 	private bool isServerStarted;
 
 	public void OnGUI(){
-		/*foreach(Player name in allPlayers){
-			//display the messages
-			GUILayout.Label(name.playerName);
-		}*/
-		//print (myName);
 
-		/*if(Network.isServer){
+		if(Network.isServer){
 			GUILayout.Label("Running as a server.");
 		} else if(Network.isClient){
 			GUILayout.Label("Running as a client.");
-		}*/
+		}
 
 		if(!isCarChosen){
 			ChooseCar();

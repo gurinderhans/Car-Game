@@ -62,7 +62,8 @@ public class CrossHair : MonoBehaviour {
 
 			Debug.DrawRay(crosshairRay.origin, crosshairRay.direction*200, Color.green);
 
-			if(Physics.Raycast(crosshairRay, out hit, 200))//we'll alawys shoot raycast from the exact middle of screen
+			if(Physics.Raycast(crosshairRay, out hit, 500))//we'll alawys shoot raycast from the exact middle of screen
+				//if change length here also change for shoot bullet in inspector
 				whoIsIt=hit.transform.gameObject.tag;
 			else
 				whoIsIt=null;
