@@ -78,7 +78,8 @@ public class ShootBullet : MonoBehaviour {
 		if(Physics.Raycast(shoot_ray_from.position, shoot_ray_from.transform.forward, out hit, shootLength)){//make ray length larger
 			if(hit.transform.gameObject.tag == "Player"){
 				smartFire = true;
-				
+
+				//line renderer stuff
 				GameObject myShootFX = (GameObject) Instantiate(Resources.Load("ShootFXLineRenderer"), Vector3.zero, Quaternion.identity);
 				LineRenderer myLR = myShootFX.GetComponent<LineRenderer>();
 				myLR.SetPosition(0, shoot_bullet_from.position);

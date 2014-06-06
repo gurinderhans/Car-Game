@@ -53,7 +53,7 @@ public class Console : MonoBehaviour
 	
 	void Update ()
 	{
-		if (Input.GetKeyDown(toggleKey)) {
+		if (Input.GetKeyDown(toggleKey) && GameObject.Find ("_SCRIPTS").GetComponent<AllCheats>().developerMode) {
 			show = !show;
 		}
 	}

@@ -49,7 +49,8 @@ public class NetworkManager : MonoBehaviour {
 
 		return spawnPosition;
 	}
-
+	//for personal green indicator
+	public Material Green;
 	private void SpawnPlayer(){
 
 		Vector3 spawnPos = CalcSpawnPos ();
@@ -93,6 +94,12 @@ public class NetworkManager : MonoBehaviour {
 
 		//hide cursor when game starts initially after all the menu stuff
 		//Screen.showCursor = false;
+
+		//change personal car indicator to green
+		myCar.GetComponentInChildren<PlayerIndicator> ().changeColorForPersonalCar (Green);
+
+		//enable compass
+		GameObject.Find ("Compass-Plane").GetComponent<CompassRotation> ().enabled = true;
 
 	}
 	

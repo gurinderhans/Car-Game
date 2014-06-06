@@ -7,7 +7,7 @@ public class ChatControl : MonoBehaviour {
 	public string messageToSend;
 	public List<string> chatMessages = new List<string>();
 	//make string empty because we dont want to send null values over network
-	Vector2 scrollPosition;
+	public Vector2 scrollPosition;
 	public string playerName;
 	public bool showChatTextField;
 	
@@ -31,7 +31,7 @@ public class ChatControl : MonoBehaviour {
 		else if(styleStart==FontStyle.BoldAndItalic) strStyle="Bold and Italic";
 		else strStyle="Normal";
 		ApplyAllChanges ();
-
+		
 		main_scripts = GameObject.Find ("_SCRIPTS");
 	}
 	
@@ -69,6 +69,8 @@ public class ChatControl : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.BackQuote))
 			showChatTextField = !showChatTextField;
 		if(Input.GetKeyDown(KeyCode.Backspace)&&Network.isServer) networkView.RPC ("UnlockMap", RPCMode.AllBuffered, new object[]{serverMandeep,lockedDoorMandeep,openDoorMandeep});
+		//to just change chat setting with numeric pad '/' rather than clicking on top
+		if(Input.GetKeyDown (KeyCode.KeypadDivide)) showEditOptions = !showEditOptions;
 	}
 	
 	public void OnGUI(){
@@ -183,11 +185,9 @@ public class ChatControl : MonoBehaviour {
 		
 	}
 	
-	string ConvertToString( float no){
-		string str = no.ToString ();
-		if(no==100) return "100";
-		else if(str.Length<=2) return str;
-		else return str.Substring(0,2);
+	string ConvertToString( float inFLoat){
+		int no = (int)inFLoat;
+		return no.ToString ();
 	}
 	
 	string StyleChangePress(string str){

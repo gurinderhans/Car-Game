@@ -38,15 +38,15 @@ public class CarController : MonoBehaviour {
 	float torqueMultiplier=1;
 	GameObject allScripts;
 	bool forSingleJump;
-
+	
 	/*each car individual stuff*/
 	public Transform cof;
-
+	
 	/*carcamera position stuff*/
 	//we'll give these values to DriveCam for distance behind and up b/c its going to be different for each car
 	public float carCamPosUp;
 	public float carCamPosBehind;
-
+	
 	
 	/*
 	 * Cool IDEAS TODO
@@ -61,7 +61,7 @@ public class CarController : MonoBehaviour {
 		//print(rigidbody.centerOfMass);
 		slipForwardFriction = 0.05f;
 		slipSidewayFriction = 0.018f;
-
+		
 		//little camera stuff
 		//if(this.transform.gameObject.tag == "
 		
@@ -82,32 +82,37 @@ public class CarController : MonoBehaviour {
 		wheelFRTrans.localEulerAngles = new Vector3 (wheelFRTrans.localEulerAngles.x, wheelFR.steerAngle, wheelFRTrans.localEulerAngles.z);
 		
 		//print (rigidbody.velocity.magnitude);
-
+		
 		//Cheats need to be added in Update or it causes errors.
 		//Besides it does not move car, it only changes the multiple for torque which is used in fixedUpdate
 		//but this needs to called every frame. So leave it here.
+		
 		CheatsControl ();
 	}
 	
 	void CheatsControl(){
 		//cheats in Use
 		AllCheats cheats = allScripts.GetComponent<AllCheats>();
-		if(Input.GetKeyDown(KeyCode.LeftShift)&&cheats.nitroAllowed){
+		if(Input.GetKeyDown(KeyCode.LeftShift) && cheats.nitroAllowed){
 			maxSpeed*=4;
 			torqueMultiplier=4;
 		}
 		
-		if(Input.GetKeyUp(KeyCode.LeftShift)&&cheats.nitroAllowed){
+		if(Input.GetKeyUp(KeyCode.LeftShift) && cheats.nitroAllowed){
 			maxSpeed/=4;
 			torqueMultiplier=1;
 		}
 		
-		if(Input.GetKeyDown(KeyCode.E)&&cheats.jumpAllowed){
+		if(Input.GetKeyDown(KeyCode.E) && cheats.jumpAllowed){
 			rigidbody.AddForce(Vector3.up*1000000);
 			ejump = true;
 		}
+		airplaneMode = cheats.airFly;
 		forSingleJump = !cheats.jumpAllowed;
+		//DeveloperMenuOpened = cheats.showDeveloperMenu;
 	}
+	
+	bool airplaneMode;
 	
 	void WheelPosition(){
 		RaycastHit hit;
@@ -154,7 +159,7 @@ public class CarController : MonoBehaviour {
 		
 		
 	}
-
+	
 	//set slip function
 	void MakeSlip (float forwardFriction , float sidewayFriction){
 		/*<WheelFrictionCurve> is a struct so we cant change it directly
@@ -228,8 +233,8 @@ public class CarController : MonoBehaviour {
 		//print (wheelRL.brakeTorque);
 		//print ("SIDEWAYS FRIC: "+wheelRL.sidewaysFriction.stiffness+" FORWARD FRIC: "+wheelRL.forwardFriction.stiffness);
 	}
-
-	bool ejump;
+	
+	bool ejump, onGround;
 	void CalcDownForceOnCar(){
 		RaycastHit hit;
 		int carSpeed = (int) rigidbody.velocity.magnitude;
@@ -238,6 +243,9 @@ public class CarController : MonoBehaviour {
 			//hit.point is the point the raycast is hitting
 			rigidbody.AddForce(0,carSpeed*1000*-1,0);
 			//print ("1000");
+			
+			//by me
+			onGround=true;
 		} else{//car is in air
 			int force = 175;
 			rigidbody.AddForce(0,carSpeed*force*-1,0);
@@ -245,6 +253,9 @@ public class CarController : MonoBehaviour {
 				rigidbody.AddForceAtPosition(new Vector3(0, carSpeed*6,0), forceUp.position);
 			}
 			//print (force);
+			
+			//by me
+			onGround=false;
 		}
 	}
 	
@@ -298,7 +309,7 @@ public class CarController : MonoBehaviour {
 		//if car currently drifting and only Input.GetAxis("Vertical") is pressed then speed it to make it go forward
 		//print (wheelRL.brakeTorque);
 		//all functions for car
-
+		
 		Drift ();
 		WheelPosition ();
 		CalcDownForceOnCar ();
@@ -364,11 +375,35 @@ public class CarController : MonoBehaviour {
 			}
 		}
 		
+		if(airplaneMode && !onGround){
+			transform.Rotate(Vector3.up * Input.GetAxisRaw("Horizontal"));
+			rigidbody.AddRelativeForce(Vector3.forward * Input.GetAxisRaw ("Horizontal")*20000);
+			print (rigidbody.velocity.magnitude.ToString()+" and "+rigidbody.angularVelocity.magnitude.ToString());
+		}
+		
 		//reset
-		if(Input.GetKey("q")){
+		if(Input.GetKey(KeyCode.Q)){
 			transform.position = new Vector3(0, 15, 0);
 			transform.rotation = Quaternion.identity;
 			rigidbody.Sleep ();
 		}
+		
+		/*
+		 * When max speed reached and if you hold back key without letting go of front key car will lock at max speed
+		 * 
+		 */
 	}
+	
+	/*bool DeveloperMenuOpened;
+	
+	void ChangeTag(){
+		if(gameObject.tag=="Player") gameObject.tag="raycastTarget";
+		else gameObject.tag="Player";
+	}
+	
+	void OnGUI(){
+		if(DeveloperMenuOpened){
+			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+200,200,35),"Current Tag is "+gameObject.tag)) ChangeTag();
+		}
+	}*/
 }
