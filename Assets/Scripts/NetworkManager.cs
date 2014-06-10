@@ -180,7 +180,7 @@ public class NetworkManager : MonoBehaviour {
 
 	void ChooseCar(){
 		//GUI BOX (l,t,w,h)
-		GUI.Box(new Rect (25f, 25f, 250f, 240f), "CHOOSE YOUR CAR:");
+		GUI.Box(new Rect (25f, 25f, 250f, 310f), "CHOOSE YOUR CAR:");
 		
 		//Create buttons for cars
 		if(GUI.Button( new Rect(50f, 50f, 200f, 30f) , "CHEVROLET CAMARO")){
@@ -201,8 +201,11 @@ public class NetworkManager : MonoBehaviour {
 		} else if(GUI.Button( new Rect(50f, 225f, 200f, 30f) , "Mr.Powells JetCar")){
 			car_choosen = "jetcar/";
 			isCarChosen = true;
-		} else if(GUI.Button( new Rect(50f, 260f, 200f, 30f) , "Khari Giant Ship")){
+		} else if(GUI.Button( new Rect(50f, 260f, 200f, 30f) , "Khari Ship")){
 			car_choosen = "Khari Ship/";
+			isCarChosen = true;
+		} else if(GUI.Button( new Rect(50f, 295f, 200f, 30f) , "Mr.Powells PlaneCar")){
+			car_choosen = "newCar/";
 			isCarChosen = true;
 		}/*else if(GUI.Button( new Rect(50f, 190f, 200f, 30f) , "RANDOM CAR 5")){
 			//print("camaro");

@@ -55,7 +55,7 @@ public class ShootBullet : MonoBehaviour {
 	void PlayerFire(){
 		RaycastHit hit;
 
-		if(Physics.Raycast(shoot_ray_from.position, shoot_ray_from.transform.forward, out hit, shootLength)){//make ray length larger
+		if(Physics.Raycast(shoot_ray_from.position, shoot_ray_from.transform.forward, out hit, 2000)){//make ray length larger
 			if(hit.transform.gameObject.tag == "Player"){
 
 				hit.transform.gameObject.GetComponentInChildren<Health>().hit = true;
@@ -85,7 +85,7 @@ public class ShootBullet : MonoBehaviour {
 	void SmartFire(){
 		RaycastHit hit;
 
-		if(Physics.Raycast(shoot_ray_from.position, shoot_ray_from.transform.forward, out hit, shootLength)){//make ray length larger
+		if(Physics.Raycast(shoot_ray_from.position, shoot_ray_from.transform.forward, out hit, 2000)){//make ray length larger
 			if(hit.transform.gameObject.tag == "Player"){
 				smartFire = true;
 

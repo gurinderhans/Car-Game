@@ -15,7 +15,7 @@ public class LeaderBoard : MonoBehaviour {
 	//List<PlayerScore> allClientsList = new List<PlayerScore>();
 
 	void Update(){
-		if(Input.GetKeyDown(KeyCode.L)) showLeaderBoard = !showLeaderBoard;
+		if(Input.GetKeyDown(KeyCode.Tab)) showLeaderBoard = !showLeaderBoard;
 
 		//print ("allPlayersOnServer contains " + allPlayersOnServer.Count + " elements");
 
