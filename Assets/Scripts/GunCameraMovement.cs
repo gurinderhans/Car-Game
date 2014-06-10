@@ -12,7 +12,8 @@ public class GunCameraMovement : MonoBehaviour {
 	Color colorForAlpha;
 	float fieldOfView;
 	float lerpSpeed=20f;
-	float mouseRotationMultiplier=1f;
+
+	public float mouseRotationMultiplier=1f;
 
 
 	GameObject car;//get the car for other stuff like speed

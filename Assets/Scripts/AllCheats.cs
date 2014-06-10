@@ -4,7 +4,7 @@ using System.Collections;
 public class AllCheats : MonoBehaviour {
 	
 	public bool developerMode;
-	[HideInInspector] public bool showInstructions,nitroAllowed,jumpAllowed,checkPassword,showDeveloperMenu,isMandeepMapAvailable,isMustafaMapAvailable,zoomAllowed,airFly,godMode;
+	[HideInInspector] public bool showInstructions,nitroAllowed,jumpAllowed,checkPassword,showDeveloperMenu,isMandeepMapAvailable,isMustafaMapAvailable,zoomAllowed,airFly,godMode,noBlur;
 	string passwordTry="Enter Password";
 	
 	public string checkStatus(bool YESorNO){
@@ -55,6 +55,7 @@ public class AllCheats : MonoBehaviour {
 		if(passwordTry=="mustafamap") UnlockMustafaMap();
 		if(passwordTry=="zoomify") zoomAllowed=!zoomAllowed;
 		if(passwordTry=="pilot") airFly=!airFly;
+		if(passwordTry=="sharpness") noBlur=!noBlur;
 		
 		passwordTry="Enter Password";
 		checkPassword = false;
@@ -93,6 +94,7 @@ public class AllCheats : MonoBehaviour {
 			//if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+280,200,35),"Var"+checkStatus(var))) var=!var;
 			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+240,200,35),"Mandeep's map"+checkMapUnlocked(isMandeepMapAvailable))) UnlockMandeepMap();
 			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+280,200,35),"Mustafa's map"+checkMapUnlocked(isMustafaMapAvailable))) UnlockMustafaMap();
+			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+320,200,35),"No Blur"+checkStatus(noBlur))) noBlur=!noBlur;
 		}
 		else if(checkPassword){
 			GUIStyle myStyle = new GUIStyle(GUI.skin.textField);

@@ -38,6 +38,16 @@ public class GameModeManager : MonoBehaviour {
 
 		} else{
 
+			//to make sure the zoom mode is fixed
+			if(this.GetComponent<GunCameraMovement>().showZoom){
+				this.GetComponent<GunCameraMovement>().mouseRotationMultiplier=1;
+				Color tempColor = this.GetComponent<GunCameraMovement>().zoomPlane.renderer.material.color;
+				tempColor.a=0;
+				this.GetComponent<GunCameraMovement>().zoomPlane.renderer.material.color = tempColor;
+				camera.fieldOfView=60;
+				this.GetComponent<GunCameraMovement>().showZoom=false;
+			}
+
 			Camera.main.GetComponent<GunCameraMovement>().enabled = false;
 			Camera.main.GetComponent<DriveCamController>().enabled = true;//after this disable gun so it dosent show
 			Camera.main.GetComponent<CrossHair>().enabled = false;
