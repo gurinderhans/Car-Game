@@ -14,7 +14,7 @@ public class GunMovement : MonoBehaviour {
 			vectorRotation.y = cameraY;
 			vectorRotation.z = 0;
 			Quaternion targetRotation = Quaternion.Euler (vectorRotation);
-			transform.rotation = targetRotation;
+			transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 15f);
 		}
 	}
 }

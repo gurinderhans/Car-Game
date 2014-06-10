@@ -4,7 +4,7 @@ using System.Collections;
 public class AllCheats : MonoBehaviour {
 	
 	public bool developerMode;
-	[HideInInspector] public bool showInstructions,nitroAllowed,jumpAllowed,checkPassword,showDeveloperMenu,isMandeepMapAvailable,isMustafaMapAvailable,zoomAllowed,airFly;
+	[HideInInspector] public bool showInstructions,nitroAllowed,jumpAllowed,checkPassword,showDeveloperMenu,isMandeepMapAvailable,isMustafaMapAvailable,zoomAllowed,airFly,godMode;
 	string passwordTry="Enter Password";
 	
 	public string checkStatus(bool YESorNO){
@@ -87,7 +87,7 @@ public class AllCheats : MonoBehaviour {
 			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+80,200,35),"Nitro"+checkStatus(nitroAllowed))) nitroAllowed=!nitroAllowed;
 			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+120,200,35),"Sniper Zoom"+checkStatus (zoomAllowed))) zoomAllowed=!zoomAllowed;
 			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+160,200,35),"Fly Mode"+checkStatus(airFly))) airFly=!airFly;
-			//if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+200,200,35),"Var"+checkStatus(var))) var=!var;
+			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+200,200,35),"GOD Mode"+checkStatus(godMode))) godMode=!godMode;
 			//if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+240,200,35),"Var"+checkStatus(var))) var=!var;
 			//if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+280,200,35),"Var"+checkStatus(var))) var=!var;
 			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+240,200,35),"Mandeep's map"+checkMapUnlocked(isMandeepMapAvailable))) UnlockMandeepMap();
@@ -114,7 +114,6 @@ public class AllCheats : MonoBehaviour {
 			
 			//five times to make it think
 			if(GUI.Button (new Rect((Screen.width-700)/2,(Screen.height-500)/2,700,500),"")) showInstructions=!showInstructions;
-			GUI.Box (new Rect((Screen.width-700)/2,(Screen.height-500)/2,700,500),"");
 			GUI.Box (new Rect((Screen.width-700)/2,(Screen.height-500)/2,700,500),"");
 			GUI.Box (new Rect((Screen.width-700)/2,(Screen.height-500)/2,700,500),"");
 			GUI.Box (new Rect((Screen.width-700)/2,(Screen.height-500)/2,700,500),"");

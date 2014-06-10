@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ShootBullet : MonoBehaviour {
@@ -12,9 +12,9 @@ public class ShootBullet : MonoBehaviour {
 	public float shootLength;
 	//GUIText updateToPlayer;
 	public Transform shoot_bullet_from;
-	
-	//get the gunCam
-	public Camera mainCam;
+
+	public bool playerKill;
+	public int kills;
 
 	/*Few Checks*/
 	public bool pointsUpdated;
@@ -22,23 +22,29 @@ public class ShootBullet : MonoBehaviour {
 	
 	void Start(){
 		//updateToPlayer = GameObject.FindGameObjectWithTag ("playerUpdates").guiText;
-		mainCam = GameObject.FindGameObjectWithTag ("MainCamera").camera;
 	}
 	
 	void Update () {
 		if(Time.timeScale!=0){
-			//print (pointsUpdated);
+			//print (playerKill);
+
+			if(playerKill){
+				kills += Mathf.Clamp(1, 1,1);
+			}
+
 			if(Input.GetMouseButton(1)){
 				networkView.RPC ("SmartFire", RPCMode.All);
 			} else if(Input.GetMouseButtonDown(0)){
-				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"),shoot_bullet_from.position, transform.rotation);
+				GameObject myBullet=(GameObject) Instantiate(Resources.Load("Bullet"), shoot_bullet_from.position, transform.rotation);
 				myBullet.rigidbody.AddRelativeForce(Vector3.forward * shootForce);
+
 				//then call the RPC
 				networkView.RPC ("PlayerFire", RPCMode.All);
 				smartFire = false;
 			} else{
 				pointsUpdated = false;
 				smartFire = false;
+				playerKill = false;
 			}
 			Debug.DrawRay(shoot_ray_from.position, shoot_ray_from.transform.forward * shootLength, Color.red);
 		}
@@ -50,13 +56,17 @@ public class ShootBullet : MonoBehaviour {
 		RaycastHit hit;
 
 		if(Physics.Raycast(shoot_ray_from.position, shoot_ray_from.transform.forward, out hit, shootLength)){//make ray length larger
-			
 			if(hit.transform.gameObject.tag == "Player"){
+
 				hit.transform.gameObject.GetComponentInChildren<Health>().hit = true;
+				print ("From NetworkPlayer's perspective : " +hit.transform.gameObject.GetComponentInChildren<Health>().health);
 				if(hit.transform.gameObject.GetComponentInChildren<Health>().health < 30){
 					
 					//updateToPlayer.text = "Killed " + hit.transform.gameObject.GetComponentInChildren<GUIText>().text;
 					iGetPoint = true;
+					playerKill = true;
+				} else{
+					playerKill = false;
 				}
 			}
 			if(iGetPoint){//not very fast either but for now its good as well

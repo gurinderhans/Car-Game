@@ -4,9 +4,9 @@ using System.Collections;
 public class DriveCamController : MonoBehaviour {
 	
 	// the distance we want the camera to be behind the target
-	float distance;
+	public float distance;
 	// the height we want the camera to be above the target
-	float height;
+	public float height;
 	
 	// How much 
 	public float heightDamping = 2.0f;
@@ -49,8 +49,8 @@ public class DriveCamController : MonoBehaviour {
 	
 	void Update(){
 		//get floats of distance and height of camera from car b/c each car has different values
-		distance = car.GetComponent<CarController> ().carCamPosBehind;
-		height = car.GetComponent<CarController> ().carCamPosUp;
+		//distance = car.GetComponent<CarController> ().carCamPosBehind;
+		//height = car.GetComponent<CarController> ().carCamPosUp;
 		
 		transform.position = Vector3.Lerp (transform.position, transform.position, Time.deltaTime);
 		

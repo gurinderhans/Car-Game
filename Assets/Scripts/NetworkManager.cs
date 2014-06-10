@@ -67,7 +67,11 @@ public class NetworkManager : MonoBehaviour {
 
 		myCam.GetComponent<DriveCamController> ().enabled = true;
 
-		myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
+		if(myCar.GetComponent<CarController> () != null){
+			myCar.GetComponent<CarController> ().enabled = true;//for getting .cs files
+		} else{
+			myCar.GetComponent<AeroplaneUserControl2Axis>().enabled = true;
+		}
 		myCar.GetComponentInChildren<Health> ().enabled = true;
 
 		//hide the player name locally so it wont interrupt gameplay but show on others screen
@@ -196,6 +200,9 @@ public class NetworkManager : MonoBehaviour {
 			isCarChosen = true;
 		} else if(GUI.Button( new Rect(50f, 225f, 200f, 30f) , "Mr.Powells JetCar")){
 			car_choosen = "jetcar/";
+			isCarChosen = true;
+		} else if(GUI.Button( new Rect(50f, 260f, 200f, 30f) , "Khari Giant Ship")){
+			car_choosen = "Khari Ship/";
 			isCarChosen = true;
 		}/*else if(GUI.Button( new Rect(50f, 190f, 200f, 30f) , "RANDOM CAR 5")){
 			//print("camaro");

@@ -11,6 +11,8 @@ public class Health : MonoBehaviour {
 
 	public GUIStyle myHealthStyle;
 
+	public int deaths;
+
 
 
 	// Update is called once per frame
@@ -19,6 +21,7 @@ public class Health : MonoBehaviour {
 		if(hit){
 			GameObject.Find ("OnHitTexture").GetComponent<ShowHitBorder>().shouldIncreseAlpha=true;
 			CalculateHealth ();
+			print ("From my perspective : "+health);
 			networkView.RPC("PlayerHealthSync", RPCMode.AllBuffered, new object[]{guiTextLines, health});
 		}
 

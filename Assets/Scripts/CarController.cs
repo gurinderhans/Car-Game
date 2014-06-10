@@ -109,8 +109,19 @@ public class CarController : MonoBehaviour {
 		}
 		airplaneMode = cheats.airFly;
 		forSingleJump = !cheats.jumpAllowed;
+		godMOde = cheats.godMode;
+
+		//you'll know its godMode if the health bar disappears on your screen in the bottom left
+		if(godMOde){
+			this.GetComponentInChildren<Health>().enabled = false;
+		} else{
+			//this.GetComponentInChildren<Health>().enabled = true;
+		}
+
 		//DeveloperMenuOpened = cheats.showDeveloperMenu;
 	}
+
+	bool godMOde;
 	
 	bool airplaneMode;
 	
