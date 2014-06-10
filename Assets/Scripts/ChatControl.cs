@@ -221,9 +221,26 @@ public class ChatControl : MonoBehaviour {
 		else if(txt=="mustafamap"){
 			networkView.RPC ("UnlockMap", RPCMode.AllBuffered, new object[]{serverMustafa,lockedDoorMustafa,openDoorMustafa});
 			return true;
+		} else if(txt == "d"){
+			//seteveryones blur to true by calling RPC PublicBoolUnlock
+			networkView.RPC("PublicBoolUnlock", RPCMode.AllBuffered, new object[]{1f});
+			return true;
+		}
+		else if(txt == "n"){
+			//seteveryones blur to true by calling RPC PublicBoolUnlock
+			networkView.RPC("PublicBoolUnlock", RPCMode.AllBuffered, new object[]{0f});
+			return true;
 		}
 		else return false;
 	}
+
+	[RPC]
+	void PublicBoolUnlock(float drunkAmount){
+		//rpc func
+		this.GetComponent<MotionBlur> ().blurAmount = drunkAmount;
+		print ("blur set to " + drunkAmount);
+	}
+
 	
 	[RPC]
 	void UnlockMap(bool theBool, string lockedDoorStr, string openDoor){

@@ -112,11 +112,12 @@ public class CarController : MonoBehaviour {
 		forSingleJump = !cheats.jumpAllowed;
 		godMOde = cheats.godMode;
 
-		if(cheats.noBlur) Camera.main.GetComponent<MotionBlur> ().blurAmount=0;
+
+		/*if(cheats.noBlur) Camera.main.GetComponent<MotionBlur> ().blurAmount=0;
 		else{
 			//for blur
 			Camera.main.GetComponent<MotionBlur> ().blurAmount = Mathf.Lerp (Camera.main.GetComponent<MotionBlur> ().blurAmount, (rigidbody.velocity.magnitude / 250f) + (rigidbody.angularVelocity.magnitude / 10f), 0.25f * Time.deltaTime);
-		}
+		}*/
 
 
 		//you'll know its godMode if the health bar disappears on your screen in the bottom left
