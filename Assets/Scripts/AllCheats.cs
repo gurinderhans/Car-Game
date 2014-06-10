@@ -62,16 +62,17 @@ public class AllCheats : MonoBehaviour {
 	}
 	
 	void Update(){
-		if(Input.GetKeyDown(KeyCode.O)&&developerMode){
+		if(this.GetComponent<PauseMenu>().gamePaused){
+			showDeveloperMenu = false;
+			checkPassword = false;
+		} else if(Input.GetKeyDown(KeyCode.O)&&developerMode){
 			showDeveloperMenu=!showDeveloperMenu;
 			if(Time.timeScale!=0) Time.timeScale=0;
 			else Time.timeScale=1;
-		}
-		if(Input.GetKeyUp(KeyCode.KeypadMultiply)&&!showDeveloperMenu){
+		} else if(Input.GetKeyUp(KeyCode.KeypadMultiply)&&!showDeveloperMenu){
 			checkPassword=true;
 			Time.timeScale=0;
-		}
-		if(Input.GetKeyDown(KeyCode.Escape)){
+		} else if(Input.GetKeyDown(KeyCode.Escape)){
 			checkPassword=false;
 			showDeveloperMenu=false;
 			Time.timeScale=1;
@@ -114,6 +115,7 @@ public class AllCheats : MonoBehaviour {
 			
 			//five times to make it think
 			if(GUI.Button (new Rect((Screen.width-700)/2,(Screen.height-500)/2,700,500),"")) showInstructions=!showInstructions;
+			GUI.Box (new Rect((Screen.width-700)/2,(Screen.height-500)/2,700,500),"");
 			GUI.Box (new Rect((Screen.width-700)/2,(Screen.height-500)/2,700,500),"");
 			GUI.Box (new Rect((Screen.width-700)/2,(Screen.height-500)/2,700,500),"");
 			GUI.Box (new Rect((Screen.width-700)/2,(Screen.height-500)/2,700,500),"");
