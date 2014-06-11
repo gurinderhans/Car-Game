@@ -48,7 +48,12 @@ public class ChatControl : MonoBehaviour {
 				//if we are server/host then we send special messages to all clients
 				ApplyAllChanges();
 				if(ifCheatThenActivate(messageToSend)){}//everything done in the function
-				else networkView.RPC ("SendHostMessage", RPCMode.AllBuffered, new object[]{messageToSend, mySize, myFontStyle, Rcolor, Gcolor, Bcolor, Acolor});
+				else {
+					networkView.RPC ("SendHostMessage", RPCMode.AllBuffered, new object[]{messageToSend, mySize, myFontStyle, Rcolor, Gcolor, Bcolor, Acolor});
+
+					//we also want server messages to go in client messages as well as publichostmessages
+					networkView.RPC ("SendClientMessage", RPCMode.AllBuffered, new object[]{messageToSend, playerName});
+				}
 			}
 			else {
 				if (messageToSend.Length > 0) {//we dont send empty messages
