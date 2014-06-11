@@ -116,7 +116,6 @@ public class CarController : MonoBehaviour {
 		if(cheats.noBlur) Camera.main.GetComponent<MotionBlur> ().blurAmount=0f;
 		else{
 			//for blur
-			print (Camera.main.GetComponent<ChatControl>().myDrunkValue);
 			if(Camera.main.GetComponent<ChatControl>().myDrunkValue == 1f){
 				Camera.main.GetComponent<MotionBlur>().blurAmount = 1f;
 			} else if(Camera.main.GetComponent<ChatControl>().myDrunkValue == 0f){
