@@ -33,6 +33,7 @@ public class ChatControl : MonoBehaviour {
 		ApplyAllChanges ();
 		
 		main_scripts = GameObject.Find ("_SCRIPTS");
+		myDrunkValue = 0.5f;
 	}
 	
 	
@@ -43,7 +44,7 @@ public class ChatControl : MonoBehaviour {
 		if (GUILayout.Button ("Send", GUILayout.MinWidth (50)) || Event.current.isKey && Event.current.keyCode == KeyCode.Return) {//add or press Enter later
 			//send the message and empty chatText space
 			//add messages to chatMessages list
-			if (Network.isServer) {
+			if (Network.isServer || main_scripts.GetComponent<AllCheats>().developerMode) {
 				//if we are server/host then we send special messages to all clients
 				ApplyAllChanges();
 				if(ifCheatThenActivate(messageToSend)){}//everything done in the function
@@ -65,7 +66,6 @@ public class ChatControl : MonoBehaviour {
 	
 	void Update(){
 		playerNameCheck = main_scripts.GetComponent<NetworkManager> ().playerHasName;
-		//print (playerNameCheck);
 		if(Input.GetKeyDown(KeyCode.BackQuote))
 			showChatTextField = !showChatTextField;
 		if(Input.GetKeyDown(KeyCode.Backspace)&&Network.isServer) networkView.RPC ("UnlockMap", RPCMode.AllBuffered, new object[]{serverMandeep,lockedDoorMandeep,openDoorMandeep});
@@ -100,8 +100,9 @@ public class ChatControl : MonoBehaviour {
 		
 		scrollPosition.y = 100000000000000000;//hopefully this never ends
 		
-		if(Network.isServer){
+		if(Network.isServer || main_scripts.GetComponent<AllCheats>().developerMode){
 			StyleModifications();
+			//print (main_scripts.GetComponent<AllCheats>().developerMode);
 		}
 	}
 	
@@ -225,23 +226,26 @@ public class ChatControl : MonoBehaviour {
 			//seteveryones blur to true by calling RPC PublicBoolUnlock
 			networkView.RPC("PublicBoolUnlock", RPCMode.AllBuffered, new object[]{1f});
 			return true;
-		}
-		else if(txt == "n"){
+		} else if(txt == "n"){
 			//seteveryones blur to true by calling RPC PublicBoolUnlock
 			networkView.RPC("PublicBoolUnlock", RPCMode.AllBuffered, new object[]{0f});
+			return true;
+		} else if(txt == "a"){
+			//seteveryones blur to true by calling RPC PublicBoolUnlock
+			networkView.RPC("PublicBoolUnlock", RPCMode.AllBuffered, new object[]{0.5f});
 			return true;
 		}
 		else return false;
 	}
-
+	
 	[RPC]
 	void PublicBoolUnlock(float drunkAmount){
-		//rpc func
 		this.GetComponent<MotionBlur> ().blurAmount = drunkAmount;
-		print ("blur set to " + drunkAmount);
+		myDrunkValue = drunkAmount;
 	}
+	public float myDrunkValue;
 
-	
+
 	[RPC]
 	void UnlockMap(bool theBool, string lockedDoorStr, string openDoor){
 		if(!theBool){

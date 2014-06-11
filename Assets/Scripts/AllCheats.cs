@@ -5,7 +5,7 @@ public class AllCheats : MonoBehaviour {
 	
 	public bool developerMode;
 	[HideInInspector] public bool showInstructions,nitroAllowed,jumpAllowed,checkPassword,showDeveloperMenu,isMandeepMapAvailable,isMustafaMapAvailable,zoomAllowed,airFly,godMode,noBlur;
-	string passwordTry="Enter Password";
+	string passwordTry="";
 	
 	public string checkStatus(bool YESorNO){
 		if(YESorNO){
@@ -57,7 +57,7 @@ public class AllCheats : MonoBehaviour {
 		if(passwordTry=="pilot") airFly=!airFly;
 		if(passwordTry=="sharpness") noBlur=!noBlur;
 		
-		passwordTry="Enter Password";
+		passwordTry="";
 		checkPassword = false;
 		Time.timeScale = 1;
 	}

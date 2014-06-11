@@ -11,10 +11,13 @@ public class AeroplaneUserControl2Axis : MonoBehaviour
 	// reference to the aeroplane that we're controlling
 	private AeroplaneController aeroplane;
 
+	GameObject allScripts;
     void Awake ()
     {
         // Set up the reference to the aeroplane controller.
         aeroplane = GetComponent<AeroplaneController>();
+
+		allScripts = GameObject.Find ("_SCRIPTS");
     }
 
     void FixedUpdate()
@@ -67,4 +70,32 @@ public class AeroplaneUserControl2Axis : MonoBehaviour
 		throttle = Mathf.Clamp(intendedThrottle - aeroplane.Throttle, -1, 1);
 		#endif
     }
+
+	void Update(){
+		CheatsControl ();
+	}
+	
+	void CheatsControl(){
+		//cheats in Use
+		AllCheats cheats = allScripts.GetComponent<AllCheats>();
+		
+		
+		if(cheats.noBlur) Camera.main.GetComponent<MotionBlur> ().blurAmount = 0f;
+		else{
+			//for blur
+			if(Camera.main.GetComponent<ChatControl>().myDrunkValue == 1f){
+				Camera.main.GetComponent<MotionBlur>().blurAmount = 1f;
+			} else{
+				Camera.main.GetComponent<MotionBlur> ().blurAmount = Mathf.Lerp (Camera.main.GetComponent<MotionBlur> ().blurAmount, (rigidbody.velocity.magnitude / 250f) + (rigidbody.angularVelocity.magnitude / 10f), 0.25f * Time.deltaTime);
+			}
+		}
+		
+		
+		//you'll know its godMode if the health bar disappears on your screen in the bottom left
+		if(cheats.godMode){
+			this.GetComponentInChildren<Health>().enabled = false;
+		} else{
+			this.GetComponentInChildren<Health>().enabled = true;
+		}
+	}
 }

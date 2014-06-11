@@ -67,8 +67,8 @@ public class CarController : MonoBehaviour {
 		
 		//For Cheats
 		allScripts = GameObject.Find ("_SCRIPTS");
-
-
+		
+		
 	}
 	
 	void Update(){
@@ -111,25 +111,30 @@ public class CarController : MonoBehaviour {
 		airplaneMode = cheats.airFly;
 		forSingleJump = !cheats.jumpAllowed;
 		godMOde = cheats.godMode;
-
-
-		/*if(cheats.noBlur) Camera.main.GetComponent<MotionBlur> ().blurAmount=0;
+		
+		
+		if(cheats.noBlur) Camera.main.GetComponent<MotionBlur> ().blurAmount=0f;
 		else{
 			//for blur
-			Camera.main.GetComponent<MotionBlur> ().blurAmount = Mathf.Lerp (Camera.main.GetComponent<MotionBlur> ().blurAmount, (rigidbody.velocity.magnitude / 250f) + (rigidbody.angularVelocity.magnitude / 10f), 0.25f * Time.deltaTime);
-		}*/
-
-
+			print (Camera.main.GetComponent<ChatControl>().myDrunkValue);
+			if(Camera.main.GetComponent<ChatControl>().myDrunkValue == 1f){
+				Camera.main.GetComponent<MotionBlur>().blurAmount = 1f;
+			} else if(Camera.main.GetComponent<ChatControl>().myDrunkValue == 0f){
+				Camera.main.GetComponent<MotionBlur>().blurAmount = 0f;
+			} else{
+				Camera.main.GetComponent<MotionBlur> ().blurAmount = Mathf.Lerp (Camera.main.GetComponent<MotionBlur> ().blurAmount, (rigidbody.velocity.magnitude / 250f) + (rigidbody.angularVelocity.magnitude / 10f), 0.25f * Time.deltaTime);
+			}
+		}
+		
+		
 		//you'll know its godMode if the health bar disappears on your screen in the bottom left
 		if(godMOde){
 			this.GetComponentInChildren<Health>().enabled = false;
 		} else{
-			//this.GetComponentInChildren<Health>().enabled = true;
+			this.GetComponentInChildren<Health>().enabled = true;
 		}
-
-		//DeveloperMenuOpened = cheats.showDeveloperMenu;
 	}
-
+	
 	bool godMOde;
 	
 	bool airplaneMode;
@@ -414,17 +419,4 @@ public class CarController : MonoBehaviour {
 		 * 
 		 */
 	}
-	
-	/*bool DeveloperMenuOpened;
-	
-	void ChangeTag(){
-		if(gameObject.tag=="Player") gameObject.tag="raycastTarget";
-		else gameObject.tag="Player";
-	}
-	
-	void OnGUI(){
-		if(DeveloperMenuOpened){
-			if(GUI.Button(new Rect((Screen.width-200)/2,(Screen.height-400)/2+200,200,35),"Current Tag is "+gameObject.tag)) ChangeTag();
-		}
-	}*/
 }
